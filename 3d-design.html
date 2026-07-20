@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Design | Natasha Afzal</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syne:wght@800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            background-color: #f7f7f7;
+            color: #111111;
+            font-family: 'Space Grotesk', sans-serif;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            cursor: none;
+        }
+
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding: 0.5rem 2.5rem 2.5rem 2.5rem;
+        }
+
+        /* HEAVY INDUSTRIAL AUTOCAD CROSSHAIR */
+        .custom-crosshair {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            mix-blend-mode: multiply;
+            transition: width 0.2s cubic-bezier(0.25, 1, 0.5, 1), height 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: left, top;
+        }
+
+        .custom-crosshair::before,
+        .custom-crosshair::after {
+            content: '';
+            position: absolute;
+            background-color: #000000;
+        }
+
+        .custom-crosshair::before {
+            top: 0;
+            left: calc(50% - 1.5px);
+            width: 3px;
+            height: 100%;
+        }
+
+        .custom-crosshair::after {
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 3px;
+        }
+
+        .custom-crosshair.expand {
+            width: 50px;
+            height: 50px;
+        }
+
+        /* STATIC HEADER BAR */
+        .global-header {
+            width: 100%;
+            margin-bottom: 2rem;
+            padding-top: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .nav-rectangle {
+            border: 2px solid #111111;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            width: 100%;
+            height: 50px;
+            overflow: hidden;
+            background-color: #f7f7f7;
+        }
+
+        .brand-logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            color: #111111;
+            letter-spacing: -0.05em;
+            padding: 0.6rem 2rem;
+            display: flex;
+            align-items: center;
+            border-right: 2px solid #111111;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            cursor: none;
+        }
+
+        .brand-logo:hover {
+            background-color: #E63946;
+            color: #ffffff;
+        }
+
+        .nav-spacer {
+            flex: 1;
+            border-right: 2px solid #111111;
+        }
+
+        .nav-item {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            color: #111111;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.6rem 0;
+            width: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            white-space: nowrap;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            cursor: none;
+        }
+
+        .nav-item:not(:last-child) {
+            border-right: 2px solid #111111;
+        }
+
+        .nav-item:hover {
+            background-color: #E63946;
+            color: #ffffff;
+        }
+
+        .nav-item.active {
+            background-color: #111111;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        /* LANGUAGE TOGGLE */
+        .lang-toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 90px;
+            background: transparent;
+            border: none;
+            gap: 0.5rem;
+            padding: 0 1rem;
+            transition: background-color 0.2s ease;
+            cursor: none;
+        }
+
+        .lang-toggle-container:hover {
+            background-color: #111111;
+        }
+
+        .lang-toggle-container:hover .globe-icon {
+            stroke: #ffffff;
+        }
+
+        .lang-toggle-container:hover .lang-label {
+            color: #E63946;
+        }
+
+        .globe-icon {
+            stroke: #111111;
+            transition: stroke 0.2s ease;
+        }
+
+        .lang-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #111111;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: color 0.2s ease;
+        }
+
+        /* SCROLL VIEWPORT & INTERLOCKING LAYOUT */
+        .scroll-viewport {
+            flex: 1;
+            min-height: 0;
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            display: flex;
+            align-items: center;
+            padding-bottom: 2rem;
+        }
+
+        .scroll-viewport::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .scroll-viewport::-webkit-scrollbar-track {
+            background: #f7f7f7;
+            border-bottom: 1px solid #dcdcdc;
+        }
+
+        .scroll-viewport::-webkit-scrollbar-thumb {
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='8'><circle cx='9' cy='4' r='2' fill='%23E63946'/></svg>");
+            background-repeat: repeat-x;
+            background-position: center;
+            border-radius: 0px;
+        }
+
+        .magazine-grid {
+            display: flex;
+            gap: 2.5rem;
+            height: 100%;
+            align-items: center;
+            width: max-content;
+        }
+
+        .spread-item {
+            display: flex;
+            width: 500px;
+            height: 70vh;
+            border: 2px solid #111111;
+            border-radius: 4px;
+            background: #ffffff;
+            text-decoration: none;
+            color: #111111;
+            transition: 0.2s;
+            cursor: none;
+        }
+
+        .spread-item:hover {
+            border-color: #E63946;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.07);
+        }
+
+        .spread-item-l {
+            flex-direction: row;
+        }
+
+        .spread-item-inv-l {
+            flex-direction: row-reverse;
+        }
+
+        /* PROPORTION ADJUSTMENT: Image 50% / Text 50% */
+        .image-container {
+            width: 50%;
+            background: #eaeaea;
+            border-right: 2px solid #111111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 0;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .spread-item-inv-l .image-container {
+            border-right: none;
+            border-left: 2px solid #111111;
+        }
+
+        .text-area {
+            width: 50%;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .project-meta {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 0.3rem;
+            font-weight: 500;
+        }
+
+        .project-headline {
+            font-size: 1.4rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 0.4rem;
+        }
+
+        .project-description {
+            font-size: 0.85rem;
+            color: #444;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="custom-crosshair" id="crosshair"></div>
+
+    <div class="page-wrapper">
+
+        <header class="global-header">
+            <nav class="nav-rectangle">
+                <a href="index.html" class="brand-logo">NA</a>
+                <div class="nav-spacer"></div>
+                <a href="architecture.html" class="nav-item" data-key="nav-arch">Architecture</a>
+                <a href="3d-design.html" class="nav-item active" data-key="nav-3d">3D Design</a>
+                <a href="research.html" class="nav-item" data-key="nav-res">Research</a>
+                <a href="contact.html" class="nav-item" data-key="nav-cont">Contact</a>
+
+                <button id="langToggle" class="lang-toggle-container">
+                    <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path
+                            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                        </path>
+                    </svg>
+                    <span id="langLabel" class="lang-label">TR</span>
+                </button>
+            </nav>
+        </header>
+
+        <div class="scroll-viewport" id="scrollContainer">
+            <main class="magazine-grid">
+                <a href="Projects/Design/running-girl.html" class="spread-item spread-item-l">
+                    <div class="image-container"><img src="Assets/Design/running-girl/r1.png" alt="Running Girl"></div>
+                    <div class="text-area">
+                        <div class="project-meta" data-key="d1-meta"></div>
+                        <h2 class="project-headline" data-key="d1-title"></h2>
+                        <p class="project-description" data-key="d1-desc"></p>
+                    </div>
+                </a>
+                <a href="Projects/Design/yatai-cart.html" class="spread-item spread-item-inv-l">
+                    <div class="image-container"><img src="Assets/Design/yatai-cart/Render.png" alt="Yatai Cart"></div>
+                    <div class="text-area">
+                        <div class="project-meta" data-key="d2-meta"></div>
+                        <h2 class="project-headline" data-key="d2-title"></h2>
+                        <p class="project-description" data-key="d2-desc"></p>
+                    </div>
+                </a>
+                <a href="Projects/Design/scared-man.html" class="spread-item spread-item-l">
+                    <div class="image-container"><img src="Assets/Design/scared-man/r2.png" alt="Scared Man"></div>
+                    <div class="text-area">
+                        <div class="project-meta" data-key="d3-meta"></div>
+                        <h2 class="project-headline" data-key="d3-title"></h2>
+                        <p class="project-description" data-key="d3-desc"></p>
+                    </div>
+                </a>
+                <a href="Projects/Design/anxiety-clock.html" class="spread-item spread-item-inv-l">
+                    <div class="image-container"><img src="Assets/Design/anxiety-clock/render2.png" alt="Anxiety Clock">
+                    </div>
+                    <div class="text-area">
+                        <div class="project-meta" data-key="d4-meta"></div>
+                        <h2 class="project-headline" data-key="d4-title"></h2>
+                        <p class="project-description" data-key="d4-desc"></p>
+                    </div>
+                </a>
+                <a href="Projects/Design/on-the-road.html" class="spread-item spread-item-l">
+                    <div class="image-container"><img src="Assets/Design/on-the-road/8.png" alt="On the Road"></div>
+                    <div class="text-area">
+                        <div class="project-meta" data-key="d5-meta"></div>
+                        <h2 class="project-headline" data-key="d5-title"></h2>
+                        <p class="project-description" data-key="d5-desc"></p>
+                    </div>
+                </a>
+                <a href="Projects/Design/rusty.html" class="spread-item spread-item-inv-l">
+                    <div class="image-container"><img src="Assets/Design/rusty/thumbnail.png" alt="Rusty"></div>
+                    <div class="text-area">
+                        <div class="project-meta" data-key="d6-meta"></div>
+                        <h2 class="project-headline" data-key="d6-title"></h2>
+                        <p class="project-description" data-key="d6-desc"></p>
+                    </div>
+                </a>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                "nav-arch": "Architecture", "nav-3d": "3D Design", "nav-res": "Research", "nav-cont": "Contact",
+                "d1-meta": "Project 01 // Narrative Art", "d1-title": "Running Girl", "d1-desc": "A cinematic environmental study exploring isolation and anxiety through motion within a dense forest.",
+                "d2-meta": "Project 02 // Environment Design", "d2-title": "Yatai Street Cart", "d2-desc": "A vibrant homage to Japanese anime aesthetics, focusing on stylized lighting and environmental storytelling.",
+                "d3-meta": "Project 03 // Character Study", "d3-title": "Scared Man", "d3-desc": "An emotive character study centered on chiaroscuro lighting to evoke internal vulnerability.",
+                "d4-meta": "Project 04 // Conceptual 3D", "d4-title": "Anxiety Clock", "d4-desc": "A surreal conceptual piece where time is replaced by fluctuating emotional states within a moody workspace.",
+                "d5-meta": "Project 05 // Narrative Environment", "d5-title": "On the Road", "d5-desc": "An atmospheric render depicting two characters navigating a perpetual, fog-laden mountain pass.",
+                "d6-meta": "Project 06 // Character Design", "d6-title": "Rusty", "d6-desc": "Commissioned for the hybrid-casual game Mirror Mania, a scrappy, lovable robot character featuring a retro-industrial aesthetic and custom low-poly textures."
+            },
+            tr: {
+                "nav-arch": "Mimarlık", "nav-3d": "3D Tasarım", "nav-res": "Araştırma", "nav-cont": "İletişim",
+                "d1-meta": "Proje 01 // Anlatı Sanatı", "d1-title": "Running Girl", "d1-desc": "Yoğun bir orman içinde hareket ve izolasyon aracılığıyla kaygıyı keşfeden sinematik bir çalışma.",
+                "d2-meta": "Proje 02 // Çevre Tasarımı", "d2-title": "Yatai Sokak Tezgahı", "d2-desc": "Japon anime estetiğine canlı bir saygı duruşu; stilize aydınlatma ve çevresel hikaye anlatımına odaklanmıştır.",
+                "d3-meta": "Proje 03 // Karakter Çalışması", "d3-title": "Scared Man", "d3-desc": "İçsel kırılganlığı uyandırmak için kiaroskuro aydınlatmaya odaklanan duygusal bir karakter çalışması.",
+                "d4-meta": "Proje 04 // Kavramsal 3D", "d4-title": "Anxiety Clock", "d4-desc": "Zamanın yerini dalgalanan duygusal durumların aldığı, karanlık ve moody bir çalışma.",
+                "d5-meta": "Proje 05 // Anlatı Ortamı", "d5-title": "On the Road", "d5-desc": "Sürekli sisli bir dağ geçidinde ilerleyen iki karakterin atmosferik betimlemesi.",
+                "d6-meta": "Proje 06 // Karakter Tasarımı", "d6-title": "Rusty", "d6-desc": "Mirror Mania hibrit-gündelik oyunu için sipariş edilen, retro-endüstriyel estetiğe ve özel düşük-poli dokulara sahip sevimli bir robot karakter."
+            }
+        };
+
+        let currentLang = localStorage.getItem('portfolio-lang') || 'en';
+        const langToggleBtn = document.getElementById('langToggle');
+        const langLabel = document.getElementById('langLabel');
+
+        function applyTranslations(lang) {
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            langLabel.textContent = lang === 'en' ? 'TR' : 'EN';
+        }
+
+        langToggleBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'tr' : 'en';
+            localStorage.setItem('portfolio-lang', currentLang);
+            applyTranslations(currentLang);
+        });
+
+        applyTranslations(currentLang);
+
+        const crosshair = document.getElementById('crosshair');
+        const scrollContainer = document.getElementById('scrollContainer');
+        let mouseX = 0; let mouseY = 0;
+
+        window.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+        function bindCrosshairListeners() {
+            document.querySelectorAll('.spread-item, .brand-logo, .nav-item, .lang-toggle-container').forEach(item => {
+                item.addEventListener('mouseenter', () => crosshair.classList.add('expand'));
+                item.addEventListener('mouseleave', () => crosshair.classList.remove('expand'));
+            });
+        }
+        function updateCursor() {
+            crosshair.style.left = `${mouseX}px`; crosshair.style.top = `${mouseY}px`;
+            requestAnimationFrame(updateCursor);
+        }
+        requestAnimationFrame(updateCursor);
+        bindCrosshairListeners();
+
+        window.addEventListener('wheel', (e) => {
+            if (window.innerWidth > 900 && e.deltaY !== 0) {
+                scrollContainer.scrollLeft += e.deltaY; e.preventDefault();
+            }
+        }, { passive: false });
+    </script>
+</body>
+
+</html>

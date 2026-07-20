@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Natasha Afzal</title>
+    
+    <!-- Modern Geometric Font Stack -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syne:wght@800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Editorial Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* LOCKED VIEWPANEL INTERIOR */
+        html, body {
+            height: 100%;
+            background-color: #f7f7f7;
+            color: #111111;
+            font-family: 'Space Grotesk', sans-serif;
+            overflow: hidden; /* Hard lock to completely prevent any scrolling */
+            -webkit-font-smoothing: antialiased;
+            cursor: none; 
+        }
+
+        /* Full screen structural frame container */
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding: 0.5rem 2.5rem 2.5rem 2.5rem; 
+        }
+
+        /* HEAVY INDUSTRIAL AUTOCAD CROSSHAIR */
+        .custom-crosshair {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            pointer-events: none; 
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            mix-blend-mode: multiply; 
+            transition: width 0.2s cubic-bezier(0.25, 1, 0.5, 1), height 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: left, top;
+        }
+        .custom-crosshair::before, .custom-crosshair::after {
+            content: '';
+            position: absolute;
+            background-color: #000000;
+        }
+        .custom-crosshair::before { top: 0; left: calc(50% - 1.5px); width: 3px; height: 100%; }
+        .custom-crosshair::after { top: 50%; left: 0; width: 100%; height: 3px; }
+        .custom-crosshair.expand { width: 50px; height: 50px; }
+
+        /* STATIC HEADER BAR (Stays frozen in place) */
+        .global-header {
+            width: 100%;
+            margin-bottom: 2rem; 
+            padding-top: 0.5rem;
+            flex-shrink: 0; 
+        }
+
+        .nav-rectangle {
+            border: 2px solid #111111; 
+            border-radius: 4px; 
+            display: flex;
+            flex-direction: row;
+            align-items: stretch; 
+            width: 100%;
+            overflow: hidden; 
+            background-color: #f7f7f7;
+        }
+
+        .brand-logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            color: #111111;
+            letter-spacing: -0.05em;
+            padding: 0.6rem 2rem; 
+            display: flex;
+            align-items: center;
+            border-right: 2px solid #111111; 
+            transition: background-color 0.2s ease, color 0.2s ease;
+            cursor: none;
+        }
+        .brand-logo:hover { background-color: #E63946; color: #ffffff; }
+
+        .nav-spacer { flex: 1; border-right: 2px solid #111111; }
+
+        .nav-item {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            color: #111111;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.6rem 0; 
+            width: 160px; /* Jitter Fix */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            white-space: nowrap; 
+            transition: background-color 0.2s ease, color 0.2s ease;
+            cursor: none;
+        }
+        
+        .nav-item:not(:last-child) { border-right: 2px solid #111111; }
+        .nav-item:hover { background-color: #E63946; color: #ffffff; }
+        
+        .nav-item.active { 
+            background-color: #111111; 
+            color: #ffffff; 
+            font-weight: 700;
+        }
+
+        /* MINIMAL VECTOR LANGUAGE TOGGLE CONTAINER */
+        .lang-toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 90px;
+            background: transparent;
+            border: none;
+            gap: 0.5rem;
+            padding: 0 1rem;
+            transition: background-color 0.2s ease;
+            cursor: none;
+        }
+        .lang-toggle-container:hover {
+            background-color: #111111;
+        }
+        .lang-toggle-container:hover .globe-icon {
+            stroke: #ffffff;
+        }
+        .lang-toggle-container:hover .lang-label {
+            color: #E63946;
+        }
+
+        .globe-icon {
+            stroke: #111111;
+            transition: stroke 0.2s ease;
+        }
+
+        .lang-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #111111;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: color 0.2s ease;
+        }
+
+        /* FIXED NON-SCROLLING SPLIT GRID VIEWPORT */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; 
+            gap: 2.5rem; 
+            width: 100%;
+            flex: 1; 
+            min-height: 0; 
+        }
+
+        /* BRUTALIST DISPLAY RECTANGLES */
+        .contact-panel {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            min-height: 0; 
+            border: 2px solid #111111;
+            border-radius: 4px;
+            padding: 3rem;
+            background-color: #ffffff; 
+        }
+
+        /* IMAGE DEAD-CENTERING ENGINE */
+        .image-basin {
+            width: 100%;
+            height: 100%;
+            background-color: transparent; 
+            display: flex;
+            align-items: center;      
+            justify-content: center;    
+            overflow: hidden;
+            border: none;               
+        }
+
+        .project-image {
+            max-width: 100%;            
+            max-height: 100%;
+            object-fit: contain;        
+            display: block;
+        }
+
+        /* RIGHT SIDE WORKSPACE AND TYPOGRAPHY ORGANIZER */
+        .text-basin {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            max-width: 480px; 
+            margin: 0 auto;  
+        }
+
+        .contact-headline {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.2rem;
+            color: #111111;
+        }
+
+        .contact-description {
+            font-size: 1.05rem;
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        /* COMPACT STRUCTURAL EMAIL BASELINE */
+        .email-box {
+            border-top: 1px solid #111111; 
+            padding-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .email-anchor {
+            font-size: 1.2rem; 
+            font-weight: 500;
+            color: #111111;
+            text-decoration: none;
+            letter-spacing: -0.01em;
+            display: inline-block;
+            align-self: flex-start;
+            transition: color 0.2s ease, transform 0.2s ease;
+            cursor: none;
+        }
+
+        .email-anchor:hover {
+            color: #E63946;
+            transform: translateX(4px); 
+        }
+
+        /* Responsive Mobile Breakpoint Reversion */
+        @media (max-width: 900px) {
+            html, body { overflow-y: auto; height: auto; cursor: auto; }
+            .page-wrapper { height: auto; padding: 1.5rem; }
+            .custom-crosshair { display: none; }
+            .brand-logo, .nav-item, .email-anchor, .lang-toggle-container { cursor: auto; }
+            
+            .global-header { margin-bottom: 2rem; }
+            .nav-rectangle { flex-direction: column; align-items: stretch; }
+            .brand-logo { border-right: none; border-bottom: 2px solid #111111; justify-content: center; }
+            .nav-spacer { display: none; }
+            .nav-item:not(:last-child) { border-right: none; border-bottom: 2px solid #111111; }
+            .nav-item { justify-content: center; padding: 0.75rem; font-size: 0.85rem; width: 100%; }
+            
+            .lang-toggle-container { width: 100%; padding: 0.75rem; border-top: 2px solid #111111; justify-content: center; }
+            .lang-toggle-container:hover { background-color: transparent; }
+            .lang-toggle-container:hover .globe-icon { stroke: #111111; }
+            .lang-toggle-container:hover .lang-label { color: #111111; }
+
+            .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .contact-panel { height: auto; padding: 1.5rem; }
+            .image-basin { aspect-ratio: 1 / 1; }
+            .text-basin { max-width: 100%; margin: 0; }
+            .contact-headline { font-size: 1.8rem; }
+            .contact-description { font-size: 1rem; }
+            .email-anchor { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="custom-crosshair" id="crosshair"></div>
+
+    <div class="page-wrapper">
+
+        <!-- HEADER BAR WITH TRANSLATE ICON -->
+        <header class="global-header">
+            <nav class="nav-rectangle">
+                <a href="index.html" class="brand-logo">NA</a>
+                <div class="nav-spacer"></div>
+                <a href="architecture.html" class="nav-item" data-key="nav-arch">Architecture</a>
+                <a href="3d-design.html" class="nav-item" data-key="nav-3d">3D Design</a>
+                <a href="research.html" class="nav-item" data-key="nav-res">Research</a>
+                <a href="contact.html" class="nav-item active" data-key="nav-cont">Contact</a>
+                
+                <!-- COMPACT GLOBAL ICON BUTTON TRIGGER -->
+                <button id="langToggle" class="lang-toggle-container">
+                    <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    <span id="langLabel" class="lang-label">TR</span>
+                </button>
+            </nav>
+        </header>
+
+        <!-- NO-SCROLL DISPLAY GRID BASE -->
+        <main class="contact-grid">
+
+            <!-- LEFT RECTANGLE: FIXED DESIGN CASE PANEL -->
+            <section class="contact-panel">
+                <div class="image-basin">
+                    <img src="assets/contact/Lollywood type.png" alt="Graphic Design Project" class="project-image">
+                </div>
+            </section>
+
+            <!-- RIGHT RECTANGLE: ORGANIZED TEXT BASIN -->
+            <section class="contact-panel">
+                <div class="text-basin">
+                    <h2 class="contact-headline" data-key="c-title">Let's build something new.</h2>
+                    <p class="contact-description" data-key="c-desc">
+                        Whether you're looking to collaborate, discuss a project, or simply connect, feel free to reach out.
+                    </p>
+                    
+                    <div class="email-box">
+                        <a href="mailto:natashafzl1@gmail.com" class="email-anchor">natashafzl1@gmail.com</a>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- Script Localization Routing Pipeline -->
+    <script>
+        const translations = {
+            en: {
+                "nav-arch": "Architecture", "nav-3d": "3D Design", "nav-res": "Research", "nav-cont": "Contact",
+                "c-title": "Let's build something new.",
+                "c-desc": "Whether you're looking to collaborate, discuss a project, or simply connect, feel free to reach out."
+            },
+            tr: {
+                "nav-arch": "Mimarlık", "nav-3d": "3D Tasarım", "nav-res": "Araştırma", "nav-cont": "İletişim",
+                "c-title": "Yeni bir şeyler inşa edelim.",
+                "c-desc": "İster iş birliği yapmak, ister bir projeyi tartışmak veya sadece iletişime geçmek isteyin, çekinmeden ulaşabilirsiniz."
+            }
+        };
+
+        let currentLang = localStorage.getItem('portfolio-lang') || 'en';
+        const langToggleBtn = document.getElementById('langToggle');
+        const langLabel = document.getElementById('langLabel');
+
+        function applyTranslations(lang) {
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            langLabel.textContent = lang === 'en' ? 'TR' : 'EN';
+        }
+
+        langToggleBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'tr' : 'en';
+            localStorage.setItem('portfolio-lang', currentLang);
+            applyTranslations(currentLang);
+        });
+
+        // Initialize translations immediately on load
+        applyTranslations(currentLang);
+
+        // AutoCAD Crosshair Core Script Block
+        const crosshair = document.getElementById('crosshair');
+        let mouseX = 0; let mouseY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function bindCrosshairListeners() {
+            const interactables = document.querySelectorAll('.brand-logo, .nav-item, .email-anchor, .lang-toggle-container');
+            interactables.forEach(item => {
+                item.addEventListener('mouseenter', () => crosshair.classList.add('expand'));
+                item.addEventListener('mouseleave', () => crosshair.classList.remove('expand'));
+            });
+        }
+
+        function updateCursor() {
+            crosshair.style.left = `${mouseX}px`;
+            crosshair.style.top = `${mouseY}px`;
+            requestAnimationFrame(updateCursor);
+        }
+        
+        requestAnimationFrame(updateCursor);
+        bindCrosshairListeners();
+    </script>
+
+</body>
+</html>

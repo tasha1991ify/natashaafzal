@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture | Natasha Afzal</title>
+    
+    <!-- Modern Geometric Font Stack -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syne:wght@800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Editorial Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* LOCKED VIEWPANEL INTERIOR */
+        html, body {
+            height: 100%;
+            background-color: #f7f7f7;
+            color: #111111;
+            font-family: 'Space Grotesk', sans-serif;
+            overflow: hidden; 
+            -webkit-font-smoothing: antialiased;
+            cursor: none; 
+        }
+
+        /* Full screen structural frame container */
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding: 0.5rem 2.5rem 2.5rem 2.5rem; 
+        }
+
+        /* HEAVY INDUSTRIAL AUTOCAD CROSSHAIR */
+        .custom-crosshair {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            pointer-events: none; 
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            mix-blend-mode: multiply; 
+            transition: width 0.2s cubic-bezier(0.25, 1, 0.5, 1), height 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: left, top;
+        }
+        .custom-crosshair::before, .custom-crosshair::after {
+            content: '';
+            position: absolute;
+            background-color: #000000;
+        }
+        .custom-crosshair::before { top: 0; left: calc(50% - 1.5px); width: 3px; height: 100%; }
+        .custom-crosshair::after { top: 50%; left: 0; width: 100%; height: 3px; }
+        .custom-crosshair.expand { width: 50px; height: 50px; }
+
+        /* STATIC HEADER BAR */
+        .global-header {
+            width: 100%;
+            margin-bottom: 2rem; 
+            padding-top: 0.5rem;
+            flex-shrink: 0; 
+        }
+
+        .nav-rectangle {
+            border: 2px solid #111111; 
+            border-radius: 4px; 
+            display: flex;
+            flex-direction: row;
+            align-items: stretch; 
+            width: 100%;
+            overflow: hidden; 
+            background-color: #f7f7f7;
+        }
+
+        .brand-logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            color: #111111;
+            letter-spacing: -0.05em;
+            padding: 0.6rem 2rem; 
+            display: flex;
+            align-items: center;
+            border-right: 2px solid #111111; 
+            transition: background-color 0.2s ease, color 0.2s ease;
+            cursor: none;
+        }
+        .brand-logo:hover { background-color: #E63946; color: #ffffff; }
+
+        .nav-spacer { flex: 1; border-right: 2px solid #111111; }
+
+        .nav-item {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            color: #111111;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.6rem 0; 
+            width: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            white-space: nowrap; 
+            transition: background-color 0.2s ease, color 0.2s ease;
+            cursor: none;
+        }
+        
+        .nav-item:not(:last-child) { border-right: 2px solid #111111; }
+        .nav-item:hover { background-color: #E63946; color: #ffffff; }
+        
+        .nav-item.active { 
+            background-color: #111111; 
+            color: #ffffff; 
+            font-weight: 700;
+        }
+
+        /* MINIMAL VECTOR LANGUAGE TOGGLE */
+        .lang-toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 90px;
+            background: transparent;
+            border: none;
+            gap: 0.5rem;
+            padding: 0 1rem;
+            transition: background-color 0.2s ease;
+            cursor: none;
+        }
+        .lang-toggle-container:hover { background-color: #111111; }
+        .lang-toggle-container:hover .globe-icon { stroke: #ffffff; }
+        .lang-toggle-container:hover .lang-label { color: #E63946; }
+
+        .globe-icon {
+            stroke: #111111;
+            transition: stroke 0.2s ease;
+        }
+
+        .lang-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #111111;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: color 0.2s ease;
+        }
+
+        /* THE ISOLATED SCROLL CONTAINER BASIN */
+        .scroll-viewport {
+            flex: 1;
+            min-height: 0;
+            width: 100%;
+            overflow-x: auto;   
+            overflow-y: hidden;  
+            display: flex;
+            align-items: stretch;
+            padding-bottom: 2rem; 
+        }
+
+        /* BRUTALIST SCROLLBAR INFRASTRUCTURE */
+        .scroll-viewport::-webkit-scrollbar {
+            height: 8px; 
+        }
+        .scroll-viewport::-webkit-scrollbar-track {
+            background: #f7f7f7;
+            border-bottom: 1px solid #dcdcdc; 
+        }
+        .scroll-viewport::-webkit-scrollbar-thumb {
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='8'><circle cx='9' cy='4' r='2' fill='%23E63946'/></svg>");
+            background-repeat: repeat-x;
+            background-position: center;
+            border-radius: 0px; 
+        }
+        .scroll-viewport::-webkit-scrollbar-thumb:hover {
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='8'><circle cx='9' cy='4' r='2' fill='%23111111'/></svg>");
+        }
+
+        /* THE HORIZONTAL GRID TRACK */
+        .magazine-grid {
+            display: grid;
+            grid-auto-flow: column; 
+            grid-auto-columns: minmax(460px, 520px); 
+            gap: 2.5rem; 
+            width: max-content; 
+            height: 100%;
+            padding-right: 1px; 
+        }
+
+        /* ARCHITECTURAL PROJECT CARDS */
+        .spread-item {
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            cursor: none;
+            height: 100%;
+            min-height: 0; 
+            border: 2px solid #111111;
+            border-radius: 4px;
+            padding: 2rem;
+            background-color: #ffffff; 
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+        .spread-item:hover {
+            box-shadow: 0 6px 25px rgba(0,0,0,0.07);
+            border-color: #E63946;
+        }
+
+        .image-container {
+            width: 100%;
+            background-color: #eaeaea;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            transition: opacity 0.3s ease;
+            flex: 1; 
+            min-height: 0; 
+            border: 1px solid #dcdcdc; 
+        }
+        .spread-item:hover .image-container { opacity: 0.9; }
+
+        .spread-item:nth-child(even) .image-container { max-height: 52%; }
+        .spread-item:nth-child(odd) .image-container { max-height: 62%; }
+
+        /* Typography Metrics */
+        .project-meta {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #666;
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+            margin-top: auto; 
+        }
+        .project-headline {
+            font-size: 1.65rem;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+        .project-description {
+            font-size: 0.95rem;
+            color: #444;
+            line-height: 1.5;
+        }
+
+        /* Responsive Mobile Breakpoint Reversion */
+        @media (max-width: 900px) {
+            html, body { overflow-y: auto; height: auto; cursor: auto; }
+            .page-wrapper { height: auto; padding: 1.5rem; }
+            .custom-crosshair { display: none; }
+            .brand-logo, .nav-item, .lang-toggle-container { cursor: auto; }
+            
+            .global-header { margin-bottom: 2rem; }
+            .nav-rectangle { flex-direction: column; align-items: stretch; }
+            .brand-logo { border-right: none; border-bottom: 2px solid #111111; justify-content: center; }
+            .nav-spacer { display: none; }
+            .nav-item:not(:last-child) { border-right: none; border-bottom: 2px solid #111111; }
+            .nav-item { justify-content: center; padding: 0.75rem; font-size: 0.85rem; width: 100%; }
+            
+            .lang-toggle-container { width: 100%; padding: 0.75rem; border-top: 2px solid #111111; justify-content: center; }
+            .lang-toggle-container:hover { background-color: transparent; }
+            .lang-toggle-container:hover .globe-icon { stroke: #111111; }
+            .lang-toggle-container:hover .lang-label { color: #111111; }
+
+            .scroll-viewport { overflow-x: visible; height: auto; padding-bottom: 0; }
+            .magazine-grid { display: flex; flex-direction: column; width: 100%; gap: 2rem; }
+            .spread-item { height: auto; min-height: initial; padding: 1.5rem; }
+            .spread-item .image-container, .spread-item:nth-child(even) .image-container { max-height: none; aspect-ratio: 16 / 9; }
+            .project-headline { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="custom-crosshair" id="crosshair"></div>
+
+    <div class="page-wrapper">
+
+        <!-- HEADER BAR -->
+        <header class="global-header">
+            <nav class="nav-rectangle">
+                <a href="index.html" class="brand-logo">NA</a>
+                <div class="nav-spacer"></div>
+                <a href="architecture.html" class="nav-item active" data-key="nav-arch">Architecture</a>
+                <a href="3d-design.html" class="nav-item" data-key="nav-3d">3D Design</a>
+                <a href="research.html" class="nav-item" data-key="nav-res">Research</a>
+                <a href="contact.html" class="nav-item" data-key="nav-cont">Contact</a>
+                
+                <button id="langToggle" class="lang-toggle-container">
+                    <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    <span id="langLabel" class="lang-label">TR</span>
+                </button>
+            </nav>
+        </header>
+
+        <!-- HORIZONTAL SCROLL CHANNEL -->
+        <div class="scroll-viewport" id="scrollContainer">
+            <main class="magazine-grid">
+
+                <!-- PROJECT 01 - KAHRAMANMARAS -->
+                <a href="projects/architecture/kahramanmaras.html" class="spread-item">
+                    <div class="image-container">
+                        <img src="assets/architecture/kahramanmaras/Thumnail.png" alt="Kahramanmaraş Thumbnail" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="project-meta" data-key="p1-meta">Case Study 01 // Urban Design</div>
+                    <h2 class="project-headline" data-key="p1-title">Kahramanmaraş Meydan</h2>
+                    <p class="project-description" data-key="p1-desc">Reimagining the historic Meydan area through a balanced framework of restorative urban planning and precision 3D architectural visualization.</p>
+                </a>
+
+                <!-- PROJECT 02 - CORE-MUNAL -->
+                <a href="projects/architecture/coremunnal.html" class="spread-item">
+                    <div class="image-container">
+                        <img src="assets/architecture/Coremunnal/thumbnail.jpg" alt="Core-munal Thumbnail" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="project-meta" data-key="p2-meta">Case Study 02 // Communal Architecture</div>
+                    <h2 class="project-headline" data-key="p2-title">The Core-munal</h2>
+                    <p class="project-description" data-key="p2-desc">Addressing regional housing shortages in Maseru through neighborhood production modules and functional core architecture engineered to empower rural-urban migrations.</p>
+                </a>
+
+                <!-- PROJECT 03 - HILL HOUSE -->
+                <a href="projects/architecture/mountain-house-2.html" class="spread-item">
+                    <div class="image-container">
+                        <img src="assets/architecture/mountain-house-2/MainRender.jpg" alt="Mountain House Thumbnail" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="project-meta" data-key="p3-meta">Case Study 03 // Residential Landscape</div>
+                    <h2 class="project-headline" data-key="p3-title">Hill House</h2>
+                    <p class="project-description" data-key="p3-desc">A contemporary alpine residential concept highlighting contextual materiality, highly articulated solar profiles, and smooth programmatic spatial transitions.</p>
+                </a>
+
+                <!-- PROJECT 04 - BIN RIAZ RESTAURANT -->
+                <a href="projects/architecture/bin-riaz.html" class="spread-item">
+                    <div class="image-container">
+                        <img src="assets/architecture/bin-riaz/thumbnail.png" alt="Bin Riaz Thumbnail" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="project-meta" data-key="p4-meta">Case Study 04 // Interior Design</div>
+                    <h2 class="project-headline" data-key="p4-title">BR Restaurant</h2>
+                    <p class="project-description" data-key="p4-desc">A tripartite interior plan using custom spatial elements like an acoustic wooden nest installation balanced with natural stone aggregates, textured plasters, and minimal metal frame configurations.</p>
+                </a>
+
+                <!-- PROJECT 05 - PERGOLA PAVILION -->
+                <a href="projects/architecture/pergola.html" class="spread-item">
+                    <div class="image-container">
+                        <img src="assets/architecture/pergola/ThumbnailImage.jpg" alt="Pergola Pavilion Thumbnail" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="project-meta" data-key="p5-meta">Case Study 05 // Public Space Installation</div>
+                    <h2 class="project-headline" data-key="p5-title">Pergola Pavilion</h2>
+                    <p class="project-description" data-key="p5-desc">An empirical research prototype evaluating heavy structural timber framing, daylight filtering mechanisms, and rhythmic architectural shadow articulation.</p>
+                </a>
+
+                <!-- PROJECT 06 - AJ HOUSE -->
+                <a href="projects/architecture/aj-house.html" class="spread-item">
+                    <div class="image-container">
+                        <img src="assets/architecture/AJ-House/r4.png" alt="AJ House Thumbnail" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="project-meta" data-key="p6-meta">Case Study 06 // Residential Architecture</div>
+                    <h2 class="project-headline" data-key="p6-title">The AJ House</h2>
+                    <p class="project-description" data-key="p6-desc">A minimalist volume designed around natural micro-climates, focusing on fluid paths and clean structural geometry to create unified domestic spaces.</p>
+                </a>
+
+                <!-- PROJECT 07 - CAPPADOCIA UCHR -->
+                <a href="projects/architecture/cappadocia.html" class="spread-item">
+                    <div class="image-container">
+                        <img src="assets/architecture/cappadocia/14.jpg" alt="Cappadocia UCHR Thumbnail" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="project-meta" data-key="p7-meta">Case Study 07 // Visual Presentation</div>
+                    <h2 class="project-headline" data-key="p7-title">UCHR Hotel</h2>
+                    <p class="project-description" data-key="p7-desc">High-fidelity site renderings evaluating context-sensitive stone architectural interventions within the historic, protected topographies of Cappadocia.</p>
+                </a>
+
+                <!-- PROJECT 08 - DIY EATERY -->
+                <a href="projects/architecture/diy-eatery.html" class="spread-item">
+                    <div class="image-container">
+                        <img src="assets/architecture/DIY-eatery/thumbnail.jpg" alt="DIY Eatery Thumbnail" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="project-meta" data-key="p8-meta">Case Study 08 // Sustainable Interior Design</div>
+                    <h2 class="project-headline" data-key="p8-title">DIY Eatery</h2>
+                    <p class="project-description" data-key="p8-desc">Grounded in social and environmental sustainability, the proposed interior for the DIY Eatery embraces a cradle-to-cradle design methodology utilizing reclaimed timber elements.</p>
+                </a>
+
+                <!-- PROJECT 09 - QASWA -->
+                <a href="projects/architecture/qaswa.html" class="spread-item">
+                    <div class="image-container">
+                        <img src="assets/architecture/qaswa/thumbnail.jpg" alt="Qaswa Exhibition Thumbnail" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="project-meta" data-key="p9-meta">Case Study 09 // Commercial Exhibition</div>
+                    <h2 class="project-headline" data-key="p9-title">Qaswa Exhibition</h2>
+                    <p class="project-description" data-key="p9-desc">A tactical display workspace built for aerospace exhibitions. The program optimizes high-impact human circulation patterns alongside physical scale modeling, holograms, and dynamic media interfaces.</p>
+                </a>
+
+            </main>
+        </div>
+
+    </div>
+
+    <!-- SCRIPT PIPELINE -->
+    <script>
+        const translations = {
+            en: {
+                "nav-arch": "Architecture", "nav-3d": "3D Design", "nav-res": "Research", "nav-cont": "Contact",
+                "p1-meta": "Case Study 01 // Urban Design", "p1-title": "Kahramanmaraş Meydan", "p1-desc": "Reimagining the historic Meydan area through a balanced framework of restorative urban planning and precision 3D architectural visualization.",
+                "p2-meta": "Case Study 02 // Communal Architecture", "p2-title": "The Core-munal", "p2-desc": "Addressing regional housing shortages in Maseru through neighborhood production modules and functional core architecture engineered to empower rural-urban migrations.",
+                "p3-meta": "Case Study 03 // Residential Landscape", "p3-title": "Hill House", "p3-desc": "A contemporary alpine residential concept highlighting contextual materiality, highly articulated solar profiles, and smooth programmatic spatial transitions.",
+                "p4-meta": "Case Study 04 // Interior Design", "p4-title": "BR Restaurant", "p4-desc": "A tripartite interior plan using custom spatial elements like an acoustic wooden nest installation balanced with natural stone aggregates, textured plasters, and minimal metal frame configurations.",
+                "p5-meta": "Case Study 05 // Public Space Installation", "p5-title": "Pergola Pavilion", "p5-desc": "An empirical research prototype evaluating heavy structural timber framing, daylight filtering mechanisms, and rhythmic architectural shadow articulation.",
+                "p6-meta": "Case Study 06 // Residential Architecture", "p6-title": "The AJ House", "p6-desc": "A minimalist volume designed around natural micro-climates, focusing on fluid paths and clean structural geometry to create unified domestic spaces.",
+                "p7-meta": "Case Study 07 // Visual Presentation", "p7-title": "UCHR Hotel", "p7-desc": "High-fidelity site renderings evaluating context-sensitive stone architectural interventions within the historic, protected topographies of Cappadocia.",
+                "p8-meta": "Case Study 08 // Sustainable Interior Design", "p8-title": "DIY Eatery", "p8-desc": "Grounded in social and environmental sustainability, the proposed interior for the DIY Eatery embraces a cradle-to-cradle design methodology utilizing reclaimed timber elements.",
+                "p9-meta": "Case Study 09 // Commercial Exhibition", "p9-title": "Qaswa Exhibition", "p9-desc": "A tactical display workspace built for aerospace exhibitions. The program optimizes high-impact human circulation patterns alongside physical scale modeling, holograms, and dynamic media interfaces."
+            },
+            tr: {
+                "nav-arch": "Mimarlık", "nav-3d": "3D Tasarım", "nav-res": "Araştırma", "nav-cont": "İletişim",
+                "p1-meta": "Vaka Çalışması 01 // Kentsel Tasarım", "p1-title": "Kahramanmaraş Meydanı", "p1-desc": "Tarihi Meydan alanını, restoratif kentsel planlama ve hassas 3D mimari görselleştirme dengesiyle yeniden kurgulamak.",
+                "p2-meta": "Vaka Çalışması 02 // Toplumsal Mimari", "p2-title": "The Core-munal", "p2-desc": "Kırsaldan kente göçü desteklemek amacıyla tasarlanmış modüllerle Maseru'daki konut sıkıntısına çözüm sunan bir kamusal yerleşim projesi.",
+                "p3-meta": "Vaka Çalışması 03 // Konut Peyzajı", "p3-title": "Dağ Evi", "p3-desc": "Malzeme dokusuna, kontrollü güneş ışığı alımına ve mekanlar arası akıcı geçişlere odaklanan çağdaş bir dağ evi konsepti.",
+                "p4-meta": "Vaka Çalışması 04 // İç Mimari", "p4-title": "BR Restoran", "p4-desc": "Resepsiyon alanında asılı duran ahşap kafes yerleşimi, brüt sıva bitişler, terrazzo zemin ve yalın metal işçiliğin birleştiği minimalist bir iç mekan tasarımı.",
+                "p5-meta": "Vaka Çalışması 05 // Kamusal Alan Enstalasyonu", "p5-title": "Pergola Köşk", "p5-desc": "Modüler gölgelendirme sistemleri ve ahşap karkas yapı üzerine bir çalışma; gölge oyunlarına ve malzeme ömrüne odaklanmıştır.",
+                "p6-meta": "Vaka Çalışması 06 // Konut Mimarisi", "p6-title": "AJ Evi", "p6-desc": "Sıcak malzeme paletlerine ve kesintisiz iç-dış mekan geçişlerine odaklanan çağdaş bir konut tasarımı.",
+                "p7-meta": "Vaka Çalışması 07 // Görsel Sunum", "p7-title": "UCHR Otel", "p7-desc": "Kapadokya'nın kendine özgü doğal peyzajı ve yerel mimari dokusuyla bütünleşen lüks otel projesinin yüksek sadakatli 3D görselleştirme çalışması.",
+                "p8-meta": "Vaka Çalışması 08 // Sürdürülebilir İç Mimari", "p8-title": "DIY Eatery", "p8-desc": "Sosyal ve çevresel sürdürülebilirliğe dayanan DIY Eatery'nin iç mekan önerisi, geri kazanılmış ahşap unsurları kullanan beşikten beşiğe tasarım metodolojisini benimsiyor.",
+                "p9-meta": "Vaka Çalışması 09 // Ticari Sergi", "p9-title": "Qaswa Köşkü", "p9-desc": "Havacılık ve savunma fuarları için tasarlanmış özel bir sergi köşkü. Fiziksel maketler, hologramlar ve LED ekranlar için optimize edilmiş sirkülasyon şeması."
+            }
+        };
+
+        let currentLang = localStorage.getItem('portfolio-lang') || 'en';
+        const langToggleBtn = document.getElementById('langToggle');
+        const langLabel = document.getElementById('langLabel');
+
+        function applyTranslations(lang) {
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            langLabel.textContent = lang === 'en' ? 'TR' : 'EN';
+        }
+
+        langToggleBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'tr' : 'en';
+            localStorage.setItem('portfolio-lang', currentLang);
+            applyTranslations(currentLang);
+        });
+
+        applyTranslations(currentLang);
+
+        const crosshair = document.getElementById('crosshair');
+        const scrollContainer = document.getElementById('scrollContainer');
+        let mouseX = 0; let mouseY = 0;
+
+        window.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+        function bindCrosshairListeners() {
+            document.querySelectorAll('.spread-item, .brand-logo, .nav-item, .lang-toggle-container').forEach(item => {
+                item.addEventListener('mouseenter', () => crosshair.classList.add('expand'));
+                item.addEventListener('mouseleave', () => crosshair.classList.remove('expand'));
+            });
+        }
+        function updateCursor() {
+            crosshair.style.left = `${mouseX}px`; crosshair.style.top = `${mouseY}px`;
+            requestAnimationFrame(updateCursor);
+        }
+        requestAnimationFrame(updateCursor);
+        bindCrosshairListeners();
+
+        window.addEventListener('wheel', (e) => {
+            if (window.innerWidth > 900 && e.deltaY !== 0) {
+                scrollContainer.scrollLeft += e.deltaY; e.preventDefault();
+            }
+        }, { passive: false });
+    </script>
+</body>
+</html>

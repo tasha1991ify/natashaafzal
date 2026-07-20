@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gentrification and the Financialization of Housing | Natasha Afzal</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syne:wght@800&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body {
+            height: 100%;
+            background-color: #f7f7f7;
+            color: #111111;
+            font-family: 'Space Grotesk', sans-serif;
+            overflow: hidden; 
+            -webkit-font-smoothing: antialiased;
+            cursor: none; 
+        }
+
+        .page-wrapper { display: flex; flex-direction: column; height: 100vh; padding: 0.5rem 2.5rem 2.5rem 2.5rem; }
+
+        /* CUSTOM CROSSHAIR */
+        .custom-crosshair {
+            position: fixed; top: 0; left: 0; width: 24px; height: 24px;
+            pointer-events: none; transform: translate(-50%, -50%);
+            z-index: 9999; mix-blend-mode: multiply; 
+            transition: width 0.2s cubic-bezier(0.25, 1, 0.5, 1), height 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: left, top;
+        }
+        .custom-crosshair::before, .custom-crosshair::after { content: ''; position: absolute; background-color: #000000; }
+        .custom-crosshair::before { top: 0; left: calc(50% - 1.5px); width: 3px; height: 100%; }
+        .custom-crosshair::after { top: 50%; left: 0; width: 100%; height: 3px; }
+        .custom-crosshair.expand { width: 50px; height: 50px; }
+
+        /* HEADER */
+        .global-header { width: 100%; margin-bottom: 2rem; padding-top: 0.5rem; flex-shrink: 0; }
+        .nav-rectangle {
+            border: 2px solid #111111; border-radius: 4px; display: flex;
+            align-items: stretch; width: 100%; overflow: hidden; background-color: #f7f7f7;
+        }
+        .brand-logo {
+            font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800;
+            text-decoration: none; color: #111111; padding: 0.6rem 2rem; 
+            display: flex; align-items: center; border-right: 2px solid #111111; 
+            transition: background-color 0.2s ease, color 0.2s ease; cursor: none;
+        }
+        .brand-logo:hover { background-color: #E63946; color: #ffffff; }
+        .nav-spacer { flex: 1; border-right: 2px solid #111111; }
+        .nav-item {
+            font-size: 0.9rem; font-weight: 500; text-decoration: none; color: #111111;
+            text-transform: uppercase; letter-spacing: 0.1em; padding: 0.6rem 0; width: 160px;
+            display: flex; align-items: center; justify-content: center;
+            border-right: 2px solid #111111; transition: 0.2s; cursor: none;
+        }
+        .nav-item:hover { background-color: #E63946; color: #ffffff; }
+        .nav-item.active { background-color: #111111; color: #ffffff; font-weight: 700; }
+
+        .lang-toggle-container {
+            display: flex; align-items: center; justify-content: center;
+            width: 90px; background: transparent; border: none;
+            gap: 0.5rem; padding: 0 1rem; cursor: none;
+        }
+        .lang-toggle-container:hover { background-color: #111111; }
+        .lang-toggle-container:hover .globe-icon { stroke: #ffffff; }
+        .lang-toggle-container:hover .lang-label { color: #E63946; }
+        .globe-icon { stroke: #111111; transition: stroke 0.2s ease; }
+        .lang-label { font-size: 0.85rem; font-weight: 700; color: #111111; transition: color 0.2s ease; }
+
+        /* BACK LINK */
+        .back-link-wrapper { margin-bottom: 1.5rem; }
+        .back-link { display: inline-block; font-size: 0.85rem; text-transform: uppercase; color: #666; font-weight: 700; text-decoration: none; cursor: none; }
+        .back-link:hover { color: #E63946; }
+
+        /* SCROLL VIEWPORT */
+        .scroll-viewport {
+            flex: 1; min-height: 0; width: 100%;
+            overflow-x: auto; overflow-y: hidden; display: flex; align-items: stretch;
+            padding-bottom: 2rem; 
+        }
+        .scroll-viewport::-webkit-scrollbar { height: 8px; }
+        .scroll-viewport::-webkit-scrollbar-thumb {
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='8'><circle cx='9' cy='4' r='2' fill='%23E63946'/></svg>");
+            background-repeat: repeat-x; background-position: center;
+        }
+
+        /* MAGAZINE CONTENT */
+        .magazine-spread { display: flex; gap: 4rem; padding-right: 4rem; height: 100%; align-items: flex-start; width: max-content; }
+        .square-image { min-width: 400px; width: 400px; height: 400px; background: #eaeaea; border: 2px solid #111; border-radius: 4px; flex-shrink: 0; overflow: hidden; }
+        .content-column { height: 100%; column-width: 350px; column-gap: 2.5rem; padding-bottom: 2rem; width: auto; }
+        
+        .project-title { font-size: 2.2rem; font-weight: 700; line-height: 1.1; margin-bottom: 2rem; break-after: avoid; letter-spacing: -0.02em; }
+        .body-text { font-size: 1rem; line-height: 1.6; color: #333; margin-bottom: 1rem; }
+        .section-title { font-weight: 700; margin: 2rem 0 1rem 0; font-size: 1.2rem; }
+
+        @media (max-width: 900px) { html, body { overflow-y: auto; height: auto; } .magazine-spread { flex-direction: column; width: 100%; gap: 2rem; } .content-column { column-width: auto; width: 100%; } }
+    </style>
+</head>
+<body>
+
+    <div class="custom-crosshair" id="crosshair"></div>
+
+    <div class="page-wrapper">
+        <header class="global-header">
+            <nav class="nav-rectangle">
+                <a href="../../index.html" class="brand-logo">NA</a>
+                <div class="nav-spacer"></div>
+                <a href="../../architecture.html" class="nav-item" data-key="nav-arch">Architecture</a>
+                <a href="../../3d-design.html" class="nav-item" data-key="nav-3d">3D Design</a>
+                <a href="../../research.html" class="nav-item active" data-key="nav-res">Research</a>
+                <a href="../../contact.html" class="nav-item" data-key="nav-cont">Contact</a>
+                <button id="langToggle" class="lang-toggle-container">
+                    <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span id="langLabel" class="lang-label">TR</span>
+                </button>
+            </nav>
+        </header>
+
+        <div class="back-link-wrapper">
+            <a href="../../research.html" class="back-link" data-key="back-link">← BACK</a>
+        </div>
+
+        <div class="scroll-viewport" id="scrollContainer">
+            <main class="magazine-spread">
+                <div class="square-image">
+                    <img src="../../Assets/Research/Gentrification/Image1.jpg" alt="Project" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="content-column">
+                    <h1 class="project-title" data-key="title">Gentrification and the Financialization of Housing</h1>
+                    <h3 class="section-title" data-key="sec0">Thoughts on the gentrification and the Pakistani housing crisis</h3>
+                    <p class="body-text" data-key="p1">The absence of effective urban planning in Pakistan has led to rampant rural-to-urban migration, exacerbating economic disparities and fostering a sense of deprivation among the working class. The country faces an annual housing demand of approximately 350,000 units, with 62% required for lower-income groups, 25% for lower-middle-income groups, and only 10% for upper-middle and higher-income groups. However, the formal housing supply meets just 150,000 units annually, leaving a significant shortfall. This gap is largely addressed through informal settlements, which manifest in two forms: the unauthorized occupation and subdivision of government land, known as katchi abadis, and the informal subdivision of agricultural land (ISALs) on urban peripheries. Over the past two decades, a third method of addressing demand has emerged: the densification of existing low-income and lower-middle-income settlements.</p>
+                    <p class="body-text" data-key="p2">Despite the severity of the housing crisis, state-sponsored low-cost housing initiatives—such as Punjab's Apna Ghar Scheme, Sindh’s Behan Benazir Basti (Benazir Housing Program), and the Shaheed Benazir Bhutto Housing Scheme—have failed to deliver consistent or complete solutions. This lack of progress underscores the need for active and sustained state intervention. In the absence of such involvement, private developers have taken control of formal housing supply, prioritizing profit margins over equitable access. As a result, only 1% of new housing units cater to the 68% of the population earning a maximum monthly income of PKR 30,000, while 56% of housing units are targeted at the 12% earning over PKR 100,000. The housing backlog, currently estimated at 12 million units, continues to grow, driving the expansion of katchi abadis and placing immense financial strain on average-income households.</p>
+                    <h3 class="section-title" data-key="s1">The Dual Faces of Gentrification in Urban Pakistan</h3>
+                    <p class="body-text" data-key="p3">Gentrification in Pakistan manifests in two distinct forms: Urban Renewal and Restoration: Disinvested urban areas, such as Saddar and inner-city Lahore, undergo aggressive redevelopment, displacing lower-income households in the process. Low-Density Gated Communities: Peri-urban and peri-central areas are increasingly dominated by gated housing schemes catering to affluent lifestyles. These developments displace rural communities and lower-income groups, creating exclusivity at the expense of inclusivity. In addition to these trends, anti-encroachment drives in major cities like Islamabad, Lahore, and Karachi have displaced millions of informal settlers. These programs often prioritize the creation of formal commercial and residential hubs over the housing needs of vulnerable populations. The resulting urban renewal programs and land reutilization strategies further fuel Pakistan's burgeoning real estate market, driving up land and rental costs.</p>
+                    <h3 class="section-title" data-key="s2">The Role of Housing Financialization in Exacerbating Inequality</h3>
+                    <p class="body-text" data-key="p4">Pakistan’s housing crisis is further compounded by limited access to housing finance. Mortgage facilities, which form the backbone of real estate markets globally, remain underdeveloped in Pakistan. Financing from commercial banks is predominantly available to high-income earners, and the House Building Finance Corporation—once a cornerstone of housing finance—has significantly reduced its loan disbursements. While there are signs of improvement, with current mortgage rates between 15% and 18% (the lowest in a decade), these rates are still significantly higher than those in neighboring countries such as India (8–12%), China (7–8%), and Japan (2.7%). Consequently, homeownership remains out of reach for most lower- and middle-income groups.</p>
+                    <p class="body-text" data-key="p5">Moreover, the financialization of land as a speculative asset has distorted market dynamics. Landowners in gentrifying urban areas reap disproportionate financial benefits, while the majority of the population is excluded from homeownership opportunities. Despite claims that 75% of Pakistanis own their homes, this figure primarily reflects rural ownership, where traditional housing patterns predominate. In urban areas, the percentage of renters is far higher, further highlighting the inequities exacerbated by gentrification.</p>
+                    <h3 class="section-title" data-key="s3">The Path Forward: Bridging the Divide</h3>
+                    <p class="body-text" data-key="p6">The dire state of urban housing in Pakistan and the unchecked financialization of the sector perpetuate an entrenched cycle of inequality and exclusion. Gentrification, in its various forms, exacerbates this divide, favoring affluent groups while pushing lower- and middle-income households to the periphery of urban life—both physically and economically. Without a paradigm shift in housing policy and urban planning, the country risks deepening its socio-economic disparities, further alienating large segments of the population from access to adequate housing.</p>
+                    <p class="body-text" data-key="p7">The solution lies in adopting a multifaceted approach that prioritizes inclusivity and equity. A robust and sustained commitment from the state is imperative to develop and implement policies that address the root causes of the housing crisis. Comprehensive urban planning must go beyond short-term, project-based interventions to encompass long-term strategies that integrate housing, transportation, and employment opportunities. Policies must be rooted in the understanding that housing is not just a commodity but a fundamental human right and a cornerstone of social stability.</p>
+                    <p class="body-text" data-key="p8">In addition, addressing the financial barriers to homeownership is essential. Expanding affordable housing finance options, such as subsidized mortgage rates and micro-loans for low-income families, could transform the housing landscape. Public-private partnerships could be leveraged to develop mixed-income housing projects that promote socio-economic integration rather than segregation. Moreover, stricter regulations on speculative real estate practices and the creation of incentives for developers to build affordable housing units could help counterbalance the profit-driven motives of the private sector.</p>
+                    <p class="body-text" data-key="p9">Urban renewal and anti-encroachment drives must also be reimagined. Instead of displacing vulnerable communities, these initiatives should include participatory planning processes that engage local residents and prioritize their needs. The rehabilitation and formalization of informal settlements could offer a more humane and sustainable alternative to forced evictions, ensuring that urban development benefits all strata of society.</p>
+                    <p class="body-text" data-key="p10">Finally, there is a pressing need to challenge the cultural and systemic biases that prioritize high-end development over equitable access to resources. Civil society organizations, urban planners, and policymakers must work together to shift the narrative around urban development, advocating for cities that are inclusive, resilient, and reflective of the diverse needs of their populations.</p>
+                    <p class="body-text" data-key="p11">In conclusion, Pakistan’s urban housing crisis is not an insurmountable challenge, but it requires bold action, innovative thinking, and sustained commitment from both public and private sectors. By addressing the structural inequalities inherent in the current system and fostering an environment of inclusivity, Pakistan can pave the way for cities that are not only functional but also just. The future of urban Pakistan hinges on its ability to embrace these changes, ensuring that housing is a source of empowerment rather than a marker of division.</p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                "nav-arch": "Architecture", "nav-3d": "3D Design", "nav-res": "Research", "nav-cont": "Contact",
+                "back-link": "← BACK",
+                "title": "Gentrification and the Financialization of Housing",
+                "sec0": "Thoughts on the gentrification and the Pakistani housing crisis",
+                "p1": "The absence of effective urban planning in Pakistan has led to rampant rural-to-urban migration, exacerbating economic disparities and fostering a sense of deprivation among the working class. The country faces an annual housing demand of approximately 350,000 units, with 62% required for lower-income groups, 25% for lower-middle-income groups, and only 10% for upper-middle and higher-income groups. However, the formal housing supply meets just 150,000 units annually, leaving a significant shortfall. This gap is largely addressed through informal settlements, which manifest in two forms: the unauthorized occupation and subdivision of government land, known as katchi abadis, and the informal subdivision of agricultural land (ISALs) on urban peripheries. Over the past two decades, a third method of addressing demand has emerged: the densification of existing low-income and lower-middle-income settlements.",
+                "p2": "Despite the severity of the housing crisis, state-sponsored low-cost housing initiatives—such as Punjab's Apna Ghar Scheme, Sindh’s Behan Benazir Basti (Benazir Housing Program), and the Shaheed Benazir Bhutto Housing Scheme—have failed to deliver consistent or complete solutions. This lack of progress underscores the need for active and sustained state intervention. In the absence of such involvement, private developers have taken control of formal housing supply, prioritizing profit margins over equitable access. As a result, only 1% of new housing units cater to the 68% of the population earning a maximum monthly income of PKR 30,000, while 56% of housing units are targeted at the 12% earning over PKR 100,000. The housing backlog, currently estimated at 12 million units, continues to grow, driving the expansion of katchi abadis and placing immense financial strain on average-income households.",
+                "s1": "The Dual Faces of Gentrification in Urban Pakistan",
+                "p3": "Gentrification in Pakistan manifests in two distinct forms: Urban Renewal and Restoration: Disinvested urban areas, such as Saddar and inner-city Lahore, undergo aggressive redevelopment, displacing lower-income households in the process. Low-Density Gated Communities: Peri-urban and peri-central areas are increasingly dominated by gated housing schemes catering to affluent lifestyles. These developments displace rural communities and lower-income groups, creating exclusivity at the expense of inclusivity. In addition to these trends, anti-encroachment drives in major cities like Islamabad, Lahore, and Karachi have displaced millions of informal settlers. These programs often prioritize the creation of formal commercial and residential hubs over the housing needs of vulnerable populations. The resulting urban renewal programs and land reutilization strategies further fuel Pakistan's burgeoning real estate market, driving up land and rental costs.",
+                "s2": "The Role of Housing Financialization in Exacerbating Inequality",
+                "p4": "Pakistan’s housing crisis is further compounded by limited access to housing finance. Mortgage facilities, which form the backbone of real estate markets globally, remain underdeveloped in Pakistan. Financing from commercial banks is predominantly available to high-income earners, and the House Building Finance Corporation—once a cornerstone of housing finance—has significantly reduced its loan disbursements. While there are signs of improvement, with current mortgage rates between 15% and 18% (the lowest in a decade), these rates are still significantly higher than those in neighboring countries such as India (8–12%), China (7–8%), and Japan (2.7%). Consequently, homeownership remains out of reach for most lower- and middle-income groups.",
+                "p5": "Moreover, the financialization of land as a speculative asset has distorted market dynamics. Landowners in gentrifying urban areas reap disproportionate financial benefits, while the majority of the population is excluded from homeownership opportunities. Despite claims that 75% of Pakistanis own their homes, this figure primarily reflects rural ownership, where traditional housing patterns predominate. In urban areas, the percentage of renters is far higher, further highlighting the inequities exacerbated by gentrification.",
+                "s3": "The Path Forward: Bridging the Divide",
+                "p6": "The dire state of urban housing in Pakistan and the unchecked financialization of the sector perpetuate an entrenched cycle of inequality and exclusion. Gentrification, in its various forms, exacerbates this divide, favoring affluent groups while pushing lower- and middle-income households to the periphery of urban life—both physically and economically. Without a paradigm shift in housing policy and urban planning, the country risks deepening its socio-economic disparities, further alienating large segments of the population from access to adequate housing.",
+                "p7": "The solution lies in adopting a multifaceted approach that prioritizes inclusivity and equity. A robust and sustained commitment from the state is imperative to develop and implement policies that address the root causes of the housing crisis. Comprehensive urban planning must go beyond short-term, project-based interventions to encompass long-term strategies that integrate housing, transportation, and employment opportunities. Policies must be rooted in the understanding that housing is not just a commodity but a fundamental human right and a cornerstone of social stability.",
+                "p8": "In addition, addressing the financial barriers to homeownership is essential. Expanding affordable housing finance options, such as subsidized mortgage rates and micro-loans for low-income families, could transform the housing landscape. Public-private partnerships could be leveraged to develop mixed-income housing projects that promote socio-economic integration rather than segregation. Moreover, stricter regulations on speculative real estate practices and the creation of incentives for developers to build affordable housing units could help counterbalance the profit-driven motives of the private sector.",
+                "p9": "Urban renewal and anti-encroachment drives must also be reimagined. Instead of displacing vulnerable communities, these initiatives should include participatory planning processes that engage local residents and prioritize their needs. The rehabilitation and formalization of informal settlements could offer a more humane and sustainable alternative to forced evictions, ensuring that urban development benefits all strata of society.",
+                "p10": "Finally, there is a pressing need to challenge the cultural and systemic biases that prioritize high-end development over equitable access to resources. Civil society organizations, urban planners, and policymakers must work together to shift the narrative around urban development, advocating for cities that are inclusive, resilient, and reflective of the diverse needs of their populations.",
+                "p11": "In conclusion, Pakistan’s urban housing crisis is not an insurmountable challenge, but it requires bold action, innovative thinking, and sustained commitment from both public and private sectors. By addressing the structural inequalities inherent in the current system and fostering an environment of inclusivity, Pakistan can pave the way for cities that are not only functional but also just. The future of urban Pakistan hinges on its ability to embrace these changes, ensuring that housing is a source of empowerment rather than a marker of division."
+            },
+            tr: {
+                "nav-arch": "Mimarlık", "nav-3d": "3D Tasarım", "nav-res": "Araştırma", "nav-cont": "İletişim",
+                "back-link": "← GERİ",
+                "title": "Soylulaştırma ve Konutun Finansallaşması",
+                "sec0": "Soylulaştırma ve Pakistan konut krizi üzerine düşünceler",
+                "p1": "Pakistan'da etkili bir şehir planlamasının yokluğu, kontrolsüz kırsaldan kente göçe yol açarak ekonomik eşitsizlikleri derinleştirmiş ve çalışan sınıf arasında bir yoksunluk duygusu yaratmıştır. Ülke, %62'si düşük gelir grupları için olmak üzere yıllık yaklaşık 350.000 konut talebiyle karşı karşıyadır. Ancak resmi konut arzı yılda sadece 150.000 birimi karşılamakta ve önemli bir açık bırakmaktadır. Bu boşluk, büyük ölçüde katchi abadis olarak bilinen devlet arazilerinin izinsiz işgali ve kentsel çevrelerdeki tarım arazilerinin gayri resmi alt bölümlere ayrılması (ISAL'ler) gibi gayri resmi yerleşimlerle giderilmektedir.",
+                "p2": "Konut krizinin şiddetine rağmen, Punjab'ın Apna Ghar Projesi, Sindh'in Behan Benazir Basti'si ve Şehit Benazir Butto Konut Projesi gibi devlet destekli düşük maliyetli konut girişimleri tutarlı veya eksiksiz çözümler üretememiştir. Bu ilerleme eksikliği, aktif ve sürekli devlet müdahalesine duyulan ihtiyacı vurgulamaktadır. Özel geliştiriciler, resmi konut arzını kontrol altına alarak kâr marjlarını eşit erişime tercih etmişlerdir. Sonuç olarak, yeni konut birimlerinin sadece %1'i aylık maksimum 30.000 PKR geliri olan nüfusun %68'ine hitap ederken, konut birimlerinin %56'sı aylık 100.000 PKR üzerinde kazanan %12'lik kesimi hedeflemektedir.",
+                "s1": "Pakistan'da Soylulaştırmanın İki Yüzü",
+                "p3": "Pakistan'da soylulaştırma iki farklı biçimde ortaya çıkmaktadır: Kentsel Yenilenme ve Restorasyon: Saddar ve iç şehir Lahor gibi bölgelerde düşük gelirli hanehalklarını yerinden ederek. Düşük Yoğunluklu Kapalı Siteler: Peri-kent bölgeleri, varlıklı yaşam tarzlarına hitap eden kapalı konut projeleriyle giderek daha fazla domine edilmektedir. Bu projeler kırsal toplulukları yerinden etmekte ve kapsayıcılık yerine dışlayıcılık yaratmaktadır. Buna ek olarak, İslamabad, Lahor ve Karaçi gibi büyük şehirlerdeki yıkım çalışmaları, savunmasız nüfusun konut ihtiyaçlarına değil ticari merkezlere öncelik vererek arsa ve kira maliyetlerini artırmaktadır.",
+                "s2": "Konut Finansallaşmasının Eşitsizliği Derinleştirmedeki Rolü",
+                "p4": "Pakistan'ın konut krizi, konut finansmanına erişimin kısıtlı olmasıyla daha da kötüleşmektedir. Mortgage olanakları küresel olarak az gelişmiştir ve ticari banka finansmanı ağırlıklı olarak yüksek gelirli kesime açıktır. %15 ile %18 arasındaki mortgage oranları, Hindistan (%8-12) ve Çin (%7-8) gibi komşu ülkelerden daha yüksektir. Sonuç olarak, konut sahipliği çoğu kişi için ulaşılamaz durumdadır.",
+                "p5": "Dahası, arazinin spekülatif bir varlık olarak finansallaşması piyasa dinamiklerini bozmuştur; soylulaşan bölgelerdeki arazi sahipleri orantısız finansal kazançlar elde ederken, nüfusun büyük çoğunluğu mülkiyetten dışlanmaktadır. Pakistanlıların %75'inin ev sahibi olduğu iddiaları temel olarak kırsal mülkiyeti yansıtmaktadır; kentsel alanlarda kiracı oranı çok daha yüksektir.",
+                "s3": "İleriye Doğru Yol: Bölünmüşlüğü Aşmak",
+                "p6": "Pakistan'daki kentsel konutun vahim durumu ve sektörün kontrolsüz finansallaşması, bir eşitsizlik ve dışlanma döngüsü yaratmaktadır. Soylulaştırma, varlıklı grupları kayırırken, düşük ve orta gelirli hanehalklarını kentsel yaşamın çevresine itmektedir. Kentsel planlama paradigmasında bir değişim olmaksızın, ülke sosyo-ekonomik eşitsizliklerini derinleştirme riski taşımaktadır.",
+                "p7": "Çözüm, kapsayıcılığı ve eşitliği önceliklendiren çok yönlü bir yaklaşımda yatmaktadır. Politikalar, konut, ulaşım ve istihdamı entegre eden uzun vadeli stratejilerle krizin temel nedenlerini ele almalıdır. Konut, sadece bir meta değil, temel bir insan hakkı ve sosyal istikrarın bir köşetaşı olarak görülmelidir.",
+                "p8": "Uygun fiyatlı konut finansmanının genişletilmesi, karma gelirli kamu-özel ortaklıklarının teşvik edilmesi ve spekülatif gayrimenkulün daha sıkı düzenlenmesi hayati adımlardır. Konut projeleri teşvik edilmelidir.",
+                "p9": "Kentsel yenilenme çabaları, zorla tahliyeler yerine katılımcı planlamaya ve gayri resmi yerleşimlerin yasallaştırılmasına yönelmelidir. Bu yaklaşım, kentsel gelişimin toplumun her katmanına fayda sağlamasını garanti edecektir.",
+                "p10": "Son olarak, üst düzey geliştirmeleri önceleyen sistemik önyargılara meydan okumak çok önemlidir. Sivil toplum kuruluşları ve şehir plancıları, kapsayıcı, dayanıklı ve farklı ihtiyaçlara cevap veren şehirler için birlikte çalışmalıdır.",
+                "p11": "Sonuç olarak, Pakistan'ın konut krizi aşılmaz bir engel değildir; cesur eylem ve yenilikçi düşünce gerektirir. Mevcut sistemin yapısal eşitsizliklerini ele alarak, Pakistan hem işlevsel hem de adil şehirlerin yolunu açabilir. Gelecek, konutun bir bölünme aracı değil, bir güçlenme kaynağı olmasını sağlamaya bağlıdır."
+            }
+        };
+
+        let currentLang = localStorage.getItem('portfolio-lang') || 'en';
+        const langToggleBtn = document.getElementById('langToggle');
+        const langLabel = document.getElementById('langLabel');
+
+        function applyTranslations(lang) {
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            langLabel.textContent = lang === 'en' ? 'TR' : 'EN';
+        }
+
+        langToggleBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'tr' : 'en';
+            localStorage.setItem('portfolio-lang', currentLang);
+            applyTranslations(currentLang);
+        });
+
+        applyTranslations(currentLang);
+
+        const crosshair = document.getElementById('crosshair');
+        window.addEventListener('mousemove', (e) => {
+            crosshair.style.left = `${e.clientX}px`; crosshair.style.top = `${e.clientY}px`;
+        });
+
+        document.querySelectorAll('a, button, .lang-toggle-container').forEach(item => {
+            item.addEventListener('mouseenter', () => crosshair.classList.add('expand'));
+            item.addEventListener('mouseleave', () => crosshair.classList.remove('expand'));
+        });
+
+        window.addEventListener('wheel', (e) => {
+            if (window.innerWidth > 900 && e.deltaY !== 0) {
+                document.getElementById('scrollContainer').scrollLeft += e.deltaY; e.preventDefault();
+            }
+        }, { passive: false });
+    </script>
+</body>
+</html>

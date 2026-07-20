@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamabad Socio-Economic Study | Natasha Afzal</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syne:wght@800&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body { 
+            height: 100%; background-color: #f7f7f7; color: #111111; 
+            font-family: 'Space Grotesk', sans-serif; overflow: hidden; 
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><line x1='12' y1='2' x2='12' y2='22' stroke='black' stroke-width='2'/><line x1='2' y1='12' x2='22' y2='12' stroke='black' stroke-width='2'/></svg>") 12 12, auto; 
+        }
+
+        a:hover, button:hover, .back-link:hover, .lang-toggle-container:hover {
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'><line x1='25' y1='5' x2='25' y2='45' stroke='black' stroke-width='2'/><line x1='5' y1='25' x2='45' y2='25' stroke='black' stroke-width='2'/></svg>") 25 25, auto;
+        }
+
+        .page-wrapper { display: flex; flex-direction: column; height: 100vh; padding: 0.5rem 2.5rem 2.5rem 2.5rem; }
+
+        /* HEADER */
+        .global-header { width: 100%; margin-bottom: 2rem; padding-top: 0.5rem; flex-shrink: 0; }
+        .nav-rectangle { border: 2px solid #111111; border-radius: 4px; display: flex; align-items: stretch; width: 100%; overflow: hidden; background-color: #f7f7f7; }
+        .brand-logo { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; text-decoration: none; color: #111111; padding: 0.6rem 2rem; display: flex; align-items: center; border-right: 2px solid #111111; transition: 0.2s; }
+        .brand-logo:hover { background-color: #E63946; color: #ffffff; }
+        .nav-spacer { flex: 1; border-right: 2px solid #111111; }
+        .nav-item { font-size: 0.9rem; font-weight: 500; text-decoration: none; color: #111111; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.6rem 0; width: 160px; display: flex; align-items: center; justify-content: center; border-right: 2px solid #111111; transition: 0.2s; }
+        .nav-item:hover { background-color: #E63946; color: #ffffff; }
+        .nav-item.active { background-color: #111111; color: #ffffff; font-weight: 700; }
+        
+        .lang-toggle-container { display: flex; align-items: center; justify-content: center; width: 90px; background: transparent; border: none; gap: 0.5rem; padding: 0 1rem; transition: 0.2s; }
+        .lang-toggle-container:hover { background-color: #111111; }
+        .lang-toggle-container:hover .globe-icon { stroke: #ffffff; }
+        .lang-toggle-container:hover .lang-label { color: #E63946; }
+        .globe-icon { stroke: #111111; transition: stroke 0.2s ease; }
+        .lang-label { font-size: 0.85rem; font-weight: 700; color: #111111; transition: color 0.2s ease; }
+
+        /* BACK LINK */
+        .back-link-wrapper { margin-bottom: 1.5rem; }
+        .back-link { display: inline-block; font-size: 0.85rem; text-transform: uppercase; color: #666; font-weight: 700; text-decoration: none; transition: 0.2s ease; }
+        .back-link:hover { color: #E63946; }
+        
+        /* SCROLL VIEWPORT */
+        .scroll-viewport { flex: 1; min-height: 0; width: 100%; overflow-x: auto; overflow-y: hidden; display: flex; align-items: stretch; padding-bottom: 2rem; }
+        .scroll-viewport::-webkit-scrollbar { height: 8px; }
+        .scroll-viewport::-webkit-scrollbar-thumb { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='8'><circle cx='9' cy='4' r='2' fill='%23E63946'/></svg>"); background-repeat: repeat-x; background-position: center; }
+
+        .magazine-spread { display: flex; gap: 4rem; padding-right: 4rem; height: 100%; align-items: flex-start; width: max-content; }
+        
+        .content-column { height: 100%; width: 400px; flex-shrink: 0; overflow: hidden; display: flex; flex-direction: column; }
+        
+        /* IMAGE CONTAINER */
+        .image-container { height: 70vh; flex-shrink: 0; border: 2px solid #111; border-radius: 4px; background: #eaeaea; overflow: hidden; padding: 10px; position: relative; }
+        .image-container img { width: 100%; height: 100%; object-fit: contain; }
+        .image-caption { position: absolute; bottom: 0; left: 0; width: 100%; background: #f7f7f7; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #111; text-align: center; padding: 8px; border-top: 2px solid #111; }
+
+        .project-title { font-size: 2.2rem; font-weight: 700; line-height: 1.1; margin-bottom: 2rem; }
+        .body-text { font-size: 1rem; line-height: 1.6; color: #333; margin-bottom: 1rem; }
+
+        @media (max-width: 900px) { 
+            html, body { overflow-y: auto; height: auto; } 
+            .magazine-spread { flex-direction: column; width: 100%; gap: 2rem; } 
+            .content-column { width: 100%; height: auto; } 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-wrapper">
+        <header class="global-header">
+            <nav class="nav-rectangle">
+                <a href="../../index.html" class="brand-logo">NA</a>
+                <div class="nav-spacer"></div>
+                <a href="../../architecture.html" class="nav-item" data-key="nav-arch">Architecture</a>
+                <a href="../../3d-design.html" class="nav-item" data-key="nav-3d">3D Design</a>
+                <a href="../../research.html" class="nav-item active" data-key="nav-res">Research</a>
+                <a href="../../contact.html" class="nav-item" data-key="nav-cont">Contact</a>
+                <button id="langToggle" class="lang-toggle-container">
+                    <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span id="langLabel" class="lang-label">TR</span>
+                </button>
+            </nav>
+        </header>
+
+        <div class="back-link-wrapper">
+            <a href="../../research.html" class="back-link" data-key="back-link">← BACK</a>
+        </div>
+
+        <div class="scroll-viewport" id="scrollContainer">
+            <main class="magazine-spread">
+                <div class="content-column">
+                    <h1 class="project-title" data-key="title">Islamabad as a socio-economic class study</h1>
+                    <p class="body-text" data-key="p1">This research explored the socioeconomic disparities shaping the urban language of Islamabad, a city distinctly divided into socioeconomic zones. Through mapping techniques, I analyzed how these divisions manifest in the city's layout and visual identity, revealing stark contrasts in infrastructure, land use, and accessibility.</p>
+                    <p class="body-text" data-key="p2">By visually documenting the layers of disparity—both structural and spatial—this study highlights how socioeconomic dynamics influence the city’s development and urban experience. It’s a lens into how cities like Islamabad can reflect, and potentially reinforce, the divides within society.</p>
+                </div>
+                
+                <div class="image-container">
+                    <img src="../../Assets/Research/Islamabad/Image1.jpg" alt="Study Image 1">
+                    <div class="image-caption">Socioeconomic patterns via residential land distribution</div>
+                </div>
+                <div class="image-container">
+                    <img src="../../Assets/Research/Islamabad/Image2.jpg" alt="Study Image 2">
+                    <div class="image-caption">Zoning contrast: Low-density vs. high-density housing</div>
+                </div>
+                <div class="image-container">
+                    <img src="../../Assets/Research/Islamabad/image3.jpg" alt="Study Image 3">
+                    <div class="image-caption">Land distribution and encounter dynamics across three sectors</div>
+                </div>
+                <div class="image-container">
+                    <img src="../../Assets/Research/Islamabad/Image4.jpg" alt="Study Image 4">
+                    <div class="image-caption">Formal versus informal urban configurations</div>
+                </div>
+                <div class="image-container">
+                    <img src="../../Assets/Research/Islamabad/Image5.jpg" alt="Study Image 5">
+                    <div class="image-caption">Evolution of Markaz functions across successive sectors</div>
+                </div>
+                <div class="image-container">
+                    <img src="../../Assets/Research/Islamabad/Image6.jpg" alt="Study Image 6">
+                    <div class="image-caption">Public transportation route mapping</div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                "nav-arch": "Architecture", "nav-3d": "3D Design", "nav-res": "Research", "nav-cont": "Contact",
+                "back-link": "← BACK",
+                "title": "Islamabad as a socio-economic class study",
+                "p1": "This research explored the socioeconomic disparities shaping the urban language of Islamabad, a city distinctly divided into socioeconomic zones. Through mapping techniques, I analyzed how these divisions manifest in the city's layout and visual identity, revealing stark contrasts in infrastructure, land use, and accessibility.",
+                "p2": "By visually documenting the layers of disparity—both structural and spatial—this study highlights how socioeconomic dynamics influence the city’s development and urban experience. It’s a lens into how cities like Islamabad can reflect, and potentially reinforce, the divides within society."
+            },
+            tr: {
+                "nav-arch": "Mimarlık", "nav-3d": "3D Tasarım", "nav-res": "Araştırma", "nav-cont": "İletişim",
+                "back-link": "← GERİ",
+                "title": "Sosyokültürel Sınıf Çalışması Olarak İslamabad",
+                "p1": "Bu araştırma, İslamabad'ın kentsel dilini şekillendiren sosyoekonomik eşitsizlikleri, sosyoekonomik bölgelere ayrılmış bir şehir olarak inceledi. Haritalama teknikleri aracılığıyla, bu bölünmelerin şehrin düzeninde ve görsel kimliğinde nasıl ortaya çıktığını analiz ettim; altyapı, arazi kullanımı ve erişilebilirlik konularındaki keskin karşıtlıkları ortaya çıkardım.",
+                "p2": "Hem yapısal hem de mekansal eşitsizlik katmanlarını görsel olarak belgeleyerek, bu çalışma sosyoekonomik dinamiklerin şehrin gelişimini ve kentsel deneyimini nasıl etkilediğini vurguluyor. İslamabad gibi şehirlerin toplum içindeki bölünmeleri nasıl yansıtabileceğine ve potansiyel olarak pekiştirebileceğine dair bir mercek sunuyor."
+            }
+        };
+
+        let currentLang = localStorage.getItem('portfolio-lang') || 'en';
+        const langToggleBtn = document.getElementById('langToggle');
+        const langLabel = document.getElementById('langLabel');
+
+        function applyTranslations(lang) {
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            langLabel.textContent = lang === 'en' ? 'TR' : 'EN';
+            
+            const contentColumn = document.querySelector('.content-column');
+            const bodyTexts = contentColumn.querySelectorAll('.body-text');
+            
+            // Aggressive font size reduction to ensure everything fits
+            let fontSize = 1.0;
+            bodyTexts.forEach(p => p.style.fontSize = `${fontSize}rem`);
+            
+            requestAnimationFrame(() => {
+                // If content is still too tall, keep shrinking it
+                while (contentColumn.scrollHeight > contentColumn.clientHeight && fontSize > 0.6) {
+                    fontSize -= 0.05;
+                    bodyTexts.forEach(p => p.style.fontSize = `${fontSize}rem`);
+                }
+            });
+        }
+
+        langToggleBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'tr' : 'en';
+            localStorage.setItem('portfolio-lang', currentLang);
+            applyTranslations(currentLang);
+        });
+
+        window.addEventListener('load', () => applyTranslations(currentLang));
+
+        window.addEventListener('wheel', (e) => {
+            if (window.innerWidth > 900 && e.deltaY !== 0) {
+                document.getElementById('scrollContainer').scrollLeft += e.deltaY;
+                e.preventDefault();
+            }
+        }, { passive: false });
+    </script>
+</body>
+</html>

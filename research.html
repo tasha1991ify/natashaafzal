@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research | Natasha Afzal</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syne:wght@800&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body {
+            height: 100%;
+            background-color: #f7f7f7;
+            color: #111111;
+            font-family: 'Space Grotesk', sans-serif;
+            overflow: hidden; 
+            -webkit-font-smoothing: antialiased;
+            cursor: none; 
+        }
+
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding: 0.5rem 2.5rem 2.5rem 2.5rem; 
+        }
+
+        .custom-crosshair {
+            position: fixed;
+            top: 0; left: 0;
+            width: 24px; height: 24px;
+            pointer-events: none; 
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            mix-blend-mode: multiply; 
+            transition: width 0.2s cubic-bezier(0.25, 1, 0.5, 1), height 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: left, top;
+        }
+        .custom-crosshair::before, .custom-crosshair::after {
+            content: '';
+            position: absolute;
+            background-color: #000000;
+        }
+        .custom-crosshair::before { top: 0; left: calc(50% - 1.5px); width: 3px; height: 100%; }
+        .custom-crosshair::after { top: 50%; left: 0; width: 100%; height: 3px; }
+        .custom-crosshair.expand { width: 50px; height: 50px; }
+
+        .global-header { width: 100%; margin-bottom: 2rem; padding-top: 0.5rem; flex-shrink: 0; }
+        .nav-rectangle {
+            border: 2px solid #111111; 
+            border-radius: 4px; 
+            display: flex;
+            flex-direction: row;
+            align-items: stretch; 
+            width: 100%;
+            overflow: hidden; 
+            background-color: #f7f7f7;
+        }
+        .brand-logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem; font-weight: 800;
+            text-decoration: none; color: #111111;
+            padding: 0.6rem 2rem; 
+            display: flex; align-items: center;
+            border-right: 2px solid #111111; 
+            transition: background-color 0.2s ease, color 0.2s ease;
+            cursor: none;
+        }
+        .brand-logo:hover { background-color: #E63946; color: #ffffff; }
+        .nav-spacer { flex: 1; border-right: 2px solid #111111; }
+        .nav-item {
+            font-size: 0.9rem; font-weight: 500;
+            text-decoration: none; color: #111111;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.6rem 0; width: 160px;
+            display: flex; align-items: center; justify-content: center;
+            border-right: 2px solid #111111; 
+            transition: background-color 0.2s ease, color 0.2s ease;
+            cursor: none;
+        }
+        .nav-item:hover { background-color: #E63946; color: #ffffff; }
+        .nav-item.active { background-color: #111111; color: #ffffff; font-weight: 700; }
+
+        .lang-toggle-container {
+            display: flex; align-items: center; justify-content: center;
+            width: 90px; background: transparent; border: none;
+            gap: 0.5rem; padding: 0 1rem;
+            transition: background-color 0.2s ease; cursor: none;
+        }
+        .lang-toggle-container:hover { background-color: #111111; }
+        .lang-toggle-container:hover .globe-icon { stroke: #ffffff; }
+        .lang-toggle-container:hover .lang-label { color: #E63946; }
+        .globe-icon { stroke: #111111; transition: stroke 0.2s ease; }
+        .lang-label { font-size: 0.85rem; font-weight: 700; color: #111111; transition: color 0.2s ease; }
+
+        .scroll-viewport {
+            flex: 1; min-height: 0; width: 100%;
+            overflow-x: auto; overflow-y: hidden; 
+            display: flex; align-items: stretch;
+            padding-bottom: 2rem; 
+        }
+        .scroll-viewport::-webkit-scrollbar { height: 8px; }
+        .scroll-viewport::-webkit-scrollbar-track { background: #f7f7f7; border-bottom: 1px solid #dcdcdc; }
+        .scroll-viewport::-webkit-scrollbar-thumb {
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='8'><circle cx='9' cy='4' r='2' fill='%23E63946'/></svg>");
+            background-repeat: repeat-x; background-position: center;
+        }
+
+        .magazine-grid {
+            display: grid;
+            grid-auto-flow: column; 
+            grid-auto-columns: minmax(460px, 520px); 
+            gap: 2.5rem; width: max-content; height: 100%;
+        }
+
+        .spread-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-decoration: none;
+            color: inherit;
+            cursor: none;
+            height: 100%;
+            border: 2px solid #111111;
+            border-radius: 4px;
+            padding: 3rem;
+            background-color: #ffffff; 
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+        .spread-item:hover {
+            box-shadow: 0 6px 25px rgba(0,0,0,0.07);
+            border-color: #E63946;
+        }
+
+        .project-meta {
+            font-size: 0.8rem; text-transform: uppercase;
+            letter-spacing: 0.1em; color: #666;
+            margin-bottom: 1rem; font-weight: 500;
+        }
+        .project-headline {
+            font-size: 1.65rem; font-weight: 700;
+            line-height: 1.2; letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+        .project-description {
+            font-size: 0.95rem; color: #444;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 900px) {
+            html, body { overflow-y: auto; height: auto; cursor: auto; }
+            .page-wrapper { height: auto; padding: 1.5rem; }
+            .custom-crosshair { display: none; }
+            .magazine-grid { display: flex; flex-direction: column; width: 100%; gap: 2rem; }
+            .spread-item { height: auto; padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="custom-crosshair" id="crosshair"></div>
+
+    <div class="page-wrapper">
+        <header class="global-header">
+            <nav class="nav-rectangle">
+                <a href="index.html" class="brand-logo">NA</a>
+                <div class="nav-spacer"></div>
+                <a href="architecture.html" class="nav-item" data-key="nav-arch">Architecture</a>
+                <a href="3d-design.html" class="nav-item" data-key="nav-3d">3D Design</a>
+                <a href="research.html" class="nav-item active" data-key="nav-res">Research</a>
+                <a href="contact.html" class="nav-item" data-key="nav-cont">Contact</a>
+                
+                <button id="langToggle" class="lang-toggle-container">
+                    <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    <span id="langLabel" class="lang-label">TR</span>
+                </button>
+            </nav>
+        </header>
+
+        <div class="scroll-viewport" id="scrollContainer">
+            <main class="magazine-grid">
+                <!-- 01 -->
+                <a href="projects/research/gentrification-and-housing.html" class="spread-item">
+                    <div class="project-meta" data-key="r1-meta">Analysis 01 // Social Studies</div>
+                    <h2 class="project-headline" data-key="r1-title">Gentrification and the Financialization of Housing</h2>
+                    <p class="project-description" data-key="r1-desc">Thoughts on the gentrification and the Pakistani housing crisis.</p>
+                </a>
+                <!-- 02 -->
+                <a href="projects/research/Territoriality.html" class="spread-item">
+                    <div class="project-meta" data-key="r2-meta">Analysis 02 // Urban Theory</div>
+                    <h2 class="project-headline" data-key="r2-title">Territoriality in the Digital and Urban Landscape</h2>
+                    <p class="project-description" data-key="r2-desc">Reflections on Islamabad.</p>
+                </a>
+                <!-- 03 -->
+                <a href="projects/research/ankara.html" class="spread-item">
+                    <div class="project-meta">Analysis 03 // Environmental</div>
+                    <h2 class="project-headline">Ankara streams vs. Urbanization</h2>
+                    <p class="project-description">Team members - Natasha Afzal | Zahida Faiz | Sezen Mert | Shiza Mushtaq</p>
+                </a>
+                <!-- 04 -->
+                <a href="projects/research/Islamabad.html" class="spread-item">
+                    <div class="project-meta">Analysis 04 // Socio-Economics</div>
+                    <h2 class="project-headline">Islamabad as a socio-economic class study</h2>
+                    <p class="project-description">A deep-dive investigation into the spatial manifestations of socio-economic stratification in Islamabad.</p>
+                </a>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                "nav-arch": "Architecture", "nav-3d": "3D Design", "nav-res": "Research", "nav-cont": "Contact",
+                "r1-meta": "Analysis 01 // Social Studies", "r1-title": "Gentrification and the Financialization of Housing", "r1-desc": "Thoughts on the gentrification and the Pakistani housing crisis.",
+                "r2-meta": "Analysis 02 // Urban Theory", "r2-title": "Territoriality in the Digital and Urban Landscape", "r2-desc": "Reflections on Islamabad."
+            },
+            tr: {
+                "nav-arch": "Mimarlık", "nav-3d": "3D Tasarım", "nav-res": "Araştırma", "nav-cont": "İletişim",
+                "r1-meta": "Analiz 01 // Sosyal Çalışmalar", "r1-title": "Soylulaştırma ve Konutun Finansallaşması", "r1-desc": "Soylulaştırma ve Pakistan konut krizi üzerine düşünceler.",
+                "r2-meta": "Analiz 02 // Kent Teorisi", "r2-title": "Dijital ve Kentsel Peyzajda Bölgesellik", "r2-desc": "İslamabad üzerine yansımalar."
+            }
+        };
+
+        let currentLang = localStorage.getItem('portfolio-lang') || 'en';
+        const langToggleBtn = document.getElementById('langToggle');
+        const langLabel = document.getElementById('langLabel');
+
+        function applyTranslations(lang) {
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            langLabel.textContent = lang === 'en' ? 'TR' : 'EN';
+        }
+
+        langToggleBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'tr' : 'en';
+            localStorage.setItem('portfolio-lang', currentLang);
+            applyTranslations(currentLang);
+        });
+
+        applyTranslations(currentLang);
+
+        const crosshair = document.getElementById('crosshair');
+        const scrollContainer = document.getElementById('scrollContainer');
+        let mouseX = 0, mouseY = 0;
+
+        window.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+        function updateCursor() {
+            crosshair.style.left = `${mouseX}px`; crosshair.style.top = `${mouseY}px`;
+            requestAnimationFrame(updateCursor);
+        }
+        requestAnimationFrame(updateCursor);
+
+        document.querySelectorAll('.spread-item, .brand-logo, .nav-item, .lang-toggle-container').forEach(item => {
+            item.addEventListener('mouseenter', () => crosshair.classList.add('expand'));
+            item.addEventListener('mouseleave', () => crosshair.classList.remove('expand'));
+        });
+
+        window.addEventListener('wheel', (e) => {
+            if (window.innerWidth > 900 && e.deltaY !== 0) {
+                scrollContainer.scrollLeft += e.deltaY; e.preventDefault();
+            }
+        }, { passive: false });
+    </script>
+</body>
+</html>

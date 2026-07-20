@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJ House | Architecture | Natasha Afzal</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syne:wght@800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            background-color: #f7f7f7;
+            color: #111111;
+            font-family: 'Space Grotesk', sans-serif;
+            overflow: hidden;
+            cursor: none;
+        }
+
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding: 0.5rem 2.5rem 2.5rem 2.5rem;
+        }
+
+        .custom-crosshair {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            mix-blend-mode: multiply;
+            transition: width 0.2s cubic-bezier(0.25, 1, 0.5, 1), height 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: left, top;
+        }
+
+        .custom-crosshair::before,
+        .custom-crosshair::after {
+            content: '';
+            position: absolute;
+            background-color: #000000;
+        }
+
+        .custom-crosshair::before {
+            top: 0;
+            left: calc(50% - 1.5px);
+            width: 3px;
+            height: 100%;
+        }
+
+        .custom-crosshair::after {
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 3px;
+        }
+
+        .custom-crosshair.expand {
+            width: 50px;
+            height: 50px;
+        }
+
+        .global-header {
+            width: 100%;
+            margin-bottom: 1rem;
+            padding-top: 0.5rem;
+            flex-shrink: 0;
+            z-index: 1000;
+        }
+
+        .nav-rectangle {
+            border: 2px solid #111111;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            width: 100%;
+            height: 50px;
+            overflow: hidden;
+            background-color: #f7f7f7;
+        }
+
+        .brand-logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            color: #111111;
+            padding: 0.6rem 2rem;
+            display: flex;
+            align-items: center;
+            border-right: 2px solid #111111;
+            transition: 0.2s;
+            cursor: none;
+        }
+
+        .brand-logo:hover {
+            background-color: #E63946;
+            color: #ffffff;
+        }
+
+        .nav-spacer {
+            flex: 1;
+            border-right: 2px solid #111111;
+        }
+
+        .nav-item {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            color: #111111;
+            text-transform: uppercase;
+            padding: 0.6rem 0;
+            width: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 2px solid #111111;
+            transition: 0.2s;
+            cursor: none;
+        }
+
+        .nav-item:hover {
+            background-color: #E63946;
+            color: #ffffff;
+        }
+
+        .nav-item.active {
+            background-color: #111111;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .lang-toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 90px;
+            background: transparent;
+            border: none;
+            gap: 0.5rem;
+            padding: 0 1rem;
+            cursor: none;
+            transition: 0.2s;
+        }
+
+        .lang-toggle-container:hover {
+            background-color: #111111;
+        }
+
+        .lang-toggle-container:hover .globe-icon {
+            stroke: #ffffff;
+        }
+
+        .lang-toggle-container:hover .lang-label {
+            color: #E63946;
+        }
+
+        .globe-icon {
+            stroke: #111111;
+            transition: 0.2s;
+        }
+
+        .lang-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #111111;
+            text-transform: uppercase;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #111111;
+            margin-bottom: 1rem;
+            transition: color 0.2s ease;
+            cursor: none;
+        }
+
+        .back-btn:hover {
+            color: #E63946;
+        }
+
+        .scroll-viewport {
+            flex: 1;
+            min-height: 0;
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            display: flex;
+            align-items: center;
+            padding-top: 1rem;
+            padding-bottom: 2rem;
+        }
+
+        .scroll-viewport::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .scroll-viewport::-webkit-scrollbar-thumb {
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='8'><circle cx='9' cy='4' r='2' fill='%23E63946'/></svg>");
+            background-repeat: repeat-x;
+        }
+
+        .magazine-grid {
+            display: flex;
+            gap: 2.5rem;
+            height: 100%;
+            align-items: center;
+            width: max-content;
+        }
+
+        .gallery-item {
+            width: auto;
+            min-width: 300px;
+            height: 66vh;
+            border: 2px solid #111111;
+            border-radius: 4px;
+            background: #ffffff;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        /* Fixed text card height constraint: strictly bounded to max 75% height of the image cards (49.5vh), 
+           with alignment fixed to the bottom and downward spacing so content never overflows upward or gets clipped. */
+        .text-card {
+            width: 330px;
+            height: 49.5vh;
+            max-height: 49.5vh;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            flex-shrink: 0;
+            align-self: flex-end;
+            margin-bottom: 3vh;
+        }
+
+        .media-box {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .media-box img,
+        .media-box video {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .project-subheading {
+            font-size: clamp(0.7rem, 0.8vw, 0.85rem);
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 0.3rem;
+            letter-spacing: 0.05em;
+        }
+
+        .project-headline {
+            font-size: clamp(1.2rem, 1.5vw, 1.6rem);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-description {
+            line-height: 1.4;
+            color: #444;
+            font-size: clamp(0.75rem, 0.85vw, 0.88rem);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="custom-crosshair" id="crosshair"></div>
+    <div class="page-wrapper">
+        <header class="global-header">
+            <nav class="nav-rectangle">
+                <a href="../../index.html" class="brand-logo">NA</a>
+                <div class="nav-spacer"></div>
+                <a href="../../architecture.html" class="nav-item active" data-key="nav-arch">Architecture</a>
+                <a href="../../3d-design.html" class="nav-item" data-key="nav-3d">3D Design</a>
+                <a href="../../research.html" class="nav-item" data-key="nav-res">Research</a>
+                <a href="../../contact.html" class="nav-item" data-key="nav-cont">Contact</a>
+                <button id="langToggle" class="lang-toggle-container">
+                    <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path
+                            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                        </path>
+                    </svg>
+                    <span id="langLabel" class="lang-label">TR</span>
+                </button>
+            </nav>
+        </header>
+
+        <a href="../../architecture.html" class="back-btn">← BACK</a>
+
+        <div class="scroll-viewport" id="scrollContainer">
+            <main class="magazine-grid">
+                <div class="gallery-item">
+                    <div class="media-box"><img src="../../Assets/Architecture/aj-house/r4.png" alt="Floor Plan"></div>
+                </div>
+                <div class="text-card">
+                    <div class="project-subheading" data-key="p-sub">Residential Architecture</div>
+                    <h2 class="project-headline" data-key="p-title">AJ House</h2>
+                    <p class="project-description" data-key="p-desc">A contemporary 2-kanal residence designed around spatial flow, natural light, and climate performance. The layout clearly separates the guest wing from the family quarters, with a central atrium binding the spaces together. The ground floor houses the parents' bedroom, while a connected mezzanine above accommodates the children's area to keep family spaces close. To handle the local climate, the exterior walls are built with a rat-trap bond to improve insulation and reduce heat transfer. The flat roof is covered with vegetation, acting as a natural thermal barrier while doubling as a productive garden for the household.</p>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="media-box"><img src="../../Assets/Architecture/aj-house/ground-floor.png"
+                            alt="Exterior View"></div>
+                </div>
+                <div class="gallery-item">
+                    <div class="media-box"><img src="../../Assets/Architecture/aj-house/F-floor.png"
+                            alt="Exterior View"></div>
+                </div>
+                <div class="gallery-item">
+                    <div class="media-box"><img src="../../Assets/Architecture/aj-house/section.png" alt="Section">
+                    </div>
+                </div>
+
+
+                <div class="gallery-item">
+                    <div class="media-box"><img src="../../Assets/Architecture/aj-house/1.jpg" alt="Exterior View">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="media-box"><img src="../../Assets/Architecture/aj-house/2.jpg" alt="Exterior View">
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="media-box"><img src="../../Assets/Architecture/aj-house/4.jpg" alt="Exterior View">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="media-box"><img src="../../Assets/Architecture/aj-house/5.jpg" alt="Exterior View">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="media-box"><img src="../../Assets/Architecture/aj-house/6.jpg" alt="Exterior View">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="media-box"><img src="../../Assets/Architecture/aj-house/7.jpg" alt="Exterior View">
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                "nav-arch": "Architecture", "nav-3d": "3D Design", "nav-res": "Research", "nav-cont": "Contact",
+                "p-sub": "Residential Architecture", "p-title": "AJ House", "p-desc": "A contemporary 2-kanal residence designed around spatial flow, natural light, and climate performance. The layout clearly separates the guest wing from the family quarters, with a central atrium binding the spaces together. The ground floor houses the parents' bedroom, while a connected mezzanine above accommodates the children's area to keep family spaces close. To handle the local climate, the exterior walls are built with a rat-trap bond to improve insulation and reduce heat transfer. The flat roof is covered with vegetation, acting as a natural thermal barrier while doubling as a productive garden for the household."
+            },
+            tr: {
+                "nav-arch": "Mimarlık", "nav-3d": "3D Tasarım", "nav-res": "Araştırma", "nav-cont": "İletişim",
+                "p-sub": "Konut Mimarisi", "p-title": "AJ Evi", "p-desc": "Mekânsal akışa, doğal ışığa ve iklim performansına göre tasarlanmış çağdaş bir 2 kanal konut. Yerleşim planı, misafir kanadını aile yaşam alanlarından açıkça ayırır ve mekanları birbirine bağlayan merkezi bir atriyuma sahiptir. Zemin katta ebeveyn yatak odası yer alırken, üst kattaki bağlantılı asma kat çocuk alanını barındırarak aile alanlarını bir arada tutar. Yerel iklim koşullarıyla başa çıkabilmek için dış duvarlar, izolasyonu artırmak ve ısı transferini azaltmak amacıyla rat-trap bağı (fare kapanı örgü tekniği) ile örülmüştür. Düz çatı bitkilendirilerek doğal bir termal bariyer işlevi görmesi sağlanmış, aynı zamanda hanehalkı için verimli bir bahçe olarak kullanılması amaçlanmıştır."
+            }
+        };
+
+        let lang = localStorage.getItem('portfolio-lang') || 'en';
+        
+        const apply = (l) => {
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[l] && translations[l][key]) {
+                    el.textContent = translations[l][key];
+                }
+            });
+            document.getElementById('langLabel').textContent = l === 'en' ? 'TR' : 'EN';
+        };
+
+        document.getElementById('langToggle').addEventListener('click', () => {
+            lang = lang === 'en' ? 'tr' : 'en';
+            localStorage.setItem('portfolio-lang', lang);
+            apply(lang);
+        });
+
+        const crosshair = document.getElementById('crosshair');
+        let mouseX = 0;
+        let mouseY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function updateCursor() {
+            crosshair.style.left = mouseX + 'px';
+            crosshair.style.top = mouseY + 'px';
+            requestAnimationFrame(updateCursor);
+        }
+        requestAnimationFrame(updateCursor);
+
+        document.querySelectorAll('a, button, .gallery-item').forEach(i => {
+            i.addEventListener('mouseenter', () => crosshair.classList.add('expand'));
+            i.addEventListener('mouseleave', () => crosshair.classList.remove('expand'));
+        });
+
+        const scrollContainer = document.getElementById('scrollContainer');
+        scrollContainer.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            scrollContainer.scrollLeft += e.deltaY;
+        }, { passive: false });
+
+        apply(lang);
+    </script>
+</body>
+
+</html>

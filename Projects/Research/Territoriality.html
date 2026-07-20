@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Territoriality in the Digital and Urban Landscape | Natasha Afzal</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syne:wght@800&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body {
+            height: 100%;
+            background-color: #f7f7f7;
+            color: #111111;
+            font-family: 'Space Grotesk', sans-serif;
+            overflow: hidden; 
+            -webkit-font-smoothing: antialiased;
+            cursor: none; 
+        }
+
+        .page-wrapper { display: flex; flex-direction: column; height: 100vh; padding: 0.5rem 2.5rem 2.5rem 2.5rem; }
+
+        /* CUSTOM CROSSHAIR */
+        .custom-crosshair {
+            position: fixed; top: 0; left: 0; width: 24px; height: 24px;
+            pointer-events: none; transform: translate(-50%, -50%);
+            z-index: 9999; mix-blend-mode: multiply; 
+            transition: width 0.2s cubic-bezier(0.25, 1, 0.5, 1), height 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: left, top;
+        }
+        .custom-crosshair::before, .custom-crosshair::after { content: ''; position: absolute; background-color: #000000; }
+        .custom-crosshair::before { top: 0; left: calc(50% - 1.5px); width: 3px; height: 100%; }
+        .custom-crosshair::after { top: 50%; left: 0; width: 100%; height: 3px; }
+        .custom-crosshair.expand { width: 50px; height: 50px; }
+
+        /* HEADER */
+        .global-header { width: 100%; margin-bottom: 2rem; padding-top: 0.5rem; flex-shrink: 0; }
+        .nav-rectangle {
+            border: 2px solid #111111; border-radius: 4px; display: flex;
+            align-items: stretch; width: 100%; overflow: hidden; background-color: #f7f7f7;
+        }
+        .brand-logo {
+            font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800;
+            text-decoration: none; color: #111111; padding: 0.6rem 2rem; 
+            display: flex; align-items: center; border-right: 2px solid #111111; 
+            transition: 0.2s; cursor: none;
+        }
+        .brand-logo:hover { background-color: #E63946; color: #ffffff; }
+        .nav-spacer { flex: 1; border-right: 2px solid #111111; }
+        .nav-item {
+            font-size: 0.9rem; font-weight: 500; text-decoration: none; color: #111111;
+            text-transform: uppercase; letter-spacing: 0.1em; padding: 0.6rem 0; width: 160px;
+            display: flex; align-items: center; justify-content: center;
+            border-right: 2px solid #111111; transition: 0.2s; cursor: none;
+        }
+        .nav-item:hover { background-color: #E63946; color: #ffffff; }
+        .nav-item.active { background-color: #111111; color: #ffffff; font-weight: 700; }
+
+        .lang-toggle-container {
+            display: flex; align-items: center; justify-content: center;
+            width: 90px; background: transparent; border: none;
+            gap: 0.5rem; padding: 0 1rem; cursor: none;
+        }
+        .lang-toggle-container:hover { background-color: #111111; }
+        .lang-toggle-container:hover .globe-icon { stroke: #ffffff; }
+        .lang-toggle-container:hover .lang-label { color: #E63946; }
+        .globe-icon { stroke: #111111; transition: stroke 0.2s ease; }
+        .lang-label { font-size: 0.85rem; font-weight: 700; color: #111111; transition: color 0.2s ease; }
+
+        /* BACK LINK */
+        .back-link-wrapper { margin-bottom: 1.5rem; }
+        .back-link { display: inline-block; font-size: 0.85rem; text-transform: uppercase; color: #666; font-weight: 700; text-decoration: none; cursor: none; }
+        .back-link:hover { color: #E63946; }
+
+        /* VIEWPORT & CUSTOM SCROLLBAR */
+        .scroll-viewport {
+            flex: 1; min-height: 0; width: 100%;
+            overflow-x: auto; overflow-y: hidden; display: flex; align-items: stretch;
+            padding-bottom: 2rem; 
+        }
+        .scroll-viewport::-webkit-scrollbar { height: 8px; }
+        .scroll-viewport::-webkit-scrollbar-thumb {
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='8'><circle cx='9' cy='4' r='2' fill='%23E63946'/></svg>");
+            background-repeat: repeat-x; background-position: center;
+        }
+
+        .magazine-spread { display: flex; gap: 4rem; padding-right: 4rem; height: 100%; align-items: flex-start; width: max-content; }
+        .content-column { height: 100%; column-width: 350px; column-gap: 2.5rem; padding-bottom: 2rem; width: auto; }
+        
+        .project-title { font-size: 2.2rem; font-weight: 700; line-height: 1.1; margin-bottom: 2rem; break-after: avoid; letter-spacing: -0.02em; }
+        .body-text { font-size: 1rem; line-height: 1.6; color: #333; margin-bottom: 1rem; }
+        .section-title { font-weight: 700; margin: 2rem 0 1rem 0; font-size: 1.2rem; }
+
+        @media (max-width: 900px) { html, body { overflow-y: auto; height: auto; } .magazine-spread { flex-direction: column; width: 100%; gap: 2rem; } .content-column { column-width: auto; width: 100%; } }
+    </style>
+</head>
+<body>
+
+    <div class="custom-crosshair" id="crosshair"></div>
+
+    <div class="page-wrapper">
+        <header class="global-header">
+            <nav class="nav-rectangle">
+                <a href="../../index.html" class="brand-logo">NA</a>
+                <div class="nav-spacer"></div>
+                <a href="../../architecture.html" class="nav-item" data-key="nav-arch">Architecture</a>
+                <a href="../../3d-design.html" class="nav-item" data-key="nav-3d">3D Design</a>
+                <a href="../../research.html" class="nav-item active" data-key="nav-res">Research</a>
+                <a href="../../contact.html" class="nav-item" data-key="nav-cont">Contact</a>
+                <button id="langToggle" class="lang-toggle-container">
+                    <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span id="langLabel" class="lang-label">TR</span>
+                </button>
+            </nav>
+        </header>
+
+        <div class="back-link-wrapper">
+            <a href="../../research.html" class="back-link" data-key="back-link">← BACK</a>
+        </div>
+
+        <div class="scroll-viewport" id="scrollContainer">
+            <main class="magazine-spread">
+                <div class="content-column">
+                    <h1 class="project-title" data-key="title">Territoriality in the Digital and Urban Landscape</h1>
+                    <p class="body-text" data-key="p1">Sack conceives of territoriality as a spatial strategy that individuals, groups, and organizations use to achieve particular social and political ends. Sack (p.19) defines territoriality as “the attempt by an individual or group to affect, influence, or control people, phenomena, and relationships, by delimiting and asserting control over a geographic area. This area will be called the territory.” For Sack (p. 2), “Territoriality is intimately related to how people use the land, how they organize themselves in space, and how they give meaning to place.” He further asserts: “Territoriality... is a historically sensitive use of space, especially since it is socially constructed and depends on who is controlling whom and why [we may add: ‘and when’]. It is the key geographical component in understanding how society and space are interconnected” (p. 3). Thus: “Territoriality, then, forms the backcloth of human spatial relations and conceptions of space... Human spatial relations are the results of influence and power. The territory is the primary spatial form power takes” (p. 26).</p>
+                    
+                    <h3 class="section-title" data-key="s1">Reflections on Islamabad</h3>
+                    <p class="body-text" data-key="p2">Islamabad, as a planned city, demonstrates the physical manifestation of territoriality through its design and governance. The capital's layout reflects a spatial strategy aimed at asserting state control, shaping social interactions, and influencing urban life. The city’s zoning system—a hallmark of its urbanism—defines residential, commercial, diplomatic, and green areas, reinforcing the concept of territories as instruments of control and order. These zones reflect a negotiated relationship between state power and the lived experiences of its residents, where territorial boundaries are reified through planning decisions and social practices.</p>
+                    <p class="body-text" data-key="p3">Sack’s conception of territoriality can also be expanded to understand the evolving digital landscape within Islamabad. With the advent of digital technologies, new layers of territoriality emerge, blending the physical with the virtual. Digital platforms like Facebook and Google introduce a form of "deterritorialization," where geographic boundaries become fluid. However, they simultaneously create “reterritorialized” digital spaces that mirror and influence urban life.</p>
+                    <p class="body-text" data-key="p4">For instance, in Islamabad, platforms like OLX and Daraz have transformed traditional marketplaces into digital territories. These platforms collect and process user data to curate localized experiences, influencing how goods and services are exchanged. Similarly, social media platforms serve as tools for political discourse and social mobilization, redefining territorial control by creating virtual spaces for civic engagement. The use of Twitter for raising awareness about urban issues, such as environmental degradation in the Margalla Hills or traffic concerns, reflects the negotiation of territoriality within a digital framework.</p>
+                    <p class="body-text" data-key="p5">As Sack suggests, territoriality is not merely about physical boundaries but about power and control. In the context of Islamabad, the digital realm amplifies these dynamics. Facebook and Google, for instance, create territories by capturing user behaviors and patterns, akin to Sack’s “empty-able space.” This data is capitalized upon to generate insights, influencing not only the virtual experience but also urban governance. For example, geolocation data from Google Maps contributes to urban planning decisions, such as optimizing traffic flows or identifying high-demand commercial zones.</p>
+                    <p class="body-text" data-key="p6">The interplay between urbanism and digital platforms in Islamabad reveals a dual territoriality: one rooted in physical urban design and the other in virtual spaces. The latter is increasingly significant, as digital platforms impose boundaries through text limits, image sizes, and algorithms while allowing users to negotiate their usage. Instagram’s conventions of liking, posting, and following create symbolic territories that foster new forms of interaction and community within the city’s digital populace.</p>
+                    <p class="body-text" data-key="p7">This negotiation is evident in how digital tools are appropriated for diverse purposes. In Islamabad, Twitter has become a platform for political activism, Instagram a tool for showcasing the city’s evolving cultural identity, and Facebook a marketplace for local entrepreneurs. These platforms provide structured spaces for interaction but are continually redefined by users’ behaviors and practices, reflecting the city’s dynamic interplay between the digital and the physical.</p>
+                    <p class="body-text" data-key="p8">In conclusion, Islamabad's urbanism and sense of territoriality are increasingly shaped by the integration of digital technologies. The city’s planned zones and digital platforms represent interconnected forms of territorial control, where both physical spaces and virtual environments negotiate power, identity, and interaction. This dual territoriality underscores the evolving nature of how people organize themselves in space and give meaning to place in the 21st century.</p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                "nav-arch": "Architecture", "nav-3d": "3D Design", "nav-res": "Research", "nav-cont": "Contact",
+                "back-link": "← BACK",
+                "title": "Territoriality in the Digital and Urban Landscape",
+                "s1": "Reflections on Islamabad",
+                "p1": "Sack conceives of territoriality as a spatial strategy that individuals, groups, and organizations use to achieve particular social and political ends. Sack (p.19) defines territoriality as “the attempt by an individual or group to affect, influence, or control people, phenomena, and relationships, by delimiting and asserting control over a geographic area. This area will be called the territory.” For Sack (p. 2), “Territoriality is intimately related to how people use the land, how they organize themselves in space, and how they give meaning to place.” He further asserts: “Territoriality... is a historically sensitive use of space, especially since it is socially constructed and depends on who is controlling whom and why [we may add: ‘and when’]. It is the key geographical component in understanding how society and space are interconnected” (p. 3). Thus: “Territoriality, then, forms the backcloth of human spatial relations and conceptions of space... Human spatial relations are the results of influence and power. The territory is the primary spatial form power takes” (p. 26).",
+                "p2": "Islamabad, as a planned city, demonstrates the physical manifestation of territoriality through its design and governance. The capital's layout reflects a spatial strategy aimed at asserting state control, shaping social interactions, and influencing urban life. The city’s zoning system—a hallmark of its urbanism—defines residential, commercial, diplomatic, and green areas, reinforcing the concept of territories as instruments of control and order. These zones reflect a negotiated relationship between state power and the lived experiences of its residents, where territorial boundaries are reified through planning decisions and social practices.",
+                "p3": "Sack’s conception of territoriality can also be expanded to understand the evolving digital landscape within Islamabad. With the advent of digital technologies, new layers of territoriality emerge, blending the physical with the virtual. Digital platforms like Facebook and Google introduce a form of \"deterritorialization,\" where geographic boundaries become fluid. However, they simultaneously create “reterritorialized” digital spaces that mirror and influence urban life.",
+                "p4": "For instance, in Islamabad, platforms like OLX and Daraz have transformed traditional marketplaces into digital territories. These platforms collect and process user data to curate localized experiences, influencing how goods and services are exchanged. Similarly, social media platforms serve as tools for political discourse and social mobilization, redefining territorial control by creating virtual spaces for civic engagement. The use of Twitter for raising awareness about urban issues, such as environmental degradation in the Margalla Hills or traffic concerns, reflects the negotiation of territoriality within a digital framework.",
+                "p5": "As Sack suggests, territoriality is not merely about physical boundaries but about power and control. In the context of Islamabad, the digital realm amplifies these dynamics. Facebook and Google, for instance, create territories by capturing user behaviors and patterns, akin to Sack’s “empty-able space.” This data is capitalized upon to generate insights, influencing not only the virtual experience but also urban governance. For example, geolocation data from Google Maps contributes to urban planning decisions, such as optimizing traffic flows or identifying high-demand commercial zones.",
+                "p6": "The interplay between urbanism and digital platforms in Islamabad reveals a dual territoriality: one rooted in physical urban design and the other in virtual spaces. The latter is increasingly significant, as digital platforms impose boundaries through text limits, image sizes, and algorithms while allowing users to negotiate their usage. Instagram’s conventions of liking, posting, and following create symbolic territories that foster new forms of interaction and community within the city’s digital populace.",
+                "p7": "This negotiation is evident in how digital tools are appropriated for diverse purposes. In Islamabad, Twitter has become a platform for political activism, Instagram a tool for showcasing the city’s evolving cultural identity, and Facebook a marketplace for local entrepreneurs. These platforms provide structured spaces for interaction but are continually redefined by users’ behaviors and practices, reflecting the city’s dynamic interplay between the digital and the physical.",
+                "p8": "In conclusion, Islamabad's urbanism and sense of territoriality are increasingly shaped by the integration of digital technologies. The city’s planned zones and digital platforms represent interconnected forms of territorial control, where both physical spaces and virtual environments negotiate power, identity, and interaction. This dual territoriality underscores the evolving nature of how people organize themselves in space and give meaning to place in the 21st century."
+            },
+            tr: {
+                "nav-arch": "Mimarlık", "nav-3d": "3D Tasarım", "nav-res": "Araştırma", "nav-cont": "İletişim",
+                "back-link": "← GERİ",
+                "title": "Dijital ve Kentsel Peyzajda Bölgesellik",
+                "s1": "İslamabad Üzerine Düşünceler",
+                "p1": "Sack, bölgeselliği bireylerin, grupların ve organizasyonların belirli sosyal ve politik amaçlara ulaşmak için kullandıkları bir mekansal strateji olarak kavramsallaştırır. Sack (s.19), bölgeselliği “birey veya grubun insanlar, olgular ve ilişkiler üzerinde etkide bulunma, yönlendirme veya kontrol etme çabası, coğrafi bir alan üzerinde kontrol sınırlandırılması ve iddiası” olarak tanımlar. Sack (s. 2) için, “Bölgesellik, insanların araziyi nasıl kullandıkları, kendilerini mekanda nasıl organize ettikleri ve mekana nasıl anlam verdikleri ile yakından ilişkilidir.” Ayrıca şunları belirtir: “Bölgesellik... tarihsel olarak duyarlı bir mekan kullanımıdır, özellikle sosyal olarak inşa edildiği ve kimin kimi, neden [ve ekleyebiliriz: ‘ve ne zaman’] kontrol ettiği ile ilgilidir. Toplum ve mekanın birbirine nasıl bağlı olduğunu anlamada anahtar coğrafi bileşendir” (s. 3). Dolayısıyla: “Bölgesellik, insan mekansal ilişkilerinin ve mekan algılarının arka planını oluşturur... İnsan mekansal ilişkileri, etki ve gücün sonuçlarıdır. Bölge, gücün aldığı birincil mekansal biçimdir” (s. 26).",
+                "p2": "Planlı bir şehir olan İslamabad, tasarımı ve yönetimi aracılığıyla bölgeselliğin fiziksel tezahürünü göstermektedir. Başkentin yerleşimi, devlet kontrolünü pekiştirmeyi, sosyal etkileşimleri şekillendirmeyi ve kentsel yaşamı etkilemeyi amaçlayan bir mekansal stratejiyi yansıtır. Şehrin imar sistemi—kentselciliğinin bir alametifarikası—konut, ticari, diplomatik ve yeşil alanları tanımlayarak bölgelerin kontrol ve düzen araçları olduğu fikrini pekiştirir. Bu bölgeler, devlet gücü ile sakinlerinin yaşanmış deneyimleri arasında müzakere edilmiş bir ilişkiyi yansıtır; burada bölgesel sınırlar planlama kararları ve sosyal pratiklerle somutlaştırılır.",
+                "p3": "Sack’in bölgesellik kavramı, İslamabad'daki gelişen dijital peyzajı anlamak için de genişletilebilir. Dijital teknolojilerin ortaya çıkışıyla, fiziksel olanla sanalı harmanlayan yeni bölgesellik katmanları ortaya çıkmaktadır. Facebook ve Google gibi dijital platformlar, coğrafi sınırların akışkan hale geldiği bir “bölgesizleşme” biçimi sunar. Ancak, eşzamanlı olarak kentsel yaşamı yansıtan ve etkileyen “yeniden bölgeselleştirilmiş” dijital alanlar yaratırlar.",
+                "p4": "Örneğin, İslamabad'da OLX ve Daraz gibi platformlar geleneksel pazarları dijital bölgelere dönüştürmüştür. Bu platformlar, yerelleştirilmiş deneyimler oluşturmak ve mal ve hizmetlerin değişimini etkilemek için kullanıcı verilerini toplar ve işler. Benzer şekilde, sosyal medya platformları siyasi söylem ve sosyal mobilizasyon için araçlar olarak hizmet eder ve sivil katılım için sanal alanlar yaratarak bölgesel kontrolü yeniden tanımlar. Twitter'ın Margalla Tepeleri'ndeki çevresel bozulma veya trafik endişeleri gibi kentsel sorunlar hakkında farkındalık yaratmak için kullanımı, dijital bir çerçeve içinde bölgeselliğin müzakeresini yansıtır.",
+                "p5": "Sack’in önerdiği gibi, bölgesellik sadece fiziksel sınırlar hakkında değil, güç ve kontrol hakkındadır. İslamabad bağlamında, dijital alan bu dinamikleri güçlendirir. Örneğin Facebook ve Google, kullanıcı davranışlarını ve kalıplarını yakalayarak, Sack’in “boşaltılabilir mekanına” benzer bölgeler yaratır. Bu veriler, sadece sanal deneyimi değil aynı zamanda kentsel yönetimi de etkileyen içgörüler üretmek için kullanılır. Örneğin, Google Haritalar'dan alınan konum verileri, trafik akışlarını optimize etmek veya yüksek talep gören ticari bölgeleri belirlemek gibi kentsel planlama kararlarına katkıda bulunur.",
+                "p6": "İslamabad'daki kentselcilik ve dijital platformlar arasındaki etkileşim ikili bir bölgesellik ortaya koyar: biri fiziksel kentsel tasarıma, diğeri ise sanal alanlara kök salmıştır. İkincisi giderek daha önemli hale gelmektedir; çünkü dijital platformlar metin sınırları, resim boyutları ve algoritmalar aracılığıyla sınırlar dayatırken, kullanıcıların kullanım biçimlerini müzakere etmelerine izin verir. Instagram'ın beğenme, paylaşma ve takip etme kuralları, şehrin dijital nüfusu içinde yeni etkileşim ve topluluk biçimlerini besleyen sembolik bölgeler yaratır.",
+                "p7": "Bu müzakere, dijital araçların çeşitli amaçlar için nasıl benimsendiğinde belirgindir. İslamabad'da Twitter siyasi aktivizm için bir platform haline gelmiş, Instagram şehrin gelişen kültürel kimliğini sergilemek için bir araç olmuş ve Facebook yerel girişimciler için bir pazar yeri olmuştur. Bu platformlar etkileşim için yapılandırılmış alanlar sağlar ancak kullanıcıların davranışları ve pratikleri tarafından sürekli yeniden tanımlanır, şehrin dijital ve fiziksel arasındaki dinamik etkileşimini yansıtır.",
+                "p8": "Sonuç olarak, İslamabad'ın kentselciliği ve bölgesellik algısı, dijital teknolojilerin entegrasyonu ile giderek daha fazla şekillenmektedir. Şehrin planlı bölgeleri ve dijital platformları, hem fiziksel mekanların hem de sanal ortamların güç, kimlik ve etkileşimi müzakere ettiği birbirine bağlı bölgesel kontrol biçimlerini temsil eder. Bu ikili bölgesellik, insanların 21. yüzyılda mekanda kendilerini nasıl organize ettiklerinin ve mekana nasıl anlam verdiklerinin evrimleşen doğasını vurgulamaktadır."
+            }
+        };
+
+        let currentLang = localStorage.getItem('portfolio-lang') || 'en';
+        const langToggleBtn = document.getElementById('langToggle');
+        const langLabel = document.getElementById('langLabel');
+
+        function applyTranslations(lang) {
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            langLabel.textContent = lang === 'en' ? 'TR' : 'EN';
+        }
+
+        langToggleBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'tr' : 'en';
+            localStorage.setItem('portfolio-lang', currentLang);
+            applyTranslations(currentLang);
+        });
+
+        applyTranslations(currentLang);
+
+        const crosshair = document.getElementById('crosshair');
+        window.addEventListener('mousemove', (e) => {
+            crosshair.style.left = `${e.clientX}px`; crosshair.style.top = `${e.clientY}px`;
+        });
+
+        document.querySelectorAll('a, button, .lang-toggle-container').forEach(item => {
+            item.addEventListener('mouseenter', () => crosshair.classList.add('expand'));
+            item.addEventListener('mouseleave', () => crosshair.classList.remove('expand'));
+        });
+
+        window.addEventListener('wheel', (e) => {
+            if (window.innerWidth > 900 && e.deltaY !== 0) {
+                document.getElementById('scrollContainer').scrollLeft += e.deltaY; e.preventDefault();
+            }
+        }, { passive: false });
+    </script>
+</body>
+</html>

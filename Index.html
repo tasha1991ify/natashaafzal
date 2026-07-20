@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natasha Afzal | Design & Architecture</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=Syne:wght@800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Modern Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            height: 100%;
+            background-color: #f7f7f7; 
+            color: #111111;
+            font-family: 'Space Grotesk', sans-serif;
+            overflow: hidden; 
+            -webkit-font-smoothing: antialiased;
+            cursor: none; /* Hides default mouse pointer */
+        }
+
+        /* HEAVY INDUSTRIAL AUTOCAD CROSSHAIR ELEMENT */
+        .custom-crosshair {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            pointer-events: none; 
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            transition: width 0.2s cubic-bezier(0.25, 1, 0.5, 1), height 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            mix-blend-mode: multiply; 
+            will-change: left, top;
+        }
+
+        .custom-crosshair::before,
+        .custom-crosshair::after {
+            content: '';
+            position: absolute;
+            background-color: #000000;
+        }
+
+        /* Vertical axis (3px Thick) */
+        .custom-crosshair::before {
+            top: 0;
+            left: calc(50% - 1.5px);
+            width: 3px;
+            height: 100%;
+        }
+
+        /* Horizontal axis (3px Thick) */
+        .custom-crosshair::after {
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 3px;
+        }
+
+        /* Hover expansion targeting state */
+        .custom-crosshair.expand {
+            width: 55px;
+            height: 55px;
+        }
+
+        /* The Main Screen Frame (Pushed completely to edges) */
+        .homepage-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; 
+            height: 100%;
+            padding: 0.5rem 2.5rem; 
+        }
+
+        /* 1. TOP NAME (Natasha) */
+        .top-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 12vw; 
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.04em;
+            line-height: 0.75;
+            width: 100%;
+            display: flex;
+            justify-content: space-between; 
+        }
+
+        /* 2. CENTER CONTENT AREA */
+        .center-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2.5rem;
+            z-index: 10;
+        }
+
+        /* Custom User Intro Write-up Paragraph */
+        .intro-text {
+           font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem; 
+            line-height: 1.6;
+            color: #111111;
+            max-width: 960px; 
+            font-weight: 400;
+            letter-spacing: -0.02em;
+        }
+
+        /* The Clickable Links Grid Row */
+        .portfolio-links {
+            display: flex;
+            flex-direction: row; 
+            justify-content: center;
+            gap: 1.2rem; 
+            flex-wrap: wrap; 
+            align-items: center;
+        }
+        
+        .project-link {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            color: #111111;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            
+            padding: 0.6rem 1.2rem; 
+            background-color: transparent;
+            border-radius: 4px; 
+            
+            transition: background-color 0.2s ease, color 0.2s ease; 
+            cursor: none;
+        }
+
+        /* The Filled Red Rectangle Hover State */
+        .project-link:hover {
+            background-color: #E63946; 
+            color: #FFFFFF; 
+        }
+
+        /* LANGUAGE CONTROLLER UI TOGGLE BUTTON */
+        .lang-btn {
+            background: transparent;
+            border: 2px solid #111111;
+            color: #E63946; 
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            transition: all 0.2s ease;
+            cursor: none;
+        }
+
+        .lang-btn:hover {
+            background-color: #111111;
+            color: #ffffff;
+        }
+
+        /* 3. BOTTOM NAME (Afzal) */
+        .bottom-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 12vw;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.04em;
+            line-height: 0.75;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        /* Mobile Scale Adjustments */
+        @media (max-width: 768px) {
+            .homepage-container { padding: 0.5rem 1.5rem; }
+            .intro-text { font-size: 1.05rem; line-height: 1.5; }
+            .portfolio-links { gap: 0.5rem; }
+            .project-link, .lang-btn { font-size: 0.8rem; letter-spacing: 0.08em; padding: 0.5rem 0.8rem; }
+            
+            html, body { cursor: auto; }
+            .custom-crosshair { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="custom-crosshair" id="crosshair"></div>
+
+    <div class="homepage-container">
+        
+        <div class="top-name">
+            <span>N</span><span>A</span><span>T</span><span>A</span><span>S</span><span>H</span><span>A</span>
+        </div>
+
+        <main class="center-content">
+            <p class="intro-text" data-key="intro">
+                I've always enjoyed creating things. Architecture became the foundation for that, but my curiosity has led me into 3D visualization, digital environments, and game design. No matter the medium, I enjoy designing spaces that tell a story and feel natural to experience.
+            </p>
+
+            <nav class="portfolio-links">
+                <a href="architecture.html" class="project-link" data-key="nav-arch">Architecture</a>
+                <a href="3d-design.html" class="project-link" data-key="nav-3d">3D Design</a>
+                <a href="research.html" class="project-link" data-key="nav-res">Research</a>
+                <a href="contact.html" class="project-link" data-key="nav-cont">Contact</a>
+                
+                <button id="langToggle" class="lang-btn">TR</button>
+            </nav>
+        </main>
+
+        <div class="bottom-name">
+            <span>A</span><span>F</span><span>Z</span><span>A</span><span>L</span>
+        </div>
+
+    </div>
+
+    <script>
+        // 1. DICTIONARY DEFINITION
+        const translations = {
+            en: {
+                "intro": "I've always enjoyed creating things. Architecture became the foundation for that, but my curiosity has led me into 3D visualization, digital environments, and game design. No matter the medium, I enjoy designing spaces that tell a story and feel natural to experience.",
+                "nav-arch": "Architecture",
+                "nav-3d": "3D Design",
+                "nav-res": "Research",
+                "nav-cont": "Contact"
+            },
+            tr: {
+                "intro": "Her zaman bir şeyler üretmekten keyif aldım. Mimarlık bunun temelini oluşturdu, ancak merakım beni 3D görselleştirme, dijital ortamlar ve oyun tasarımına yönlendirdi. Ortam ne olursa olsun, bir hikayesi olan ve deneyimlemesi doğal hissettiren alanlar tasarlamayı seviyorum.",
+                "nav-arch": "Mimarlık",
+                "nav-3d": "3D Tasarım",
+                "nav-res": "Araştırma",
+                "nav-cont": "İletişim"
+            }
+        };
+
+        // 2. STATE MANAGER & PREFERENCE LOADING
+        let currentLang = localStorage.getItem('portfolio-lang') || 'en';
+        const langToggleBtn = document.getElementById('langToggle');
+
+        function applyTranslations(lang) {
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            // Show the alternative string selection option on the button surface
+            langToggleBtn.textContent = lang === 'en' ? 'TR' : 'EN';
+        }
+
+        // 3. LISTEN TO TOGGLE INTERFACE TRIGGER
+        langToggleBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'tr' : 'en';
+            localStorage.setItem('portfolio-lang', currentLang); // Pin translation value into local disk memory
+            applyTranslations(currentLang);
+        });
+
+        // Initialize translations on launch window tick
+        applyTranslations(currentLang);
+
+        // 4. MOUSE CURSOR CROSSHAIR SMOOTH RENDERING PIPELINE
+        const crosshair = document.getElementById('crosshair');
+        const interactables = document.querySelectorAll('.project-link, .lang-btn');
+
+        let mouseX = 0;
+        let mouseY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function updateCursor() {
+            crosshair.style.left = `${mouseX}px`;
+            crosshair.style.top = `${mouseY}px`;
+            requestAnimationFrame(updateCursor);
+        }
+        requestAnimationFrame(updateCursor);
+
+        interactables.forEach(item => {
+            item.addEventListener('mouseenter', () => crosshair.classList.add('expand'));
+            item.addEventListener('mouseleave', () => crosshair.classList.remove('expand'));
+        });
+    </script>
+
+</body>
+</html>
