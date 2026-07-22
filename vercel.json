@@ -1,3 +1,13 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/architecture/:slug",
+      "destination": "/projects/architecture/:slug"
+    },
+    {
+      "source": "/3d-design/:slug",
+      "destination": "/projects/3d-design/:slug"
+    }
+  ]
 }
