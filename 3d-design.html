@@ -17,6 +17,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         html,
@@ -260,7 +261,6 @@
             flex-direction: row-reverse;
         }
 
-        /* PROPORTION ADJUSTMENT: Image 50% / Text 50% */
         .image-container {
             width: 50%;
             background: #eaeaea;
@@ -311,12 +311,207 @@
             color: #444;
             line-height: 1.4;
         }
+
+        /* MOBILE ELEMENTS (Hidden on Desktop) */
+        .mobile-header-block,
+        .mobile-top-home,
+        .mobile-split-nav {
+            display: none;
+        }
+
+        /* RESPONSIVE MOBILE OVERRIDES */
+        @media (max-width: 900px) {
+            html,
+            body {
+                overflow-y: auto;
+                height: auto;
+                cursor: auto;
+            }
+
+            .page-wrapper {
+                height: auto;
+                padding: 1rem 1rem 5.5rem 1rem;
+            }
+
+            .custom-crosshair {
+                display: none;
+            }
+
+            .global-header {
+                display: none;
+            }
+
+            /* Stacked Header Block */
+            .mobile-header-block {
+                width: 100%;
+                padding-top: 0.25rem;
+                margin-bottom: 1.5rem;
+                padding-right: 4rem;
+                display: block;
+            }
+
+            .mobile-title-stack {
+                font-family: 'Syne', sans-serif;
+                font-size: 1.35rem;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: -0.03em;
+                line-height: 1.05;
+                color: #111111;
+                margin-bottom: 0.4rem;
+                display: inline-block;
+            }
+
+            .mobile-title-stack span {
+                display: block;
+            }
+
+            .mobile-title-underline {
+                display: block;
+                width: 100%;
+                height: 3px;
+                background-color: #111111;
+            }
+
+            /* Floating Home Button */
+            .mobile-top-home {
+                position: fixed;
+                top: 1rem;
+                right: 1rem;
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                background-color: #111111;
+                border: 1.5px solid #111111;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                z-index: 9998;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+                outline: none;
+            }
+
+            .mobile-top-home .na-text {
+                font-family: 'Syne', sans-serif;
+                font-size: 0.8rem;
+                font-weight: 800;
+                letter-spacing: -0.05em;
+                color: #ffffff;
+            }
+
+            /* Vertical Scroll Viewport */
+            .scroll-viewport {
+                overflow-x: visible;
+                overflow-y: visible;
+                height: auto;
+                padding-bottom: 0;
+                display: block;
+            }
+
+            .magazine-grid {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                height: auto;
+                gap: 2rem;
+                align-items: stretch;
+            }
+
+            /* Stacked Vertical Card Design */
+            .spread-item {
+                width: 100%;
+                height: auto;
+                min-height: initial;
+                flex-direction: column !important;
+                padding: 1.5rem;
+            }
+
+            .image-container {
+                width: 100% !important;
+                height: auto !important;
+                aspect-ratio: 16 / 9;
+                border: 1px solid #dcdcdc !important;
+                margin-bottom: 1.5rem;
+            }
+
+            .text-area {
+                width: 100% !important;
+                padding: 0 !important;
+                justify-content: flex-start !important;
+            }
+
+            .project-headline {
+                font-size: 1.5rem;
+            }
+
+            /* Split-profile Mobile Bottom Navigation Bar */
+            .mobile-split-nav {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 36px;
+                background-color: #111111;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                z-index: 9998;
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+
+            .split-nav-item {
+                position: relative;
+                top: -14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                padding: 0 0.75rem;
+                height: 44px;
+                border-radius: 22px;
+                background-color: #ffffff;
+                border: 2px solid #111111;
+                color: #111111;
+                cursor: pointer;
+                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+                transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease, color 0.2s ease, padding 0.2s ease;
+                white-space: nowrap;
+                outline: none;
+            }
+
+            .split-nav-item .pill-text {
+                font-family: 'Space Grotesk', sans-serif;
+                font-size: 0.72rem;
+                font-weight: 800;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+                color: #111111;
+                transition: color 0.2s ease;
+            }
+
+            .split-nav-item.active {
+                background-color: #E63946;
+                border-color: #111111;
+                transform: translateY(-4px) scale(1.05);
+                padding: 0 1.15rem;
+            }
+
+            .split-nav-item.active .pill-text {
+                color: #ffffff;
+            }
+        }
     </style>
 </head>
 
 <body>
 
     <div class="custom-crosshair" id="crosshair"></div>
+
+    <!-- MOBILE TOP RIGHT HOME BUTTON -->
+    <a href="index.html" class="mobile-top-home" title="Home">
+        <span class="na-text">NA</span>
+    </a>
 
     <div class="page-wrapper">
 
@@ -342,6 +537,15 @@
                 </button>
             </nav>
         </header>
+
+        <!-- MOBILE STACKED TITLE BLOCK -->
+        <div class="mobile-header-block">
+            <h1 class="mobile-title-stack">
+                <span data-key="nav-3d-line1">3D</span>
+                <span data-key="nav-3d-line2">Design</span>
+            </h1>
+            <div class="mobile-title-underline"></div>
+        </div>
 
         <div class="scroll-viewport" id="scrollContainer">
             <main class="magazine-grid">
@@ -404,10 +608,37 @@
         </div>
     </div>
 
+    <!-- MOBILE BOTTOM NAVIGATION BAR -->
+    <nav class="mobile-split-nav">
+        <a href="architecture.html" class="split-nav-item" title="Architecture">
+            <span class="pill-text" data-key="nav-arch">Arch</span>
+        </a>
+        <a href="3d-design.html" class="split-nav-item active" title="3D Design">
+            <span class="pill-text" data-key="nav-3d-full">3D Design</span>
+        </a>
+        <a href="research.html" class="split-nav-item" title="Research">
+            <span class="pill-text" data-key="nav-res">Res</span>
+        </a>
+        <a href="contact.html" class="split-nav-item" title="Contact">
+            <span class="pill-text" data-key="nav-cont">Cont</span>
+        </a>
+        <button id="langToggleMobile" class="split-nav-item" title="Language">
+            <span id="langLabelMobile" class="pill-text">TR</span>
+        </button>
+    </nav>
+
     <script>
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                document.activeElement.blur();
+            }
+        });
+
         const translations = {
             en: {
-                "nav-arch": "Architecture", "nav-3d": "3D Design", "nav-res": "Research", "nav-cont": "Contact",
+                "nav-arch": "Arch", "nav-3d": "3D Design", "nav-res": "Res", "nav-cont": "Cont",
+                "nav-3d-full": "3D Design",
+                "nav-3d-line1": "3D", "nav-3d-line2": "Design",
                 "d1-meta": "Project 01 // Narrative Art", "d1-title": "Running Girl", "d1-desc": "A cinematic environmental study exploring isolation and anxiety through motion within a dense forest.",
                 "d2-meta": "Project 02 // Environment Design", "d2-title": "Yatai Street Cart", "d2-desc": "A vibrant homage to Japanese anime aesthetics, focusing on stylized lighting and environmental storytelling.",
                 "d3-meta": "Project 03 // Character Study", "d3-title": "Scared Man", "d3-desc": "An emotive character study centered on chiaroscuro lighting to evoke internal vulnerability.",
@@ -416,7 +647,9 @@
                 "d6-meta": "Project 06 // Character Design", "d6-title": "Rusty", "d6-desc": "Commissioned for the hybrid-casual game Mirror Mania, a scrappy, lovable robot character featuring a retro-industrial aesthetic and custom low-poly textures."
             },
             tr: {
-                "nav-arch": "Mimarlık", "nav-3d": "3D Tasarım", "nav-res": "Araştırma", "nav-cont": "İletişim",
+                "nav-arch": "Mim", "nav-3d": "3D Tasarım", "nav-res": "Arş", "nav-cont": "İlet",
+                "nav-3d-full": "3D Tasarım",
+                "nav-3d-line1": "3D", "nav-3d-line2": "Tasarım",
                 "d1-meta": "Proje 01 // Anlatı Sanatı", "d1-title": "Running Girl", "d1-desc": "Yoğun bir orman içinde hareket ve izolasyon aracılığıyla kaygıyı keşfeden sinematik bir çalışma.",
                 "d2-meta": "Proje 02 // Çevre Tasarımı", "d2-title": "Yatai Sokak Tezgahı", "d2-desc": "Japon anime estetiğine canlı bir saygı duruşu; stilize aydınlatma ve çevresel hikaye anlatımına odaklanmıştır.",
                 "d3-meta": "Proje 03 // Karakter Çalışması", "d3-title": "Scared Man", "d3-desc": "İçsel kırılganlığı uyandırmak için kiaroskuro aydınlatmaya odaklanan duygusal bir karakter çalışması.",
@@ -428,7 +661,9 @@
 
         let currentLang = localStorage.getItem('portfolio-lang') || 'en';
         const langToggleBtn = document.getElementById('langToggle');
+        const langToggleMobile = document.getElementById('langToggleMobile');
         const langLabel = document.getElementById('langLabel');
+        const langLabelMobile = document.getElementById('langLabelMobile');
 
         function applyTranslations(lang) {
             document.querySelectorAll('[data-key]').forEach(element => {
@@ -437,14 +672,19 @@
                     element.textContent = translations[lang][key];
                 }
             });
-            langLabel.textContent = lang === 'en' ? 'TR' : 'EN';
+            const targetLabel = lang === 'en' ? 'TR' : 'EN';
+            if (langLabel) langLabel.textContent = targetLabel;
+            if (langLabelMobile) langLabelMobile.textContent = targetLabel;
         }
 
-        langToggleBtn.addEventListener('click', () => {
+        function toggleLanguage() {
             currentLang = currentLang === 'en' ? 'tr' : 'en';
             localStorage.setItem('portfolio-lang', currentLang);
             applyTranslations(currentLang);
-        });
+        }
+
+        if (langToggleBtn) langToggleBtn.addEventListener('click', toggleLanguage);
+        if (langToggleMobile) langToggleMobile.addEventListener('click', toggleLanguage);
 
         applyTranslations(currentLang);
 
@@ -454,7 +694,7 @@
 
         window.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
         function bindCrosshairListeners() {
-            document.querySelectorAll('.spread-item, .brand-logo, .nav-item, .lang-toggle-container').forEach(item => {
+            document.querySelectorAll('.spread-item, .brand-logo, .nav-item, .lang-toggle-container, .split-nav-item, .mobile-top-home').forEach(item => {
                 item.addEventListener('mouseenter', () => crosshair.classList.add('expand'));
                 item.addEventListener('mouseleave', () => crosshair.classList.remove('expand'));
             });
