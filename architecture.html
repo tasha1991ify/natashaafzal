@@ -354,12 +354,17 @@
             .nav-rectangle {
                 flex-direction: column;
                 align-items: stretch;
+                border: none;
+                background-color: transparent;
+                gap: 0.6rem;
             }
 
             .brand-logo {
-                border-right: none;
-                border-bottom: 2px solid #111111;
+                border: 2px solid #111111;
+                border-radius: 6px;
                 justify-content: center;
+                padding: 0.75rem;
+                background-color: #f7f7f7;
             }
 
             .nav-spacer {
@@ -368,33 +373,45 @@
 
             .nav-item:not(:last-child) {
                 border-right: none;
-                border-bottom: 2px solid #111111;
+                border-bottom: none;
             }
 
             .nav-item {
                 justify-content: center;
-                padding: 0.75rem;
-                font-size: 0.85rem;
+                padding: 0.6rem 0.8rem;
+                font-size: 0.88rem;
+                letter-spacing: 0.06em;
                 width: 100%;
+                border: 1.5px solid rgba(17, 17, 17, 0.25);
+                border-radius: 6px;
+                background-color: #f7f7f7;
+            }
+
+            .nav-item.active {
+                background-color: #111111;
+                color: #ffffff;
+                border-color: #111111;
             }
 
             .lang-toggle-container {
                 width: 100%;
-                padding: 0.75rem;
-                border-top: 2px solid #111111;
+                padding: 0.6rem 0.8rem;
+                border: 1.5px solid #111111;
+                border-radius: 6px;
                 justify-content: center;
+                background-color: #f7f7f7;
             }
 
             .lang-toggle-container:hover {
-                background-color: transparent;
+                background-color: #111111;
             }
 
             .lang-toggle-container:hover .globe-icon {
-                stroke: #111111;
+                stroke: #ffffff;
             }
 
             .lang-toggle-container:hover .lang-label {
-                color: #111111;
+                color: #E63946;
             }
 
             .scroll-viewport {
@@ -587,6 +604,13 @@
 
     <!-- SCRIPT PIPELINE -->
     <script>
+        // Clears stuck focus/active states when returning via browser back button
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                document.activeElement.blur();
+            }
+        });
+
         const translations = {
             en: {
                 "nav-arch": "Architecture", "nav-3d": "3D Design", "nav-res": "Research", "nav-cont": "Contact",
