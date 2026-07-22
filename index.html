@@ -185,7 +185,7 @@
             width: 100%;
         }
 
-        /* STRICT MOBILE VIEWPORT LOCK & MOBILE-ONLY HEIGHT STRETCH */
+        /* STRICT MOBILE VIEWPORT LOCK & INCREASED BODY FONT SIZING */
         @media (max-width: 768px) {
             html, body {
                 overflow: hidden !important; 
@@ -206,7 +206,6 @@
                 font-size: 11.5vw;
                 justify-content: space-between;
                 width: 100%;
-                /* Stretches height by 15% exclusively on mobile viewports without altering width */
                 transform: scaleY(1.15); 
             }
 
@@ -219,22 +218,24 @@
             }
 
             .center-content {
-                gap: 0.9rem;
+                gap: 0.8rem;
             }
 
+            /* Increased main text body size for comfortable mobile reading */
             .intro-text {
-                font-size: 0.85rem;
-                line-height: 1.35;
+                font-size: 1.02rem;
+                line-height: 1.45;
             }
 
             .portfolio-links {
-                gap: 0.35rem;
+                gap: 0.4rem;
                 justify-content: center;
             }
 
+            /* Increased button and navigation link font size for mobile */
             .project-link, .lang-btn {
-                font-size: 0.7rem;
-                padding: 0.3rem 0.6rem;
+                font-size: 0.8rem;
+                padding: 0.35rem 0.7rem;
                 letter-spacing: 0.05em;
             }
 
