@@ -352,22 +352,25 @@
                 display: none;
             }
 
-            /* Mobile Section Header Title */
+            /* Bounded, fluidly scaling mobile section title that never overflows */
             .mobile-header-title {
                 display: block;
                 padding-top: 0.25rem;
                 margin-bottom: 1.25rem;
-                padding-right: 3.5rem; /* Space so it doesn't collide with top home button */
+                padding-right: 3.5rem;
+                width: 100%;
+                overflow: hidden;
             }
 
             .mobile-header-title h1 {
                 font-family: 'Syne', sans-serif;
-                font-size: 1.8rem;
+                font-size: clamp(1.4rem, 7vw, 2.1rem);
                 font-weight: 800;
                 text-transform: uppercase;
-                letter-spacing: -0.03em;
+                letter-spacing: -0.04em;
                 line-height: 1;
                 color: #111111;
+                white-space: nowrap;
             }
 
             /* Floating Home Button on Top Right */
@@ -408,19 +411,22 @@
                 color: #ffffff;
             }
 
-            /* Instagram-style bottom navigation bar conforming to phone width */
+            /* Refined Instagram-style bottom navigation bar */
             .mobile-instagram-nav {
                 position: fixed;
                 bottom: 0;
                 left: 0;
                 width: 100%;
-                background-color: #f7f7f7;
-                border-top: 1.5px solid #111111;
+                background: rgba(247, 247, 247, 0.92);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                border-top: 1px solid rgba(17, 17, 17, 0.15);
                 display: flex;
                 justify-content: space-around;
                 align-items: center;
-                padding: 0.75rem 0.5rem calc(0.75rem + env(safe-area-inset-bottom)) 0.5rem;
+                padding: 0.8rem 1rem calc(0.8rem + env(safe-area-inset-bottom)) 1rem;
                 z-index: 9998;
+                box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.04);
             }
 
             .ig-nav-item {
@@ -431,25 +437,25 @@
                 color: #111111;
                 background: transparent;
                 border: none;
-                padding: 0.5rem;
+                padding: 0.25rem;
                 cursor: pointer;
-                transition: transform 0.2s ease;
+                transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
             }
 
             .ig-nav-item svg {
                 stroke: #111111;
                 fill: none;
-                stroke-width: 1.8;
+                stroke-width: 1.7;
                 stroke-linecap: round;
                 stroke-linejoin: round;
-                transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), stroke-width 0.2s ease;
-                width: 22px;
-                height: 22px;
+                transition: transform 0.2s ease, stroke-width 0.2s ease;
+                width: 21px;
+                height: 21px;
             }
 
             .ig-nav-item .lang-text {
                 font-family: 'Space Grotesk', sans-serif;
-                font-size: 0.75rem;
+                font-size: 0.72rem;
                 font-weight: 700;
                 letter-spacing: 0.05em;
                 color: #111111;
@@ -457,13 +463,13 @@
             }
 
             .ig-nav-item.active svg {
-                stroke-width: 2.5;
-                transform: scale(1.25);
+                stroke-width: 2.3;
+                transform: scale(1.2);
             }
 
             .ig-nav-item.active .lang-text {
                 font-weight: 800;
-                transform: scale(1.15);
+                transform: scale(1.1);
             }
 
             .ig-nav-item:active {
