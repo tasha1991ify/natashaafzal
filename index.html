@@ -218,13 +218,13 @@
             }
 
             .center-content {
-                gap: 0rem; /* Handled via individual spacing below */
+                gap: 0rem; 
             }
 
             .intro-text {
                 font-size: 1.12rem;
                 line-height: 1.45;
-                margin-bottom: 1.5rem; /* Increased padding/space between text body and nav bar */
+                margin-bottom: 1.5rem; 
             }
 
             .portfolio-links {
@@ -232,13 +232,12 @@
                 justify-content: center;
             }
 
-            /* Increased font size and padding for mobile nav items */
             .project-link {
                 background-color: transparent;
                 border: 1.5px solid rgba(17, 17, 17, 0.25);
                 border-radius: 6px;
-                font-size: 0.88rem; /* Increased from 0.8rem */
-                padding: 0.45rem 0.85rem; /* Slightly increased touch target padding */
+                font-size: 0.88rem; 
+                padding: 0.45rem 0.85rem; 
                 letter-spacing: 0.06em;
             }
 
@@ -249,7 +248,7 @@
             }
 
             .lang-btn {
-                font-size: 0.88rem; /* Increased from 0.8rem */
+                font-size: 0.88rem; 
                 padding: 0.45rem 0.85rem;
                 letter-spacing: 0.06em;
                 border-radius: 6px;
@@ -293,6 +292,13 @@
     </div>
 
     <script>
+        // Clears stuck focus/active states when returning via browser back button
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                document.activeElement.blur();
+            }
+        });
+
         const translations = {
             en: {
                 "intro": "I've always enjoyed creating things. Architecture became the foundation for that, but my curiosity has led me into 3D visualization, digital environments, and game design. No matter the medium, I enjoy designing spaces that tell a story and feel natural to experience.",
