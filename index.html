@@ -24,7 +24,7 @@
             font-family: 'Space Grotesk', sans-serif;
             overflow: hidden; 
             -webkit-font-smoothing: antialiased;
-            cursor: none; /* Hides default mouse pointer */
+            cursor: none;
         }
 
         /* HEAVY INDUSTRIAL AUTOCAD CROSSHAIR ELEMENT */
@@ -49,7 +49,6 @@
             background-color: #000000;
         }
 
-        /* Vertical axis (3px Thick) */
         .custom-crosshair::before {
             top: 0;
             left: calc(50% - 1.5px);
@@ -57,7 +56,6 @@
             height: 100%;
         }
 
-        /* Horizontal axis (3px Thick) */
         .custom-crosshair::after {
             top: 50%;
             left: 0;
@@ -65,32 +63,42 @@
             height: 3px;
         }
 
-        /* Hover expansion targeting state */
         .custom-crosshair.expand {
             width: 55px;
             height: 55px;
         }
 
-        /* The Main Screen Frame (Pushed completely to edges) */
+        /* The Main Screen Frame */
         .homepage-container {
             display: flex;
             flex-direction: column;
             justify-content: space-between; 
             height: 100%;
-            padding: 0.5rem 2.5rem; 
+            padding: 1.5rem 2.5rem; 
         }
 
-        /* 1. TOP NAME (Natasha) */
+        /* 1. TOP NAME (Natasha - Solid crisp vector lines) */
         .top-name {
             font-family: 'Syne', sans-serif;
             font-size: 12vw; 
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: -0.04em;
+            letter-spacing: -0.05em;
             line-height: 0.75;
             width: 100%;
             display: flex;
             justify-content: space-between; 
+        }
+
+        .top-name span, .bottom-name span {
+            color: #111111; 
+            -webkit-text-stroke: 0.8px #111111; 
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        .top-name span:hover, .bottom-name span:hover {
+            color: #E63946; 
+            -webkit-text-stroke: 0.8px #E63946;
         }
 
         /* 2. CENTER CONTENT AREA */
@@ -101,22 +109,20 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 2.5rem;
+            gap: 2rem;
             z-index: 10;
         }
 
-        /* Custom User Intro Write-up Paragraph */
         .intro-text {
-           font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.2rem; 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.15rem; 
             line-height: 1.6;
             color: #111111;
-            max-width: 960px; 
+            max-width: 900px; 
             font-weight: 400;
             letter-spacing: -0.02em;
         }
 
-        /* The Clickable Links Grid Row */
         .portfolio-links {
             display: flex;
             flex-direction: row; 
@@ -134,22 +140,18 @@
             color: #111111;
             text-transform: uppercase;
             letter-spacing: 0.12em;
-            
             padding: 0.6rem 1.2rem; 
             background-color: transparent;
             border-radius: 4px; 
-            
             transition: background-color 0.2s ease, color 0.2s ease; 
             cursor: none;
         }
 
-        /* The Filled Red Rectangle Hover State */
         .project-link:hover {
             background-color: #E63946; 
             color: #FFFFFF; 
         }
 
-        /* LANGUAGE CONTROLLER UI TOGGLE BUTTON */
         .lang-btn {
             background: transparent;
             border: 2px solid #111111;
@@ -170,28 +172,66 @@
             color: #ffffff;
         }
 
-        /* 3. BOTTOM NAME (Afzal) */
+        /* 3. BOTTOM NAME (Afzal - Solid crisp vector lines) */
         .bottom-name {
             font-family: 'Syne', sans-serif;
             font-size: 12vw;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: -0.04em;
+            letter-spacing: -0.05em;
             line-height: 0.75;
             display: flex;
             justify-content: space-between;
             width: 100%;
         }
 
-        /* Mobile Scale Adjustments */
+        /* MOBILE RESPONSIVE OPTIMIZATIONS */
         @media (max-width: 768px) {
-            .homepage-container { padding: 0.5rem 1.5rem; }
-            .intro-text { font-size: 1.05rem; line-height: 1.5; }
-            .portfolio-links { gap: 0.5rem; }
-            .project-link, .lang-btn { font-size: 0.8rem; letter-spacing: 0.08em; padding: 0.5rem 0.8rem; }
-            
-            html, body { cursor: auto; }
-            .custom-crosshair { display: none; }
+            html, body {
+                overflow-y: auto; /* Allow natural scrolling on mobile */
+                height: auto;
+                cursor: auto; /* Revert to standard phone touch cursor */
+            }
+
+            .homepage-container {
+                height: auto;
+                min-height: 100vh;
+                padding: 2rem 1.25rem;
+                justify-content: space-between;
+                gap: 2.5rem;
+            }
+
+            /* Stack names neatly centered on mobile instead of forcing full-width stretches */
+            .top-name, .bottom-name {
+                font-size: 16vw;
+                justify-content: center;
+                gap: 0.15em;
+            }
+
+            .center-content {
+                gap: 1.8rem;
+            }
+
+            .intro-text {
+                font-size: 1rem;
+                line-height: 1.55;
+            }
+
+            .portfolio-links {
+                gap: 0.8rem;
+                justify-content: center;
+            }
+
+            .project-link, .lang-btn {
+                font-size: 0.85rem;
+                padding: 0.5rem 1rem;
+                letter-spacing: 0.08em;
+            }
+
+            /* Hide custom crosshair on touch devices */
+            .custom-crosshair {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -227,7 +267,6 @@
     </div>
 
     <script>
-        // 1. DICTIONARY DEFINITION
         const translations = {
             en: {
                 "intro": "I've always enjoyed creating things. Architecture became the foundation for that, but my curiosity has led me into 3D visualization, digital environments, and game design. No matter the medium, I enjoy designing spaces that tell a story and feel natural to experience.",
@@ -245,7 +284,6 @@
             }
         };
 
-        // 2. STATE MANAGER & PREFERENCE LOADING
         let currentLang = localStorage.getItem('portfolio-lang') || 'en';
         const langToggleBtn = document.getElementById('langToggle');
 
@@ -256,21 +294,17 @@
                     element.textContent = translations[lang][key];
                 }
             });
-            // Show the alternative string selection option on the button surface
             langToggleBtn.textContent = lang === 'en' ? 'TR' : 'EN';
         }
 
-        // 3. LISTEN TO TOGGLE INTERFACE TRIGGER
         langToggleBtn.addEventListener('click', () => {
             currentLang = currentLang === 'en' ? 'tr' : 'en';
-            localStorage.setItem('portfolio-lang', currentLang); // Pin translation value into local disk memory
+            localStorage.setItem('portfolio-lang', currentLang);
             applyTranslations(currentLang);
         });
 
-        // Initialize translations on launch window tick
         applyTranslations(currentLang);
 
-        // 4. MOUSE CURSOR CROSSHAIR SMOOTH RENDERING PIPELINE
         const crosshair = document.getElementById('crosshair');
         const interactables = document.querySelectorAll('.project-link, .lang-btn');
 
