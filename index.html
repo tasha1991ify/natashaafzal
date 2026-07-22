@@ -132,7 +132,7 @@
             align-items: center;
         }
         
-        /* Desktop Links: Clean text style with underline hover */
+        /* Desktop Links: Clean text style without borders */
         .project-link {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 0.95rem;
@@ -145,13 +145,13 @@
             background-color: transparent;
             border: none;
             border-radius: 0;
-            transition: color 0.2s ease; 
+            transition: background-color 0.2s ease, color 0.2s ease; 
             cursor: none;
         }
 
         .project-link:hover {
-            color: #E63946; 
-            background-color: transparent;
+            background-color: #E63946; 
+            color: #FFFFFF; 
         }
 
         /* Desktop Language Button */
@@ -188,7 +188,7 @@
             width: 100%;
         }
 
-        /* STRICT MOBILE VIEWPORT STYLING (Rounded borders & mobile tweaks applied here) */
+        /* STRICT MOBILE VIEWPORT STYLING (Rounded borders & mobile tweaks applied here only) */
         @media (max-width: 768px) {
             html, body {
                 overflow-y: auto !important; 
@@ -234,6 +234,7 @@
 
             /* Mobile-only rounded borders for navigation items */
             .project-link {
+                background-color: transparent;
                 border: 1.5px solid rgba(17, 17, 17, 0.25);
                 border-radius: 6px;
                 font-size: 0.8rem;
