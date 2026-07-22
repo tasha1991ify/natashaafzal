@@ -19,7 +19,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent; /* Removes mobile tap highlight box */
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* LOCKED VIEWPANEL INTERIOR */
@@ -353,17 +353,17 @@
                 display: none;
             }
 
-            /* Stacked multi-line title layout with strict text-width underline */
+            /* Stacked multi-line title layout matching project card full width */
             .mobile-header-block {
-                display: inline-block;
+                width: 100%;
                 padding-top: 0.25rem;
                 margin-bottom: 1.5rem;
-                padding-right: 3.5rem; /* Leaves clean breathing room for top-right NA badge */
+                padding-right: 3.5rem; /* Leaves room for top-right NA badge */
             }
 
             .mobile-title-stack {
                 font-family: 'Syne', sans-serif;
-                font-size: 1.35rem; /* Refined compact size */
+                font-size: 1.35rem;
                 font-weight: 800;
                 text-transform: uppercase;
                 letter-spacing: -0.03em;
@@ -377,7 +377,7 @@
                 display: block;
             }
 
-            /* Thick accent rule spanning precisely the text block width */
+            /* Thick accent rule spanning the full width of the project card container */
             .mobile-title-underline {
                 display: block;
                 width: 100%;
@@ -385,7 +385,7 @@
                 background-color: #111111;
             }
 
-            /* Floating Home Button on Top Right */
+            /* Floating Home Button on Top Right (Solid Black Fill, White NA text) */
             .mobile-top-home {
                 position: fixed;
                 top: 1rem;
@@ -393,18 +393,16 @@
                 width: 40px;
                 height: 40px;
                 border-radius: 50%;
-                background: rgba(247, 247, 247, 0.85);
-                backdrop-filter: blur(12px);
-                -webkit-backdrop-filter: blur(12px);
+                background-color: #111111;
                 border: 1.5px solid #111111;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 text-decoration: none;
                 z-index: 9998;
-                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
                 transition: transform 0.2s ease, background-color 0.2s ease;
-                outline: none; /* Strips browser focus ring */
+                outline: none;
             }
 
             .mobile-top-home:focus,
@@ -417,25 +415,20 @@
                 font-size: 0.65rem;
                 font-weight: 800;
                 letter-spacing: -0.05em;
-                color: #111111;
-            }
-
-            .mobile-top-home:hover {
-                background-color: #111111;
-                transform: scale(1.05);
-            }
-
-            .mobile-top-home:hover .na-text {
                 color: #ffffff;
             }
 
-            /* Split-profile bottom nav bar (half-height background rectangle, half-out floating pills with text abbreviations) */
+            .mobile-top-home:hover {
+                transform: scale(1.05);
+            }
+
+            /* Split-profile bottom nav bar (half-height background rectangle, larger half-out floating pills) */
             .mobile-split-nav {
                 position: fixed;
                 bottom: 0;
                 left: 0;
                 width: 100%;
-                height: 32px; /* Slim background footprint */
+                height: 36px; /* Slightly taller background footprint */
                 background-color: #111111; /* Solid black fill */
                 display: flex;
                 justify-content: space-around;
@@ -446,32 +439,32 @@
 
             .split-nav-item {
                 position: relative;
-                top: -12px; /* Lifts pills so they sit precisely half-in, half-out of the black bar */
+                top: -14px; /* Lifts larger pills so they sit precisely half-in, half-out */
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 text-decoration: none;
-                padding: 0 0.65rem;
-                height: 38px;
-                border-radius: 20px; /* Sleek pill shape to fit short text */
+                padding: 0 0.85rem;
+                height: 44px; /* Increased height for better mobile touch target */
+                border-radius: 22px; /* Sleek pill shape */
                 background-color: #ffffff; /* High contrast card fill */
                 border: 2px solid #111111;
                 color: #111111;
                 cursor: pointer;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
                 transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease, color 0.2s ease;
                 white-space: nowrap;
-                outline: none; /* Strips browser focus ring / blue outline */
+                outline: none;
             }
 
             .split-nav-item:focus,
             .split-nav-item:active {
-                outline: none; /* Completely bypasses the browser focus/tap box */
+                outline: none;
             }
 
             .split-nav-item .pill-text {
                 font-family: 'Space Grotesk', sans-serif;
-                font-size: 0.65rem;
+                font-size: 0.72rem; /* Scaled up slightly for better legibility */
                 font-weight: 800;
                 letter-spacing: 0.05em;
                 text-transform: uppercase;
@@ -482,7 +475,7 @@
             .split-nav-item.active {
                 background-color: #E63946; /* Bold highlight color for active state */
                 border-color: #111111;
-                transform: translateY(-3px) scale(1.08);
+                transform: translateY(-4px) scale(1.08);
             }
 
             .split-nav-item.active .pill-text {
@@ -560,11 +553,10 @@
             </nav>
         </header>
 
-        <!-- MOBILE STACKED TITLE BLOCK WITH TEXT-WIDTH UNDERLINE -->
+        <!-- MOBILE STACKED TITLE BLOCK WITH FULL CARD-WIDTH UNDERLINE -->
         <div class="mobile-header-block">
             <h1 class="mobile-title-stack">
-                <span data-key="nav-arch-line1">Arch-</span>
-                <span data-key="nav-arch-line2">tecture</span>
+                <span data-key="nav-arch-line1">Architecture</span>
             </h1>
             <div class="mobile-title-underline"></div>
         </div>
@@ -695,7 +687,7 @@
 
     </div>
 
-    <!-- SPLIT-PROFILE MOBILE BOTTOM NAVIGATION BAR WITH TEXT PILLS -->
+    <!-- SPLIT-PROFILE MOBILE BOTTOM NAVIGATION BAR WITH LARGER TEXT PILLS -->
     <nav class="mobile-split-nav">
         <!-- Architecture (Active - Highlighted focal point) -->
         <a href="architecture.html" class="split-nav-item active" title="Architecture">
@@ -731,7 +723,7 @@
         const translations = {
             en: {
                 "nav-arch": "Arch", "nav-3d": "3D", "nav-res": "Res", "nav-cont": "Cont",
-                "nav-arch-line1": "Arch-", "nav-arch-line2": "tecture",
+                "nav-arch-line1": "Architecture",
                 "p1-meta": "Case Study 01 // Urban Design", "p1-title": "Kahramanmaraş Meydan", "p1-desc": "Reimagining the historic Meydan area through a balanced framework of restorative urban planning and precision 3D architectural visualization.",
                 "p2-meta": "Case Study 02 // Communal Architecture", "p2-title": "The Core-munal", "p2-desc": "Addressing regional housing shortages in Maseru through neighborhood production modules and functional core architecture engineered to empower rural-urban migrations.",
                 "p3-meta": "Case Study 03 // Residential Landscape", "p3-title": "Hill House", "p3-desc": "A contemporary alpine residential concept highlighting contextual materiality, highly articulated solar profiles, and smooth programmatic spatial transitions.",
@@ -744,7 +736,7 @@
             },
             tr: {
                 "nav-arch": "Mim", "nav-3d": "3D", "nav-res": "Arş", "nav-cont": "İlet",
-                "nav-arch-line1": "Mim-", "nav-arch-line2": "arlık",
+                "nav-arch-line1": "Mimarlık",
                 "p1-meta": "Vaka Çalışması 01 // Kentsel Tasarım", "p1-title": "Kahramanmaraş Meydanı", "p1-desc": "Tarihi Meydan alanını, restoratif kentsel planlama ve hassas 3D mimari görselleştirme dengesiyle yeniden kurgulamak.",
                 "p2-meta": "Vaka Çalışması 02 // Toplumsal Mimari", "p2-title": "The Core-munal", "p2-desc": "Kırsaldan kente göçü desteklemek amacıyla tasarlanmış modüllerle Maseru'daki konut sıkıntısına çözüm sunan bir kamusal yerleşim projesi.",
                 "p3-meta": "Vaka Çalışması 03 // Konut Peyzajı", "p3-title": "Dağ Evi", "p3-desc": "Malzeme dokusuna, kontrollü güneş ışığı alımına ve mekanlar arası akıcı geçişlere odaklanan çağdaş bir dağ evi konsepti.",
@@ -752,7 +744,7 @@
                 "p5-meta": "Vaka Çalışması 05 // Kamusal Alan Enstalasyonu", "p5-title": "Pergola Köşk", "p5-desc": "Modüler gölgelendirme sistemleri ve ahşap karkas yapı üzerine bir çalışma; gölge oyunlarına ve malzeme ömrüne odaklanmıştır.",
                 "p6-meta": "Vaka Çalışması 06 // Konut Mimarisi", "p6-title": "AJ Evi", "p6-desc": "Sıcak malzeme paletlerine ve kesintisiz iç-dış mekan geçişlerine odaklanan çağdaş bir konut tasarımı.",
                 "p7-meta": "Vaka Çalışması 07 // Görsel Sunum", "p7-title": "UCHR Otel", "p7-desc": "Kapadokya'nın kendine özgü doğal peyzajı ve yerel mimari dokusuyla bütünleşen lüks otel projesinin yüksek sadakatli 3D görselleştirme çalışması.",
-                "p8-meta": "Vaka Çalışması 08 // Sürdürülebilir İç Mimari", "p8-title": "DIY Eatery", "p8-desc": "Sosyal ve çevresel sürdürülebilirliğe dayanan DIY Eatery'nin iç mekan önerisi, geri kazanılmış ahşap unsurları kullanan beşikten beşiğe tasarım metodolojisini benimsiyor.",
+                "p8-meta": "Vaka Çalışness 08 // Sürdürülebilir İç Mimari", "p8-title": "DIY Eatery", "p8-desc": "Sosyal ve çevresel sürdürülebilirliğe dayanan DIY Eatery'nin iç mekan önerisi, geri kazanılmış ahşap unsurları kullanan beşikten beşiğe tasarım metodolojisini benimsiyor.",
                 "p9-meta": "Vaka Çalışması 09 // Ticari Sergi", "p9-title": "Qaswa Köşkü", "p9-desc": "Havacılık ve savunma fuarları için tasarlanmış özel bir sergi köşkü. Fiziksel maketler, hologramlar ve LED ekranlar için optimize edilmiş sirkülasyon şeması."
             }
         };
