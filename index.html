@@ -132,6 +132,7 @@
             align-items: center;
         }
         
+        /* Desktop Links: Clean text style with underline hover */
         .project-link {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 0.95rem;
@@ -142,16 +143,18 @@
             letter-spacing: 0.12em;
             padding: 0.6rem 1.2rem; 
             background-color: transparent;
-            border-radius: 4px; 
-            transition: background-color 0.2s ease, color 0.2s ease; 
+            border: none;
+            border-radius: 0;
+            transition: color 0.2s ease; 
             cursor: none;
         }
 
         .project-link:hover {
-            background-color: #E63946; 
-            color: #FFFFFF; 
+            color: #E63946; 
+            background-color: transparent;
         }
 
+        /* Desktop Language Button */
         .lang-btn {
             background: transparent;
             border: 2px solid #111111;
@@ -185,10 +188,10 @@
             width: 100%;
         }
 
-        /* STRICT MOBILE VIEWPORT (Allows pull-to-refresh & larger text) */
+        /* STRICT MOBILE VIEWPORT STYLING (Rounded borders & mobile tweaks applied here) */
         @media (max-width: 768px) {
             html, body {
-                overflow-y: auto !important; /* Re-enables native touch bouncing and pull-to-refresh */
+                overflow-y: auto !important; 
                 height: 100dvh;
                 cursor: auto; 
             }
@@ -219,7 +222,6 @@
                 gap: 0.8rem;
             }
 
-            /* Increased main text body size for mobile readability */
             .intro-text {
                 font-size: 1.12rem;
                 line-height: 1.45;
@@ -230,10 +232,26 @@
                 justify-content: center;
             }
 
-            .project-link, .lang-btn {
+            /* Mobile-only rounded borders for navigation items */
+            .project-link {
+                border: 1.5px solid rgba(17, 17, 17, 0.25);
+                border-radius: 6px;
                 font-size: 0.8rem;
                 padding: 0.35rem 0.7rem;
                 letter-spacing: 0.05em;
+            }
+
+            .project-link:hover {
+                background-color: #E63946;
+                border-color: #E63946;
+                color: #FFFFFF;
+            }
+
+            .lang-btn {
+                font-size: 0.8rem;
+                padding: 0.35rem 0.7rem;
+                letter-spacing: 0.05em;
+                border-radius: 6px;
             }
 
             .custom-crosshair {
