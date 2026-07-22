@@ -323,9 +323,9 @@
         }
 
         /* MOBILE ELEMENTS (Hidden on Desktop) */
-        .mobile-header-title,
+        .mobile-header-block,
         .mobile-top-home,
-        .mobile-instagram-nav {
+        .mobile-split-nav {
             display: none;
         }
 
@@ -352,25 +352,36 @@
                 display: none;
             }
 
-            /* Bounded, fluidly scaling mobile section title that never overflows */
-            .mobile-header-title {
-                display: block;
+            /* Stacked multi-line title layout with strict text-width underline */
+            .mobile-header-block {
+                display: inline-block;
                 padding-top: 0.25rem;
-                margin-bottom: 1.25rem;
-                padding-right: 3.5rem;
-                width: 100%;
-                overflow: hidden;
+                margin-bottom: 1.75rem;
+                padding-right: 3.5rem; /* Leaves clean breathing room for top-right NA badge */
             }
 
-            .mobile-header-title h1 {
+            .mobile-title-stack {
                 font-family: 'Syne', sans-serif;
-                font-size: clamp(1.4rem, 7vw, 2.1rem);
+                font-size: 2.1rem;
                 font-weight: 800;
                 text-transform: uppercase;
-                letter-spacing: -0.04em;
-                line-height: 1;
+                letter-spacing: -0.03em;
+                line-height: 1.05;
                 color: #111111;
-                white-space: nowrap;
+                margin-bottom: 0.5rem;
+                display: inline-block;
+            }
+
+            .mobile-title-stack span {
+                display: block;
+            }
+
+            /* Thick accent rule spanning precisely the text block width */
+            .mobile-title-underline {
+                display: block;
+                width: 100%;
+                height: 3.5px;
+                background-color: #111111;
             }
 
             /* Floating Home Button on Top Right */
@@ -411,69 +422,75 @@
                 color: #ffffff;
             }
 
-            /* Refined Instagram-style bottom navigation bar */
-            .mobile-instagram-nav {
+            /* Split-profile bottom nav bar (half-height background rectangle, half-out floating icons) */
+            .mobile-split-nav {
                 position: fixed;
                 bottom: 0;
                 left: 0;
                 width: 100%;
-                background: rgba(247, 247, 247, 0.92);
-                backdrop-filter: blur(12px);
-                -webkit-backdrop-filter: blur(12px);
-                border-top: 1px solid rgba(17, 17, 17, 0.15);
+                height: 32px; /* Slim background footprint */
+                background-color: #111111; /* Solid black fill */
                 display: flex;
                 justify-content: space-around;
                 align-items: center;
-                padding: 0.8rem 1rem calc(0.8rem + env(safe-area-inset-bottom)) 1rem;
                 z-index: 9998;
-                box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.04);
+                padding-bottom: env(safe-area-inset-bottom);
             }
 
-            .ig-nav-item {
+            .split-nav-item {
+                position: relative;
+                top: -12px; /* Lifts icons so they sit precisely half-in, half-out of the black bar */
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 text-decoration: none;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background-color: #ffffff; /* High contrast card fill */
+                border: 2px solid #111111;
                 color: #111111;
-                background: transparent;
-                border: none;
-                padding: 0.25rem;
                 cursor: pointer;
-                transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease, color 0.2s ease;
             }
 
-            .ig-nav-item svg {
+            .split-nav-item svg {
                 stroke: #111111;
                 fill: none;
-                stroke-width: 1.7;
+                stroke-width: 2;
                 stroke-linecap: round;
                 stroke-linejoin: round;
-                transition: transform 0.2s ease, stroke-width 0.2s ease;
-                width: 21px;
-                height: 21px;
+                width: 18px;
+                height: 18px;
+                transition: stroke 0.2s ease;
             }
 
-            .ig-nav-item .lang-text {
+            .split-nav-item .lang-text {
                 font-family: 'Space Grotesk', sans-serif;
-                font-size: 0.72rem;
-                font-weight: 700;
+                font-size: 0.65rem;
+                font-weight: 800;
                 letter-spacing: 0.05em;
                 color: #111111;
-                transition: transform 0.2s ease;
             }
 
-            .ig-nav-item.active svg {
-                stroke-width: 2.3;
-                transform: scale(1.2);
+            /* Active focal point styling */
+            .split-nav-item.active {
+                background-color: #E63946; /* Bold highlight color for active state */
+                border-color: #111111;
+                transform: translateY(-3px) scale(1.1);
             }
 
-            .ig-nav-item.active .lang-text {
-                font-weight: 800;
-                transform: scale(1.1);
+            .split-nav-item.active svg {
+                stroke: #ffffff;
             }
 
-            .ig-nav-item:active {
-                transform: scale(0.9);
+            .split-nav-item.active .lang-text {
+                color: #ffffff;
+            }
+
+            .split-nav-item:active {
+                transform: scale(0.95);
             }
 
             .scroll-viewport {
@@ -543,9 +560,13 @@
             </nav>
         </header>
 
-        <!-- MOBILE SECTION TITLE -->
-        <div class="mobile-header-title">
-            <h1 data-key="nav-arch">Architecture</h1>
+        <!-- MOBILE STACKED TITLE BLOCK WITH TEXT-WIDTH UNDERLINE -->
+        <div class="mobile-header-block">
+            <h1 class="mobile-title-stack">
+                <span data-key="nav-arch-line1">Arch-</span>
+                <span data-key="nav-arch-line2">tecture</span>
+            </h1>
+            <div class="mobile-title-underline"></div>
         </div>
 
         <!-- HORIZONTAL SCROLL CHANNEL -->
@@ -674,26 +695,26 @@
 
     </div>
 
-    <!-- INSTAGRAM-STYLE MOBILE BOTTOM NAVIGATION BAR -->
-    <nav class="mobile-instagram-nav">
-        <!-- Architecture (Active - Scaled up focal point) -->
-        <a href="architecture.html" class="ig-nav-item active" title="Architecture">
+    <!-- SPLIT-PROFILE MOBILE BOTTOM NAVIGATION BAR -->
+    <nav class="mobile-split-nav">
+        <!-- Architecture (Active - Highlighted focal point) -->
+        <a href="architecture.html" class="split-nav-item active" title="Architecture">
             <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
         </a>
         <!-- 3D Design -->
-        <a href="3d-design.html" class="ig-nav-item" title="3D Design">
+        <a href="3d-design.html" class="split-nav-item" title="3D Design">
             <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
         </a>
         <!-- Research -->
-        <a href="research.html" class="ig-nav-item" title="Research">
+        <a href="research.html" class="split-nav-item" title="Research">
             <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
         </a>
         <!-- Contact -->
-        <a href="contact.html" class="ig-nav-item" title="Contact">
+        <a href="contact.html" class="split-nav-item" title="Contact">
             <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
         </a>
         <!-- Language Toggle -->
-        <button id="langToggleMobile" class="ig-nav-item" title="Language">
+        <button id="langToggleMobile" class="split-nav-item" title="Language">
             <span id="langLabelMobile" class="lang-text">TR</span>
         </button>
     </nav>
@@ -710,6 +731,7 @@
         const translations = {
             en: {
                 "nav-arch": "Architecture", "nav-3d": "3D Design", "nav-res": "Research", "nav-cont": "Contact",
+                "nav-arch-line1": "Arch-", "nav-arch-line2": "tecture",
                 "p1-meta": "Case Study 01 // Urban Design", "p1-title": "Kahramanmaraş Meydan", "p1-desc": "Reimagining the historic Meydan area through a balanced framework of restorative urban planning and precision 3D architectural visualization.",
                 "p2-meta": "Case Study 02 // Communal Architecture", "p2-title": "The Core-munal", "p2-desc": "Addressing regional housing shortages in Maseru through neighborhood production modules and functional core architecture engineered to empower rural-urban migrations.",
                 "p3-meta": "Case Study 03 // Residential Landscape", "p3-title": "Hill House", "p3-desc": "A contemporary alpine residential concept highlighting contextual materiality, highly articulated solar profiles, and smooth programmatic spatial transitions.",
@@ -722,6 +744,7 @@
             },
             tr: {
                 "nav-arch": "Mimarlık", "nav-3d": "3D Tasarım", "nav-res": "Araştırma", "nav-cont": "İletişim",
+                "nav-arch-line1": "Mim-", "nav-arch-line2": "arlık",
                 "p1-meta": "Vaka Çalışması 01 // Kentsel Tasarım", "p1-title": "Kahramanmaraş Meydanı", "p1-desc": "Tarihi Meydan alanını, restoratif kentsel planlama ve hassas 3D mimari görselleştirme dengesiyle yeniden kurgulamak.",
                 "p2-meta": "Vaka Çalışması 02 // Toplumsal Mimari", "p2-title": "The Core-munal", "p2-desc": "Kırsaldan kente göçü desteklemek amacıyla tasarlanmış modüllerle Maseru'daki konut sıkıntısına çözüm sunan bir kamusal yerleşim projesi.",
                 "p3-meta": "Vaka Çalışması 03 // Konut Peyzajı", "p3-title": "Dağ Evi", "p3-desc": "Malzeme dokusuna, kontrollü güneş ışığı alımına ve mekanlar arası akıcı geçişlere odaklanan çağdaş bir dağ evi konsepti.",
@@ -769,7 +792,7 @@
 
         window.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
         function bindCrosshairListeners() {
-            document.querySelectorAll('.spread-item, .brand-logo, .nav-item, .lang-toggle-container, .ig-nav-item, .mobile-top-home').forEach(item => {
+            document.querySelectorAll('.spread-item, .brand-logo, .nav-item, .lang-toggle-container, .split-nav-item, .mobile-top-home').forEach(item => {
                 item.addEventListener('mouseenter', () => crosshair.classList.add('expand'));
                 item.addEventListener('mouseleave', () => crosshair.classList.remove('expand'));
             });
