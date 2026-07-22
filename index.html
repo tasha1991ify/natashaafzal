@@ -74,20 +74,22 @@
             flex-direction: column;
             justify-content: space-between; 
             height: 100%;
-            padding: 0.75rem 2.5rem; /* Slightly increased vertical breathing room */
+            padding: 0.5rem 2.5rem; 
         }
 
-        /* 1. TOP NAME (Natasha - Stretched edge-to-edge on desktop) */
+        /* 1. TOP NAME (Natasha - Stretched edge-to-edge on desktop with height boost) */
         .top-name {
             font-family: 'Syne', sans-serif;
             font-size: 12vw; 
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: -0.05em;
-            line-height: 0.85; /* Slightly increased line height for height balance */
+            line-height: 0.75;
             width: 100%;
             display: flex;
             justify-content: space-between; 
+            transform: scaleY(1.15); /* Stretches height by 15% without changing width */
+            transform-origin: top;
         }
 
         .top-name span, .bottom-name span {
@@ -103,22 +105,22 @@
 
         /* 2. CENTER CONTENT AREA */
         .center-content {
-            max-width: 950px; /* Slightly richer width without changing layout style */
+            max-width: 900px;
             margin: 0 auto;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 2.2rem;
+            gap: 2rem;
             z-index: 10;
         }
 
         .intro-text {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.25rem; /* Slightly larger text to reduce dead whitespace */
-            line-height: 1.6;
+            font-size: 1.15rem; 
+            line-height: 1.5;
             color: #111111;
-            max-width: 950px; 
+            max-width: 900px; 
             font-weight: 400;
             letter-spacing: -0.02em;
         }
@@ -127,7 +129,7 @@
             display: flex;
             flex-direction: row; 
             justify-content: center;
-            gap: 1.5rem; 
+            gap: 1.2rem; 
             flex-wrap: wrap; 
             align-items: center;
         }
@@ -172,17 +174,19 @@
             color: #ffffff;
         }
 
-        /* 3. BOTTOM NAME (Afzal - Stretched edge-to-edge on desktop) */
+        /* 3. BOTTOM NAME (Afzal - Stretched edge-to-edge on desktop with height boost) */
         .bottom-name {
             font-family: 'Syne', sans-serif;
             font-size: 12vw;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: -0.05em;
-            line-height: 0.85;
+            line-height: 0.75;
             display: flex;
             justify-content: space-between;
             width: 100%;
+            transform: scaleY(1.15); /* Stretches height by 15% without changing width */
+            transform-origin: bottom;
         }
 
         /* STRICT MOBILE VIEWPORT LOCK */
@@ -197,35 +201,45 @@
             .homepage-container {
                 height: 100vh;
                 height: 100dvh;
-                padding: 1rem 1rem;
+                padding: 0.75rem 1rem;
                 justify-content: space-between;
-                gap: 0.5rem;
+                gap: 0.2rem;
             }
 
             .top-name, .bottom-name {
                 font-size: 11.5vw;
                 justify-content: space-between;
                 width: 100%;
-                line-height: 0.9;
+            }
+
+            /* Scales height by 15% cleanly on mobile viewports */
+            .top-name {
+                transform: scaleY(1.15);
+                transform-origin: top;
+            }
+
+            .bottom-name {
+                transform: scaleY(1.15);
+                transform-origin: bottom;
             }
 
             .center-content {
-                gap: 1.2rem;
+                gap: 0.9rem;
             }
 
             .intro-text {
-                font-size: 0.92rem;
-                line-height: 1.45;
+                font-size: 0.85rem;
+                line-height: 1.35;
             }
 
             .portfolio-links {
-                gap: 0.4rem;
+                gap: 0.35rem;
                 justify-content: center;
             }
 
             .project-link, .lang-btn {
-                font-size: 0.75rem;
-                padding: 0.35rem 0.7rem;
+                font-size: 0.7rem;
+                padding: 0.3rem 0.6rem;
                 letter-spacing: 0.05em;
             }
 
