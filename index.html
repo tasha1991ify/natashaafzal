@@ -132,7 +132,7 @@
             align-items: center;
         }
         
-        /* Desktop Links: Original slightly rounded filled rectangle hover effect */
+        /* Desktop Links */
         .project-link {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 0.95rem;
@@ -143,7 +143,7 @@
             letter-spacing: 0.12em;
             padding: 0.6rem 1.2rem; 
             background-color: transparent;
-            border-radius: 4px; /* Restored original rounded rectangular hover shape */
+            border-radius: 4px; 
             transition: background-color 0.2s ease, color 0.2s ease; 
             cursor: none;
         }
@@ -218,27 +218,28 @@
             }
 
             .center-content {
-                gap: 0.8rem;
+                gap: 0rem; /* Handled via individual spacing below */
             }
 
             .intro-text {
                 font-size: 1.12rem;
                 line-height: 1.45;
+                margin-bottom: 1.5rem; /* Increased padding/space between text body and nav bar */
             }
 
             .portfolio-links {
-                gap: 0.4rem;
+                gap: 0.5rem;
                 justify-content: center;
             }
 
-            /* Mobile-only structural outlines */
+            /* Increased font size and padding for mobile nav items */
             .project-link {
                 background-color: transparent;
                 border: 1.5px solid rgba(17, 17, 17, 0.25);
                 border-radius: 6px;
-                font-size: 0.8rem;
-                padding: 0.35rem 0.7rem;
-                letter-spacing: 0.05em;
+                font-size: 0.88rem; /* Increased from 0.8rem */
+                padding: 0.45rem 0.85rem; /* Slightly increased touch target padding */
+                letter-spacing: 0.06em;
             }
 
             .project-link:hover {
@@ -248,9 +249,9 @@
             }
 
             .lang-btn {
-                font-size: 0.8rem;
-                padding: 0.35rem 0.7rem;
-                letter-spacing: 0.05em;
+                font-size: 0.88rem; /* Increased from 0.8rem */
+                padding: 0.45rem 0.85rem;
+                letter-spacing: 0.06em;
                 border-radius: 6px;
             }
 
