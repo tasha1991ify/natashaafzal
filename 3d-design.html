@@ -79,7 +79,7 @@
             height: 50px;
         }
 
-        /* STATIC HEADER BAR */
+        /* STATIC HEADER BAR - EXACT ORIGINAL REFERENCE CODE */
         .global-header {
             width: 100%;
             margin-bottom: 2rem;
@@ -94,7 +94,6 @@
             flex-direction: row;
             align-items: stretch;
             width: 100%;
-            height: 50px;
             overflow: hidden;
             background-color: #f7f7f7;
         }
@@ -341,38 +340,6 @@
                 display: none;
             }
 
-            /* Stacked Header Block */
-            .mobile-header-block {
-                width: 100%;
-                padding-top: 0.25rem;
-                margin-bottom: 1.5rem;
-                padding-right: 4rem;
-                display: block;
-            }
-
-            .mobile-title-stack {
-                font-family: 'Syne', sans-serif;
-                font-size: 1.35rem;
-                font-weight: 800;
-                text-transform: uppercase;
-                letter-spacing: -0.03em;
-                line-height: 1.05;
-                color: #111111;
-                margin-bottom: 0.4rem;
-                display: inline-block;
-            }
-
-            .mobile-title-stack span {
-                display: block;
-            }
-
-            .mobile-title-underline {
-                display: block;
-                width: 100%;
-                height: 3px;
-                background-color: #111111;
-            }
-
             /* Floating Home Button */
             .mobile-top-home {
                 position: fixed;
@@ -425,6 +392,9 @@
                 min-height: initial;
                 flex-direction: column !important;
                 padding: 1.5rem;
+                border: 2px solid #111111;
+                border-radius: 4px;
+                background-color: #ffffff;
             }
 
             .image-container {
@@ -432,6 +402,8 @@
                 height: auto !important;
                 aspect-ratio: 16 / 9;
                 border: 1px solid #dcdcdc !important;
+                border-left: none !important;
+                border-right: none !important;
                 margin-bottom: 1.5rem;
             }
 
@@ -445,7 +417,7 @@
                 font-size: 1.5rem;
             }
 
-            /* Split-profile Mobile Bottom Navigation Bar */
+            /* Split-profile Mobile Bottom Navigation Bar with 3D Design Expanded */
             .mobile-split-nav {
                 position: fixed;
                 bottom: 0;
@@ -515,14 +487,15 @@
 
     <div class="page-wrapper">
 
+        <!-- DESKTOP NAVBAR - EXACT ORIGINAL REFERENCE CODE -->
         <header class="global-header">
             <nav class="nav-rectangle">
                 <a href="index.html" class="brand-logo">NA</a>
                 <div class="nav-spacer"></div>
-                <a href="architecture.html" class="nav-item" data-key="nav-arch">Architecture</a>
-                <a href="3d-design.html" class="nav-item active" data-key="nav-3d">3D Design</a>
-                <a href="research.html" class="nav-item" data-key="nav-res">Research</a>
-                <a href="contact.html" class="nav-item" data-key="nav-cont">Contact</a>
+                <a href="architecture.html" class="nav-item" data-key="nav-arch-full">Architecture</a>
+                <a href="3d-design.html" class="nav-item active" data-key="nav-3d-full">3D Design</a>
+                <a href="research.html" class="nav-item" data-key="nav-res-full">Research</a>
+                <a href="contact.html" class="nav-item" data-key="nav-cont-full">Contact</a>
 
                 <button id="langToggle" class="lang-toggle-container">
                     <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"
@@ -537,15 +510,6 @@
                 </button>
             </nav>
         </header>
-
-        <!-- MOBILE STACKED TITLE BLOCK -->
-        <div class="mobile-header-block">
-            <h1 class="mobile-title-stack">
-                <span data-key="nav-3d-line1">3D</span>
-                <span data-key="nav-3d-line2">Design</span>
-            </h1>
-            <div class="mobile-title-underline"></div>
-        </div>
 
         <div class="scroll-viewport" id="scrollContainer">
             <main class="magazine-grid">
@@ -608,7 +572,7 @@
         </div>
     </div>
 
-    <!-- MOBILE BOTTOM NAVIGATION BAR -->
+    <!-- MOBILE BOTTOM NAVIGATION BAR WITH EXPANDED 3D DESIGN -->
     <nav class="mobile-split-nav">
         <a href="architecture.html" class="split-nav-item" title="Architecture">
             <span class="pill-text" data-key="nav-arch">Arch</span>
@@ -636,9 +600,8 @@
 
         const translations = {
             en: {
-                "nav-arch": "Arch", "nav-3d": "3D Design", "nav-res": "Res", "nav-cont": "Cont",
-                "nav-3d-full": "3D Design",
-                "nav-3d-line1": "3D", "nav-3d-line2": "Design",
+                "nav-arch-full": "Architecture", "nav-3d-full": "3D Design", "nav-res-full": "Research", "nav-cont-full": "Contact",
+                "nav-arch": "Arch", "nav-3d": "3D", "nav-res": "Res", "nav-cont": "Cont",
                 "d1-meta": "Project 01 // Narrative Art", "d1-title": "Running Girl", "d1-desc": "A cinematic environmental study exploring isolation and anxiety through motion within a dense forest.",
                 "d2-meta": "Project 02 // Environment Design", "d2-title": "Yatai Street Cart", "d2-desc": "A vibrant homage to Japanese anime aesthetics, focusing on stylized lighting and environmental storytelling.",
                 "d3-meta": "Project 03 // Character Study", "d3-title": "Scared Man", "d3-desc": "An emotive character study centered on chiaroscuro lighting to evoke internal vulnerability.",
@@ -647,9 +610,8 @@
                 "d6-meta": "Project 06 // Character Design", "d6-title": "Rusty", "d6-desc": "Commissioned for the hybrid-casual game Mirror Mania, a scrappy, lovable robot character featuring a retro-industrial aesthetic and custom low-poly textures."
             },
             tr: {
-                "nav-arch": "Mim", "nav-3d": "3D Tasarım", "nav-res": "Arş", "nav-cont": "İlet",
-                "nav-3d-full": "3D Tasarım",
-                "nav-3d-line1": "3D", "nav-3d-line2": "Tasarım",
+                "nav-arch-full": "Mimarlık", "nav-3d-full": "3D Tasarım", "nav-res-full": "Araştırma", "nav-cont-full": "İletişim",
+                "nav-arch": "Mim", "nav-3d": "3D", "nav-res": "Arş", "nav-cont": "İlet",
                 "d1-meta": "Proje 01 // Anlatı Sanatı", "d1-title": "Running Girl", "d1-desc": "Yoğun bir orman içinde hareket ve izolasyon aracılığıyla kaygıyı keşfeden sinematik bir çalışma.",
                 "d2-meta": "Proje 02 // Çevre Tasarımı", "d2-title": "Yatai Sokak Tezgahı", "d2-desc": "Japon anime estetiğine canlı bir saygı duruşu; stilize aydınlatma ve çevresel hikaye anlatımına odaklanmıştır.",
                 "d3-meta": "Proje 03 // Karakter Çalışması", "d3-title": "Scared Man", "d3-desc": "İçsel kırılganlığı uyandırmak için kiaroskuro aydınlatmaya odaklanan duygusal bir karakter çalışması.",
