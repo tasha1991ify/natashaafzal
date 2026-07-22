@@ -19,6 +19,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent; /* Removes mobile tap highlight box */
         }
 
         /* LOCKED VIEWPANEL INTERIOR */
@@ -403,6 +404,12 @@
                 z-index: 9998;
                 box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
                 transition: transform 0.2s ease, background-color 0.2s ease;
+                outline: none; /* Strips browser focus ring */
+            }
+
+            .mobile-top-home:focus,
+            .mobile-top-home:active {
+                outline: none;
             }
 
             .mobile-top-home .na-text {
@@ -454,6 +461,12 @@
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
                 transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease, color 0.2s ease;
                 white-space: nowrap;
+                outline: none; /* Strips browser focus ring / blue outline */
+            }
+
+            .split-nav-item:focus,
+            .split-nav-item:active {
+                outline: none; /* Completely bypasses the browser focus/tap box */
             }
 
             .split-nav-item .pill-text {
