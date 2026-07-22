@@ -39,7 +39,7 @@
             display: flex;
             flex-direction: column;
             height: 100vh;
-            padding: 2.5rem;
+            padding: 0.5rem 2.5rem 2.5rem 2.5rem;
         }
 
         /* HEAVY INDUSTRIAL AUTOCAD CROSSHAIR */
@@ -86,7 +86,8 @@
         /* STATIC HEADER BAR (ORIGINAL DESKTOP) */
         .global-header {
             width: 100%;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
+            padding-top: 0.5rem;
             flex-shrink: 0;
         }
 
@@ -420,7 +421,7 @@
                 transform: scale(1.05);
             }
 
-            /* Split-profile bottom nav bar */
+            /* Split-profile bottom nav bar for mobile with text pills */
             .mobile-split-nav {
                 position: fixed;
                 bottom: 0;
@@ -531,10 +532,10 @@
             <nav class="nav-rectangle">
                 <a href="index.html" class="brand-logo">NA</a>
                 <div class="nav-spacer"></div>
-                <a href="architecture.html" class="nav-item active" data-key="nav-arch">Architecture</a>
-                <a href="3d-design.html" class="nav-item" data-key="nav-3d">3D Design</a>
-                <a href="research.html" class="nav-item" data-key="nav-res">Research</a>
-                <a href="contact.html" class="nav-item" data-key="nav-cont">Contact</a>
+                <a href="architecture.html" class="nav-item active" data-key="nav-arch-full">Architecture</a>
+                <a href="3d-design.html" class="nav-item" data-key="nav-3d-full">3D Design</a>
+                <a href="research.html" class="nav-item" data-key="nav-res-full">Research</a>
+                <a href="contact.html" class="nav-item" data-key="nav-cont-full">Contact</a>
 
                 <button id="langToggle" class="lang-toggle-container">
                     <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"
@@ -685,7 +686,7 @@
 
     </div>
 
-    <!-- SPLIT-PROFILE MOBILE BOTTOM NAVIGATION BAR WITH LARGER TEXT PILLS -->
+    <!-- MOBILE BOTTOM NAVIGATION BAR WITH TEXT PILLS -->
     <nav class="mobile-split-nav">
         <!-- Architecture (Active - Highlighted focal point) -->
         <a href="architecture.html" class="split-nav-item active" title="Architecture">
@@ -720,6 +721,7 @@
 
         const translations = {
             en: {
+                "nav-arch-full": "Architecture", "nav-3d-full": "3D Design", "nav-res-full": "Research", "nav-cont-full": "Contact",
                 "nav-arch": "Arch", "nav-3d": "3D", "nav-res": "Res", "nav-cont": "Cont",
                 "nav-arch-line1": "Arch-", "nav-arch-line2": "tecture",
                 "p1-meta": "Case Study 01 // Urban Design", "p1-title": "Kahramanmaraş Meydan", "p1-desc": "Reimagining the historic Meydan area through a balanced framework of restorative urban planning and precision 3D architectural visualization.",
@@ -733,6 +735,7 @@
                 "p9-meta": "Case Study 09 // Commercial Exhibition", "p9-title": "Qaswa Exhibition", "p9-desc": "A tactical display workspace built for aerospace exhibitions. The program optimizes high-impact human circulation patterns alongside physical scale modeling, holograms, and dynamic media interfaces."
             },
             tr: {
+                "nav-arch-full": "Mimarlık", "nav-3d-full": "3D Tasarım", "nav-res-full": "Araştırma", "nav-cont-full": "İletişim",
                 "nav-arch": "Mim", "nav-3d": "3D", "nav-res": "Arş", "nav-cont": "İlet",
                 "nav-arch-line1": "Mim-", "nav-arch-line2": "arlık",
                 "p1-meta": "Vaka Çalışması 01 // Kentsel Tasarım", "p1-title": "Kahramanmaraş Meydanı", "p1-desc": "Tarihi Meydan alanını, restoratif kentsel planlama ve hassas 3D mimari görselleştirme dengesiyle yeniden kurgulamak.",
