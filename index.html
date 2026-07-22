@@ -77,7 +77,7 @@
             padding: 0.5rem 2.5rem; 
         }
 
-        /* 1. TOP NAME (Natasha - Solid crisp vector lines) */
+        /* 1. TOP NAME (Natasha - Stretched edge-to-edge on desktop) */
         .top-name {
             font-family: 'Syne', sans-serif;
             font-size: 12vw; 
@@ -172,7 +172,7 @@
             color: #ffffff;
         }
 
-        /* 3. BOTTOM NAME (Afzal - Solid crisp vector lines) */
+        /* 3. BOTTOM NAME (Afzal - Stretched edge-to-edge on desktop) */
         .bottom-name {
             font-family: 'Syne', sans-serif;
             font-size: 12vw;
@@ -185,10 +185,10 @@
             width: 100%;
         }
 
-        /* MOBILE RESPONSIVE OPTIMIZATIONS (Locked to single viewport view) */
+        /* MOBILE RESPONSIVE ADAPTATION */
         @media (max-width: 768px) {
             html, body {
-                overflow: hidden; /* Force no scrolling */
+                overflow: hidden;
                 height: 100vh;
                 cursor: auto; 
             }
@@ -200,10 +200,11 @@
                 gap: 0.5rem;
             }
 
+            /* Natasha stays strictly at the top, Afzal strictly at the bottom */
             .top-name, .bottom-name {
                 font-size: 14vw;
-                justify-content: center;
-                gap: 0.15em;
+                justify-content: space-between; /* Maintains responsive spread alignment on mobile */
+                width: 100%;
             }
 
             .center-content {
@@ -211,19 +212,19 @@
             }
 
             .intro-text {
-                font-size: 0.95rem;
-                line-height: 1.45;
+                font-size: 0.9rem;
+                line-height: 1.4;
             }
 
             .portfolio-links {
-                gap: 0.5rem;
+                gap: 0.4rem;
                 justify-content: center;
             }
 
             .project-link, .lang-btn {
-                font-size: 0.75rem;
-                padding: 0.4rem 0.8rem;
-                letter-spacing: 0.06em;
+                font-size: 0.7rem;
+                padding: 0.35rem 0.7rem;
+                letter-spacing: 0.05em;
             }
 
             .custom-crosshair {
