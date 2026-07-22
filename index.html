@@ -185,46 +185,46 @@
             width: 100%;
         }
 
-        /* MOBILE RESPONSIVE ADAPTATION */
+        /* MOBILE RESPONSIVE FIX (Prevents overflow and wrapping bugs) */
         @media (max-width: 768px) {
             html, body {
-                overflow: hidden;
-                height: 100vh;
+                overflow-y: auto; 
+                height: 100%;
                 cursor: auto; 
             }
 
             .homepage-container {
-                height: 100vh;
-                padding: 1rem 1rem;
+                min-height: 100vh;
+                height: auto;
+                padding: 1.5rem 1rem;
                 justify-content: space-between;
-                gap: 0.5rem;
+                gap: 1.5rem;
             }
 
-            /* Natasha stays strictly at the top, Afzal strictly at the bottom */
             .top-name, .bottom-name {
-                font-size: 14vw;
-                justify-content: space-between; /* Maintains responsive spread alignment on mobile */
-                width: 100%;
+                font-size: 13vw;
+                justify-content: center;
+                gap: 0.2em; /* Keeps letters together cleanly on mobile screens */
             }
 
             .center-content {
-                gap: 1.2rem;
+                gap: 1.5rem;
             }
 
             .intro-text {
-                font-size: 0.9rem;
-                line-height: 1.4;
+                font-size: 0.95rem;
+                line-height: 1.5;
             }
 
             .portfolio-links {
-                gap: 0.4rem;
+                gap: 0.5rem;
                 justify-content: center;
             }
 
             .project-link, .lang-btn {
-                font-size: 0.7rem;
-                padding: 0.35rem 0.7rem;
-                letter-spacing: 0.05em;
+                font-size: 0.75rem;
+                padding: 0.4rem 0.8rem;
+                letter-spacing: 0.06em;
             }
 
             .custom-crosshair {
