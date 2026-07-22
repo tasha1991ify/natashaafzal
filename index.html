@@ -185,12 +185,12 @@
             width: 100%;
         }
 
-        /* STRICT MOBILE VIEWPORT LOCK (Zero Scrolling) */
+        /* STRICT MOBILE VIEWPORT LOCK & FONT SCALING */
         @media (max-width: 768px) {
             html, body {
                 overflow: hidden !important; 
                 height: 100vh;
-                height: 100dvh; /* Adapts cleanly to mobile browser address bars */
+                height: 100dvh; 
                 cursor: auto; 
             }
 
@@ -202,10 +202,11 @@
                 gap: 0.2rem;
             }
 
+            /* Reduced font-size to 11.5vw so 7 long characters of 'NATASHA' fit perfectly inside the screen width */
             .top-name, .bottom-name {
-                font-size: 13.5vw;
-                justify-content: center;
-                gap: 0.18em;
+                font-size: 11.5vw;
+                justify-content: space-between;
+                width: 100%;
             }
 
             .center-content {
@@ -213,7 +214,7 @@
             }
 
             .intro-text {
-                font-size: 0.88rem;
+                font-size: 0.85rem;
                 line-height: 1.35;
             }
 
