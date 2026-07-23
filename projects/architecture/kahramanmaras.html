@@ -420,6 +420,17 @@
                 padding-right: 0;
             }
 
+            /* Force intro brief to appear first on mobile */
+            .panel-intro-brief {
+                order: -1;
+                width: 100% !important;
+                margin: 0 !important;
+                border: 2px solid #111111;
+                border-radius: 4px;
+                background-color: #ffffff;
+                padding: 1.5rem;
+            }
+
             .editorial-panel {
                 width: 100% !important;
                 height: auto;
@@ -428,10 +439,6 @@
                 border-radius: 4px;
                 background-color: #ffffff;
                 padding: 1rem;
-            }
-
-            .panel-intro-brief {
-                padding: 1.5rem;
             }
 
             .image-frame-basin {
@@ -583,10 +590,10 @@
                     <div class="image-frame-basin">
                         <img src="../../assets/architecture/kahramanmaras/planning-layout.webp" alt="Master Plan"
                             class="project-image" loading="lazy" decoding="async">
-                    </div>
-                    <div class="overlay-caption-shield">
-                        <span class="project-meta" data-key="c1-meta">Site Plan // 1:1000</span>
-                        <h2 class="project-headline" data-key="c1-title">Master Layout Plan</h2>
+                        <div class="overlay-caption-shield">
+                            <span class="project-meta" data-key="c1-meta">Site Plan // 1:1000</span>
+                            <h2 class="project-headline" data-key="c1-title">Master Layout Plan</h2>
+                        </div>
                     </div>
                 </section>
 
@@ -594,10 +601,10 @@
                     <div class="image-frame-basin">
                         <img src="../../assets/architecture/kahramanmaras/perspective-view.webp"
                             alt="Morphological Study" class="project-image" loading="lazy" decoding="async">
-                    </div>
-                    <div class="overlay-caption-shield">
-                        <span class="project-meta" data-key="c2-meta">Analysis</span>
-                        <h2 class="project-headline" data-key="c2-title">Morphological Study</h2>
+                        <div class="overlay-caption-shield">
+                            <span class="project-meta" data-key="c2-meta">Analysis</span>
+                            <h2 class="project-headline" data-key="c2-title">Morphological Study</h2>
+                        </div>
                     </div>
                 </section>
 
@@ -615,10 +622,10 @@
                     <div class="image-frame-basin">
                         <img src="../../assets/architecture/kahramanmaras/image3.webp" alt="Layout" class="project-image"
                             loading="lazy" decoding="async">
-                    </div>
-                    <div class="overlay-caption-shield">
-                        <span class="project-meta" data-key="c3-meta">Urban Context</span>
-                        <h2 class="project-headline" data-key="c3-title">Spatial Distribution</h2>
+                        <div class="overlay-caption-shield">
+                            <span class="project-meta" data-key="c3-meta">Urban Context</span>
+                            <h2 class="project-headline" data-key="c3-title">Spatial Distribution</h2>
+                        </div>
                     </div>
                 </section>
 
@@ -626,10 +633,10 @@
                     <div class="image-frame-basin">
                         <img src="../../assets/architecture/kahramanmaras/image4.webp" alt="Modeling"
                             class="project-image crop-bottom" loading="lazy" decoding="async">
-                    </div>
-                    <div class="overlay-caption-shield">
-                        <span class="project-meta" data-key="c4-meta">Spatial Massing</span>
-                        <h2 class="project-headline" data-key="c4-title">Axonometric Mass Study</h2>
+                        <div class="overlay-caption-shield">
+                            <span class="project-meta" data-key="c4-meta">Spatial Massing</span>
+                            <h2 class="project-headline" data-key="c4-title">Axonometric Mass Study</h2>
+                        </div>
                     </div>
                 </section>
 
@@ -637,10 +644,10 @@
                     <div class="image-frame-basin">
                         <img src="../../assets/architecture/kahramanmaras/image5.webp" alt="Render" class="project-image"
                             loading="lazy" decoding="async">
-                    </div>
-                    <div class="overlay-caption-shield">
-                        <span class="project-meta" data-key="c5-meta">Visualization</span>
-                        <h2 class="project-headline" data-key="c5-title">Cafe House</h2>
+                        <div class="overlay-caption-shield">
+                            <span class="project-meta" data-key="c5-meta">Visualization</span>
+                            <h2 class="project-headline" data-key="c5-title">Cafe House</h2>
+                        </div>
                     </div>
                 </section>
 
@@ -648,10 +655,10 @@
                     <div class="image-frame-basin">
                         <img src="../../assets/architecture/kahramanmaras/image6.webp" alt="Detail" class="project-image"
                             loading="lazy" decoding="async">
-                    </div>
-                    <div class="overlay-caption-shield">
-                        <span class="project-meta" data-key="c6-meta">Visualization</span>
-                        <h2 class="project-headline" data-key="c6-title">Pergola</h2>
+                        <div class="overlay-caption-shield">
+                            <span class="project-meta" data-key="c6-meta">Visualization</span>
+                            <h2 class="project-headline" data-key="c6-title">Pergola</h2>
+                        </div>
                     </div>
                 </section>
 
@@ -659,10 +666,10 @@
                     <div class="image-frame-basin">
                         <img src="../../assets/architecture/kahramanmaras/image7.webp" alt="Final" class="project-image"
                             loading="lazy" decoding="async">
-                    </div>
-                    <div class="overlay-caption-shield">
-                        <span class="project-meta" data-key="c7-meta">Visualization</span>
-                        <h2 class="project-headline" data-key="c7-title">Administrative unit</h2>
+                        <div class="overlay-caption-shield">
+                            <span class="project-meta" data-key="c7-meta">Visualization</span>
+                            <h2 class="project-headline" data-key="c7-title">Administrative unit</h2>
+                        </div>
                     </div>
                 </section>
 
@@ -725,7 +732,7 @@
                 'c2-meta': 'Analiz', 'c2-title': 'Morfolojik Çalışma',
                 'c3-meta': 'Kentsel Bağlam', 'c3-title': 'Mekânsal Dağılım',
                 'c4-meta': 'Mekânsal Kütle', 'c4-title': 'Aksonometrik Kütle Çalışması',
-                'c5-meta': 'Görselleştirme', 'c5-title': 'Kafe Eviol',
+                'c5-meta': 'Görselleştirme', 'c5-title': 'Kafe Evi',
                 'c6-meta': 'Görselleştirme', 'c6-title': 'Pergola',
                 'c7-meta': 'Görselleştirme', 'c7-title': 'İdari Birim',
                 'proj-meta': 'Master Planlama & Yenileme', 'proj-title': 'Kahramanmaraş Meydan',
