@@ -16,6 +16,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
         
         /* LOCKED VIEWPANEL INTERIOR */
@@ -194,7 +195,7 @@
             align-items: center;      
             justify-content: center;    
             overflow: hidden;
-            border: none;               
+            border: none;              
         }
 
         .project-image {
@@ -256,24 +257,46 @@
             transform: translateX(4px); 
         }
 
+        /* MOBILE ELEMENTS (Hidden on Desktop) */
+        .mobile-top-home,
+        .mobile-split-nav {
+            display: none;
+        }
+
         /* Responsive Mobile Breakpoint Reversion */
         @media (max-width: 900px) {
             html, body { overflow-y: auto; height: auto; cursor: auto; }
-            .page-wrapper { height: auto; padding: 1.5rem; }
+            .page-wrapper { height: auto; padding: 1rem 1rem 5.5rem 1rem; }
             .custom-crosshair { display: none; }
-            .brand-logo, .nav-item, .email-anchor, .lang-toggle-container { cursor: auto; }
+            .global-header { display: none; }
+            .email-anchor { cursor: auto; }
             
-            .global-header { margin-bottom: 2rem; }
-            .nav-rectangle { flex-direction: column; align-items: stretch; }
-            .brand-logo { border-right: none; border-bottom: 2px solid #111111; justify-content: center; }
-            .nav-spacer { display: none; }
-            .nav-item:not(:last-child) { border-right: none; border-bottom: 2px solid #111111; }
-            .nav-item { justify-content: center; padding: 0.75rem; font-size: 0.85rem; width: 100%; }
-            
-            .lang-toggle-container { width: 100%; padding: 0.75rem; border-top: 2px solid #111111; justify-content: center; }
-            .lang-toggle-container:hover { background-color: transparent; }
-            .lang-toggle-container:hover .globe-icon { stroke: #111111; }
-            .lang-toggle-container:hover .lang-label { color: #111111; }
+            /* Floating Home Button */
+            .mobile-top-home {
+                position: fixed;
+                top: 1rem;
+                right: 1rem;
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                background-color: #111111;
+                border: 1.5px solid #111111;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                z-index: 9998;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+                outline: none;
+            }
+
+            .mobile-top-home .na-text {
+                font-family: 'Syne', sans-serif;
+                font-size: 0.8rem;
+                font-weight: 800;
+                letter-spacing: -0.05em;
+                color: #ffffff;
+            }
 
             .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
             .contact-panel { height: auto; padding: 1.5rem; }
@@ -282,12 +305,73 @@
             .contact-headline { font-size: 1.8rem; }
             .contact-description { font-size: 1rem; }
             .email-anchor { font-size: 1.1rem; }
+
+            /* Split-profile Mobile Bottom Navigation Bar with Contact Expanded */
+            .mobile-split-nav {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 36px;
+                background-color: #111111;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                z-index: 9998;
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+
+            .split-nav-item {
+                position: relative;
+                top: -14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                padding: 0 0.75rem;
+                height: 44px;
+                border-radius: 22px;
+                background-color: #ffffff;
+                border: 2px solid #111111;
+                color: #111111;
+                cursor: pointer;
+                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+                transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease, color 0.2s ease, padding 0.2s ease;
+                white-space: nowrap;
+                outline: none;
+            }
+
+            .split-nav-item .pill-text {
+                font-family: 'Space Grotesk', sans-serif;
+                font-size: 0.72rem;
+                font-weight: 800;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+                color: #111111;
+                transition: color 0.2s ease;
+            }
+
+            .split-nav-item.active {
+                background-color: #E63946;
+                border-color: #111111;
+                transform: translateY(-4px) scale(1.05);
+                padding: 0 1.15rem;
+            }
+
+            .split-nav-item.active .pill-text {
+                color: #ffffff;
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="custom-crosshair" id="crosshair"></div>
+
+    <!-- MOBILE TOP RIGHT HOME BUTTON -->
+    <a href="index.html" class="mobile-top-home" title="Home">
+        <span class="na-text">NA</span>
+    </a>
 
     <div class="page-wrapper">
 
@@ -296,10 +380,10 @@
             <nav class="nav-rectangle">
                 <a href="index.html" class="brand-logo">NA</a>
                 <div class="nav-spacer"></div>
-                <a href="architecture.html" class="nav-item" data-key="nav-arch">Architecture</a>
-                <a href="3d-design.html" class="nav-item" data-key="nav-3d">3D Design</a>
-                <a href="research.html" class="nav-item" data-key="nav-res">Research</a>
-                <a href="contact.html" class="nav-item active" data-key="nav-cont">Contact</a>
+                <a href="architecture.html" class="nav-item" data-key="nav-arch-full">Architecture</a>
+                <a href="3d-design.html" class="nav-item" data-key="nav-3d-full">3D Design</a>
+                <a href="research.html" class="nav-item" data-key="nav-res-full">Research</a>
+                <a href="contact.html" class="nav-item active" data-key="nav-cont-full">Contact</a>
                 
                 <!-- COMPACT GLOBAL ICON BUTTON TRIGGER -->
                 <button id="langToggle" class="lang-toggle-container">
@@ -341,16 +425,37 @@
 
     </div>
 
+    <!-- MOBILE BOTTOM NAVIGATION BAR WITH EXPANDED CONTACT -->
+    <nav class="mobile-split-nav">
+        <a href="architecture.html" class="split-nav-item" title="Architecture">
+            <span class="pill-text" data-key="nav-arch">Arch</span>
+        </a>
+        <a href="3d-design.html" class="split-nav-item" title="3D Design">
+            <span class="pill-text" data-key="nav-3d">3D</span>
+        </a>
+        <a href="research.html" class="split-nav-item" title="Research">
+            <span class="pill-text" data-key="nav-res">Res</span>
+        </a>
+        <a href="contact.html" class="split-nav-item active" title="Contact">
+            <span class="pill-text" data-key="nav-cont-full">Contact</span>
+        </a>
+        <button id="langToggleMobile" class="split-nav-item" title="Language">
+            <span id="langLabelMobile" class="pill-text">TR</span>
+        </button>
+    </nav>
+
     <!-- Script Localization Routing Pipeline -->
     <script>
         const translations = {
             en: {
-                "nav-arch": "Architecture", "nav-3d": "3D Design", "nav-res": "Research", "nav-cont": "Contact",
+                "nav-arch-full": "Architecture", "nav-3d-full": "3D Design", "nav-res-full": "Research", "nav-cont-full": "Contact",
+                "nav-arch": "Arch", "nav-3d": "3D", "nav-res": "Res", "nav-cont": "Cont",
                 "c-title": "Let's build something new.",
                 "c-desc": "Whether you're looking to collaborate, discuss a project, or simply connect, feel free to reach out."
             },
             tr: {
-                "nav-arch": "Mimarlık", "nav-3d": "3D Tasarım", "nav-res": "Araştırma", "nav-cont": "İletişim",
+                "nav-arch-full": "Mimarlık", "nav-3d-full": "3D Tasarım", "nav-res-full": "Araştırma", "nav-cont-full": "İletişim",
+                "nav-arch": "Mim", "nav-3d": "3D", "nav-res": "Arş", "nav-cont": "İlet",
                 "c-title": "Yeni bir şeyler inşa edelim.",
                 "c-desc": "İster iş birliği yapmak, ister bir projeyi tartışmak veya sadece iletişime geçmek isteyin, çekinmeden ulaşabilirsiniz."
             }
@@ -358,7 +463,9 @@
 
         let currentLang = localStorage.getItem('portfolio-lang') || 'en';
         const langToggleBtn = document.getElementById('langToggle');
+        const langToggleMobile = document.getElementById('langToggleMobile');
         const langLabel = document.getElementById('langLabel');
+        const langLabelMobile = document.getElementById('langLabelMobile');
 
         function applyTranslations(lang) {
             document.querySelectorAll('[data-key]').forEach(element => {
@@ -367,14 +474,19 @@
                     element.textContent = translations[lang][key];
                 }
             });
-            langLabel.textContent = lang === 'en' ? 'TR' : 'EN';
+            const targetLabel = lang === 'en' ? 'TR' : 'EN';
+            if (langLabel) langLabel.textContent = targetLabel;
+            if (langLabelMobile) langLabelMobile.textContent = targetLabel;
         }
 
-        langToggleBtn.addEventListener('click', () => {
+        function toggleLanguage() {
             currentLang = currentLang === 'en' ? 'tr' : 'en';
             localStorage.setItem('portfolio-lang', currentLang);
             applyTranslations(currentLang);
-        });
+        }
+
+        if (langToggleBtn) langToggleBtn.addEventListener('click', toggleLanguage);
+        if (langToggleMobile) langToggleMobile.addEventListener('click', toggleLanguage);
 
         // Initialize translations immediately on load
         applyTranslations(currentLang);
@@ -389,7 +501,7 @@
         });
 
         function bindCrosshairListeners() {
-            const interactables = document.querySelectorAll('.brand-logo, .nav-item, .email-anchor, .lang-toggle-container');
+            const interactables = document.querySelectorAll('.brand-logo, .nav-item, .email-anchor, .lang-toggle-container, .split-nav-item, .mobile-top-home');
             interactables.forEach(item => {
                 item.addEventListener('mouseenter', () => crosshair.classList.add('expand'));
                 item.addEventListener('mouseleave', () => crosshair.classList.remove('expand'));
