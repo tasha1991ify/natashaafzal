@@ -17,6 +17,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         html,
@@ -355,6 +356,12 @@
             line-height: 1.55;
         }
 
+        /* MOBILE ELEMENTS (Hidden on Desktop) */
+        .mobile-top-home,
+        .mobile-split-nav {
+            display: none;
+        }
+
         @media (max-width: 900px) {
 
             html,
@@ -366,18 +373,50 @@
 
             .page-wrapper {
                 height: auto;
-                padding: 1.5rem;
+                padding: 1rem 1rem 5.5rem 1rem;
             }
 
             .custom-crosshair {
                 display: none;
             }
 
+            .global-header {
+                display: none;
+            }
+
+            /* Floating Home Button */
+            .mobile-top-home {
+                position: fixed;
+                top: 1rem;
+                right: 1rem;
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                background-color: #111111;
+                border: 1.5px solid #111111;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                z-index: 9998;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+                outline: none;
+            }
+
+            .mobile-top-home .na-text {
+                font-family: 'Syne', sans-serif;
+                font-size: 0.8rem;
+                font-weight: 800;
+                letter-spacing: -0.05em;
+                color: #ffffff;
+            }
+
             .magazine-grid {
                 display: flex;
                 flex-direction: column;
                 width: 100%;
-                gap: 3.5rem;
+                height: auto;
+                gap: 2rem;
                 padding-right: 0;
             }
 
@@ -385,11 +424,31 @@
                 width: 100% !important;
                 height: auto;
                 margin: 0 !important;
+                border: 2px solid #111111;
+                border-radius: 4px;
+                background-color: #ffffff;
+                padding: 1rem;
+            }
+
+            .panel-intro-brief {
+                padding: 1.5rem;
             }
 
             .image-frame-basin {
-                height: 60vh;
-                padding: 1rem;
+                height: auto;
+                width: 100%;
+                border: none;
+                border-radius: 0;
+                background-color: transparent;
+                padding: 0;
+                margin-bottom: 0.75rem;
+            }
+
+            .project-image {
+                width: 100%;
+                height: auto;
+                max-height: none;
+                object-fit: contain;
             }
 
             .overlay-caption-shield {
@@ -398,15 +457,75 @@
                 background: transparent;
                 padding: 0;
                 height: auto;
-                margin-top: 1rem;
+                margin-top: 0;
             }
 
             .overlay-caption-shield .project-headline {
                 color: #111111;
+                font-size: 1.1rem;
+                font-weight: 700;
             }
 
             .overlay-caption-shield .project-meta {
                 color: #666;
+                font-size: 0.7rem;
+                margin-bottom: 0.2rem;
+            }
+
+            /* Split-profile Mobile Bottom Navigation Bar with Architecture Expanded */
+            .mobile-split-nav {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 36px;
+                background-color: #111111;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                z-index: 9998;
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+
+            .split-nav-item {
+                position: relative;
+                top: -14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                padding: 0 0.75rem;
+                height: 44px;
+                border-radius: 22px;
+                background-color: #ffffff;
+                border: 2px solid #111111;
+                color: #111111;
+                cursor: pointer;
+                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+                transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease, color 0.2s ease, padding 0.2s ease;
+                white-space: nowrap;
+                outline: none;
+            }
+
+            .split-nav-item .pill-text {
+                font-family: 'Space Grotesk', sans-serif;
+                font-size: 0.72rem;
+                font-weight: 800;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+                color: #111111;
+                transition: color 0.2s ease;
+            }
+
+            .split-nav-item.active {
+                background-color: #E63946;
+                border-color: #111111;
+                transform: translateY(-4px) scale(1.05);
+                padding: 0 1.15rem;
+            }
+
+            .split-nav-item.active .pill-text {
+                color: #ffffff;
             }
         }
     </style>
@@ -416,13 +535,18 @@
 
     <div class="custom-crosshair" id="crosshair"></div>
 
+    <!-- MOBILE TOP RIGHT HOME BUTTON -->
+    <a href="../../index.html" class="mobile-top-home" title="Home">
+        <span class="na-text">NA</span>
+    </a>
+
     <div class="page-wrapper">
 
         <header class="global-header">
             <nav class="nav-rectangle">
                 <a href="../../index.html" class="brand-logo">NA</a>
                 <div class="nav-spacer"></div>
-                <a href="../../architecture.html" class="nav-item active" data-key="nav-arch">Architecture</a>
+                <a href="../../architecture.html" class="nav-item active" data-key="nav-arch-full">Architecture</a>
                 <a href="../../3d-design.html" class="nav-item" data-key="nav-3d">3D Design</a>
                 <a href="../../research.html" class="nav-item" data-key="nav-res">Research</a>
                 <a href="../../contact.html" class="nav-item" data-key="nav-cont">Contact</a>
@@ -459,10 +583,10 @@
                     <div class="image-frame-basin">
                         <img src="../../assets/architecture/kahramanmaras/planning-layout.webp" alt="Master Plan"
                             class="project-image" loading="lazy" decoding="async">
-                        <div class="overlay-caption-shield">
-                            <span class="project-meta" data-key="c1-meta">Site Plan // 1:1000</span>
-                            <h2 class="project-headline" data-key="c1-title">Master Layout Plan</h2>
-                        </div>
+                    </div>
+                    <div class="overlay-caption-shield">
+                        <span class="project-meta" data-key="c1-meta">Site Plan // 1:1000</span>
+                        <h2 class="project-headline" data-key="c1-title">Master Layout Plan</h2>
                     </div>
                 </section>
 
@@ -470,10 +594,10 @@
                     <div class="image-frame-basin">
                         <img src="../../assets/architecture/kahramanmaras/perspective-view.webp"
                             alt="Morphological Study" class="project-image" loading="lazy" decoding="async">
-                        <div class="overlay-caption-shield">
-                            <span class="project-meta" data-key="c2-meta">Analysis</span>
-                            <h2 class="project-headline" data-key="c2-title">Morphological Study</h2>
-                        </div>
+                    </div>
+                    <div class="overlay-caption-shield">
+                        <span class="project-meta" data-key="c2-meta">Analysis</span>
+                        <h2 class="project-headline" data-key="c2-title">Morphological Study</h2>
                     </div>
                 </section>
 
@@ -491,10 +615,10 @@
                     <div class="image-frame-basin">
                         <img src="../../assets/architecture/kahramanmaras/image3.webp" alt="Layout" class="project-image"
                             loading="lazy" decoding="async">
-                        <div class="overlay-caption-shield">
-                            <span class="project-meta" data-key="c3-meta">Urban Context</span>
-                            <h2 class="project-headline" data-key="c3-title">Spatial Distribution</h2>
-                        </div>
+                    </div>
+                    <div class="overlay-caption-shield">
+                        <span class="project-meta" data-key="c3-meta">Urban Context</span>
+                        <h2 class="project-headline" data-key="c3-title">Spatial Distribution</h2>
                     </div>
                 </section>
 
@@ -502,10 +626,10 @@
                     <div class="image-frame-basin">
                         <img src="../../assets/architecture/kahramanmaras/image4.webp" alt="Modeling"
                             class="project-image crop-bottom" loading="lazy" decoding="async">
-                        <div class="overlay-caption-shield">
-                            <span class="project-meta" data-key="c4-meta">Spatial Massing</span>
-                            <h2 class="project-headline" data-key="c4-title">Axonometric Mass Study</h2>
-                        </div>
+                    </div>
+                    <div class="overlay-caption-shield">
+                        <span class="project-meta" data-key="c4-meta">Spatial Massing</span>
+                        <h2 class="project-headline" data-key="c4-title">Axonometric Mass Study</h2>
                     </div>
                 </section>
 
@@ -513,10 +637,10 @@
                     <div class="image-frame-basin">
                         <img src="../../assets/architecture/kahramanmaras/image5.webp" alt="Render" class="project-image"
                             loading="lazy" decoding="async">
-                        <div class="overlay-caption-shield">
-                            <span class="project-meta" data-key="c5-meta">Visualization</span>
-                            <h2 class="project-headline" data-key="c5-title">Cafe House</h2>
-                        </div>
+                    </div>
+                    <div class="overlay-caption-shield">
+                        <span class="project-meta" data-key="c5-meta">Visualization</span>
+                        <h2 class="project-headline" data-key="c5-title">Cafe House</h2>
                     </div>
                 </section>
 
@@ -524,10 +648,10 @@
                     <div class="image-frame-basin">
                         <img src="../../assets/architecture/kahramanmaras/image6.webp" alt="Detail" class="project-image"
                             loading="lazy" decoding="async">
-                        <div class="overlay-caption-shield">
-                            <span class="project-meta" data-key="c6-meta">Visualization</span>
-                            <h2 class="project-headline" data-key="c6-title">Pergola</h2>
-                        </div>
+                    </div>
+                    <div class="overlay-caption-shield">
+                        <span class="project-meta" data-key="c6-meta">Visualization</span>
+                        <h2 class="project-headline" data-key="c6-title">Pergola</h2>
                     </div>
                 </section>
 
@@ -535,10 +659,10 @@
                     <div class="image-frame-basin">
                         <img src="../../assets/architecture/kahramanmaras/image7.webp" alt="Final" class="project-image"
                             loading="lazy" decoding="async">
-                        <div class="overlay-caption-shield">
-                            <span class="project-meta" data-key="c7-meta">Visualization</span>
-                            <h2 class="project-headline" data-key="c7-title">Administrative unit</h2>
-                        </div>
+                    </div>
+                    <div class="overlay-caption-shield">
+                        <span class="project-meta" data-key="c7-meta">Visualization</span>
+                        <h2 class="project-headline" data-key="c7-title">Administrative unit</h2>
                     </div>
                 </section>
 
@@ -547,7 +671,32 @@
 
     </div>
 
+    <!-- MOBILE BOTTOM NAVIGATION BAR WITH EXPANDED ARCHITECTURE -->
+    <nav class="mobile-split-nav">
+        <a href="../../architecture.html" class="split-nav-item active" title="Architecture">
+            <span class="pill-text" data-key="nav-arch-full">Architecture</span>
+        </a>
+        <a href="../../3d-design.html" class="split-nav-item" title="3D Design">
+            <span class="pill-text" data-key="nav-3d">3D</span>
+        </a>
+        <a href="../../research.html" class="split-nav-item" title="Research">
+            <span class="pill-text" data-key="nav-res">Res</span>
+        </a>
+        <a href="../../contact.html" class="split-nav-item" title="Contact">
+            <span class="pill-text" data-key="nav-cont">Cont</span>
+        </a>
+        <button id="langToggleMobile" class="split-nav-item" title="Language">
+            <span id="langLabelMobile" class="pill-text">TR</span>
+        </button>
+    </nav>
+
     <script>
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                document.activeElement.blur();
+            }
+        });
+
         const crosshair = document.getElementById('crosshair');
         const scrollContainer = document.getElementById('scrollContainer');
         let mouseX = 0; let mouseY = 0;
@@ -559,7 +708,7 @@
         // Translation logic
         const translations = {
             'EN': {
-                'nav-arch': 'Architecture', 'nav-3d': '3D Design', 'nav-res': 'Research', 'nav-cont': 'Contact', 'btn-back': 'Back',
+                'nav-arch-full': 'Architecture', 'nav-arch': 'Arch', 'nav-3d': '3D', 'nav-res': 'Res', 'nav-cont': 'Cont', 'btn-back': 'Back',
                 'c1-meta': 'Site Plan // 1:1000', 'c1-title': 'Master Layout Plan',
                 'c2-meta': 'Analysis', 'c2-title': 'Morphological Study',
                 'c3-meta': 'Urban Context', 'c3-title': 'Spatial Distribution',
@@ -571,27 +720,41 @@
                 'proj-desc': 'This project focused on the master planning and revitalization of the historic Meydan in Kahramanmaraş. <br><br>I was involved in the design development of the project and led the production of the architectural visualizations. My work included developing 3D models, creating competition and presentation renderings, and communicating the design intent through clear and realistic visualizations.'
             },
             'TR': {
-                'nav-arch': 'Mimari', 'nav-3d': '3D Tasarım', 'nav-res': 'Araştırma', 'nav-cont': 'İletişim', 'btn-back': 'Geri',
+                'nav-arch-full': 'Mimarlık', 'nav-arch': 'Mim', 'nav-3d': '3D', 'nav-res': 'Arş', 'nav-cont': 'İlet', 'btn-back': 'Geri',
                 'c1-meta': 'Yerleşim Planı // 1:1000', 'c1-title': 'Master Yerleşim Planı',
                 'c2-meta': 'Analiz', 'c2-title': 'Morfolojik Çalışma',
                 'c3-meta': 'Kentsel Bağlam', 'c3-title': 'Mekânsal Dağılım',
                 'c4-meta': 'Mekânsal Kütle', 'c4-title': 'Aksonometrik Kütle Çalışması',
-                'c5-meta': 'Görselleştirme', 'c5-title': 'Kafe Evi',
+                'c5-meta': 'Görselleştirme', 'c5-title': 'Kafe Eviol',
                 'c6-meta': 'Görselleştirme', 'c6-title': 'Pergola',
                 'c7-meta': 'Görselleştirme', 'c7-title': 'İdari Birim',
                 'proj-meta': 'Master Planlama & Yenileme', 'proj-title': 'Kahramanmaraş Meydan',
                 'proj-desc': 'Bu proje, Kahramanmaraş\'taki tarihi Meydan\'ın master planlamasına ve yenilenmesine odaklanmıştır. <br><br>Projenin tasarım geliştirme sürecinde yer aldım ve mimari görselleştirme çalışmalarını yönettim. Çalışmalarım, 3D modeller geliştirmeyi, yarışma ve sunum renderları oluşturmayı ve tasarımın özünü net ve gerçekçi görselleştirmeler aracılığıyla iletmeyi içeriyordu.'
             }
         };
-        let currentLang = 'EN';
-        document.getElementById('langToggle').addEventListener('click', () => {
-            currentLang = currentLang === 'EN' ? 'TR' : 'EN';
-            document.getElementById('langLabel').textContent = currentLang;
+
+        let currentLang = localStorage.getItem('portfolio-lang') || 'EN';
+        
+        function applyTranslations(lang) {
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
-                if (translations[currentLang][key]) { el.innerHTML = translations[currentLang][key]; }
+                if (translations[lang][key]) { el.innerHTML = translations[lang][key]; }
             });
-        });
+            const targetLabel = lang === 'EN' ? 'TR' : 'EN';
+            document.getElementById('langLabel').textContent = targetLabel;
+            document.getElementById('langLabelMobile').textContent = targetLabel;
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'EN' ? 'TR' : 'EN';
+            localStorage.setItem('portfolio-lang', currentLang);
+            applyTranslations(currentLang);
+        }
+
+        document.getElementById('langToggle').addEventListener('click', toggleLanguage);
+        document.getElementById('langToggleMobile').addEventListener('click', toggleLanguage);
+
+        applyTranslations(currentLang);
     </script>
 </body>
 
