@@ -17,6 +17,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         html,
@@ -27,6 +28,7 @@
             font-family: 'Space Grotesk', sans-serif;
             overflow: hidden;
             cursor: none;
+            -webkit-font-smoothing: antialiased;
         }
 
         .page-wrapper {
@@ -129,6 +131,7 @@
             text-decoration: none;
             color: #111111;
             text-transform: uppercase;
+            letter-spacing: 0.1em;
             padding: 0.6rem 0;
             width: 160px;
             display: flex;
@@ -295,11 +298,202 @@
             color: #444;
             font-size: 0.95rem;
         }
+
+        /* MOBILE ELEMENTS (Hidden on Desktop) */
+        .mobile-top-home,
+        .mobile-split-nav {
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+            html,
+            body {
+                overflow-y: auto;
+                height: auto;
+                cursor: auto;
+            }
+
+            .page-wrapper {
+                height: auto;
+                padding: 1rem 1rem 5.5rem 1rem;
+            }
+
+            .custom-crosshair {
+                display: none;
+            }
+
+            .global-header {
+                display: none;
+            }
+
+            .back-btn {
+                display: inline-flex !important;
+                margin-bottom: 1.2rem;
+                font-size: 0.85rem;
+            }
+
+            /* Floating Home Button */
+            .mobile-top-home {
+                position: fixed;
+                top: 1rem;
+                right: 1rem;
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                background-color: #111111;
+                border: 1.5px solid #111111;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                z-index: 9998;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+                outline: none;
+            }
+
+            .mobile-top-home .na-text {
+                font-family: 'Syne', sans-serif;
+                font-size: 0.8rem;
+                font-weight: 800;
+                letter-spacing: -0.05em;
+                color: #ffffff;
+            }
+
+            .magazine-grid {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                height: auto;
+                gap: 2rem;
+                padding-right: 0;
+            }
+
+            /* Text cards conversion for mobile */
+            .text-card {
+                width: 100% !important;
+                height: auto !important;
+                min-height: 0 !important;
+                margin: 0 !important;
+                border: 2px solid #111111;
+                border-radius: 4px;
+                background-color: #ffffff;
+                padding: 1.5rem;
+                justify-content: flex-start;
+                align-self: stretch;
+            }
+
+            .text-card .project-subheading {
+                font-size: 0.65rem !important;
+            }
+
+            .text-card .project-headline {
+                font-size: 1.1rem !important;
+            }
+
+            .text-card .project-description {
+                font-size: 0.8rem !important;
+            }
+
+            /* Gallery items / image cards conversion for mobile */
+            .gallery-item {
+                width: 100% !important;
+                height: auto !important;
+                margin: 0 !important;
+                border: 2px solid #111111 !important;
+                border-radius: 4px !important;
+                background-color: #ffffff !important;
+                padding: 1.2rem !important;
+                display: flex !important;
+                flex-direction: column !important;
+            }
+
+            .media-box {
+                position: relative !important;
+                height: auto !important;
+                width: 100% !important;
+                border: none !important;
+                border-radius: 0 !important;
+                background-color: transparent !important;
+                padding: 0 !important;
+                overflow: hidden !important;
+                display: block !important;
+            }
+
+            .media-box img {
+                width: 100% !important;
+                height: auto !important;
+                max-height: none !important;
+                object-fit: contain !important;
+                display: block !important;
+            }
+
+            /* Split-profile Mobile Bottom Navigation Bar */
+            .mobile-split-nav {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 36px;
+                background-color: #111111;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                z-index: 9998;
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+
+            .split-nav-item {
+                position: relative;
+                top: -14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                padding: 0 0.75rem;
+                height: 44px;
+                border-radius: 22px;
+                background-color: #ffffff;
+                border: 2px solid #111111;
+                color: #111111;
+                cursor: pointer;
+                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+                transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease, color 0.2s ease, padding 0.2s ease;
+                white-space: nowrap;
+                outline: none;
+            }
+
+            .split-nav-item .pill-text {
+                font-family: 'Space Grotesk', sans-serif;
+                font-size: 0.72rem;
+                font-weight: 800;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+                color: #111111;
+                transition: color 0.2s ease;
+            }
+
+            .split-nav-item.active {
+                background-color: #E63946;
+                border-color: #111111;
+                transform: translateY(-4px) scale(1.05);
+                padding: 0 1.15rem;
+            }
+
+            .split-nav-item.active .pill-text {
+                color: #ffffff;
+            }
+        }
     </style>
 </head>
 
 <body>
     <div class="custom-crosshair" id="crosshair"></div>
+
+    <!-- MOBILE TOP RIGHT HOME BUTTON -->
+    <a href="../../index.html" class="mobile-top-home" title="Home">
+        <span class="na-text">NA</span>
+    </a>
+
     <div class="page-wrapper">
         <header class="global-header">
             <nav class="nav-rectangle">
@@ -374,6 +568,25 @@
         </div>
     </div>
 
+    <!-- MOBILE BOTTOM NAVIGATION BAR -->
+    <nav class="mobile-split-nav">
+        <a href="../../architecture.html" class="split-nav-item active" title="Architecture">
+            <span class="pill-text" data-key="nav-arch">Architecture</span>
+        </a>
+        <a href="../../3d-design.html" class="split-nav-item" title="3D Design">
+            <span class="pill-text" data-key="nav-3d">3D</span>
+        </a>
+        <a href="../../research.html" class="split-nav-item" title="Research">
+            <span class="pill-text" data-key="nav-res">Res</span>
+        </a>
+        <a href="../../contact.html" class="split-nav-item" title="Contact">
+            <span class="pill-text" data-key="nav-cont">Contact</span>
+        </a>
+        <button id="langToggleMobile" class="split-nav-item" title="Language">
+            <span id="langLabelMobile" class="pill-text">TR</span>
+        </button>
+    </nav>
+
     <script>
         const translations = {
             en: {
@@ -391,14 +604,64 @@
                 "desc2": "Işık, gölge ve malzeme etkileşimini keşfeden ön cephe çalışmaları. Bu görselleştirmeler, cephenin mimari kompozisyonuna ve tarihi dokuyla görsel entegrasyonuna odaklanmaktadır."
             }
         };
+
         let lang = localStorage.getItem('portfolio-lang') || 'en';
-        const apply = (l) => { document.querySelectorAll('[data-key]').forEach(el => { const key = el.getAttribute('data-key'); if (translations[l] && translations[l][key]) el.textContent = translations[l][key]; }); document.getElementById('langLabel').textContent = l === 'en' ? 'TR' : 'EN'; };
-        document.getElementById('langToggle').addEventListener('click', () => { lang = lang === 'en' ? 'tr' : 'en'; localStorage.setItem('portfolio-lang', lang); apply(lang); });
+
+        const apply = (l) => {
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[l] && translations[l][key]) {
+                    el.textContent = translations[l][key];
+                }
+            });
+            const targetLabel = l === 'en' ? 'TR' : 'EN';
+            document.getElementById('langLabel').textContent = targetLabel;
+            if (document.getElementById('langLabelMobile')) {
+                document.getElementById('langLabelMobile').textContent = targetLabel;
+            }
+        };
+
+        const toggleLanguage = () => {
+            lang = lang === 'en' ? 'tr' : 'en';
+            localStorage.setItem('portfolio-lang', lang);
+            apply(lang);
+        };
+
+        document.getElementById('langToggle').addEventListener('click', toggleLanguage);
+        const mobileToggle = document.getElementById('langToggleMobile');
+        if (mobileToggle) {
+            mobileToggle.addEventListener('click', toggleLanguage);
+        }
 
         const crosshair = document.getElementById('crosshair');
-        window.addEventListener('mousemove', (e) => { crosshair.style.left = e.clientX + 'px'; crosshair.style.top = e.clientY + 'px'; });
-        document.querySelectorAll('a, button, .gallery-item').forEach(i => { i.addEventListener('mouseenter', () => crosshair.classList.add('expand')); i.addEventListener('mouseleave', () => crosshair.classList.remove('expand')); });
-        document.getElementById('scrollContainer').addEventListener('wheel', (e) => { e.preventDefault(); document.getElementById('scrollContainer').scrollLeft += e.deltaY; }, { passive: false });
+        let mouseX = 0;
+        let mouseY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function updateCursor() {
+            crosshair.style.left = mouseX + 'px';
+            crosshair.style.top = mouseY + 'px';
+            requestAnimationFrame(updateCursor);
+        }
+        requestAnimationFrame(updateCursor);
+
+        document.querySelectorAll('a, button, .gallery-item').forEach(i => {
+            i.addEventListener('mouseenter', () => crosshair.classList.add('expand'));
+            i.addEventListener('mouseleave', () => crosshair.classList.remove('expand'));
+        });
+
+        const scrollContainer = document.getElementById('scrollContainer');
+        scrollContainer.addEventListener('wheel', (e) => {
+            if (window.innerWidth > 900) {
+                e.preventDefault();
+                scrollContainer.scrollLeft += e.deltaY;
+            }
+        }, { passive: false });
+
         apply(lang);
     </script>
 </body>
