@@ -276,6 +276,7 @@
             margin-left: 0.5rem;
             margin-right: 0.8rem;
             justify-content: center;
+            order: 3;
         }
 
         .image-frame-basin {
@@ -422,7 +423,7 @@
 
             /* Force intro brief to appear first on mobile */
             .panel-intro-brief {
-                order: -1;
+                order: -1 !important;
                 width: 100% !important;
                 margin: 0 !important;
                 border: 2px solid #111111;
@@ -431,52 +432,72 @@
                 padding: 1.5rem;
             }
 
+            /* Editorial panel for mobile */
             .editorial-panel {
                 width: 100% !important;
-                height: auto;
+                height: auto !important;
                 margin: 0 !important;
-                border: 2px solid #111111;
-                border-radius: 4px;
-                background-color: #ffffff;
-                padding: 1rem;
+                border: 2px solid #111111 !important;
+                border-radius: 4px !important;
+                background-color: #ffffff !important;
+                padding: 1.2rem !important;
+                order: 0;
+                display: flex !important;
+                flex-direction: column !important;
             }
 
             .image-frame-basin {
-                height: auto;
-                width: 100%;
-                border: none;
-                border-radius: 0;
-                background-color: transparent;
-                padding: 0;
-                margin-bottom: 0.75rem;
+                position: relative !important;
+                height: auto !important;
+                width: 100% !important;
+                border: none !important;
+                border-radius: 0 !important;
+                background-color: transparent !important;
+                padding: 0 !important;
+                overflow: visible !important;
+                display: flex !important;
+                flex-direction: column !important;
             }
 
             .project-image {
-                width: 100%;
-                height: auto;
-                max-height: none;
-                object-fit: contain;
+                width: 100% !important;
+                height: auto !important;
+                max-height: none !important;
+                object-fit: contain !important;
+                display: block !important;
             }
 
+            /* Caption positioned completely below the image box */
             .overlay-caption-shield {
-                position: relative;
-                opacity: 1;
-                background: transparent;
-                padding: 0;
-                height: auto;
-                margin-top: 0;
-            }
-
-            .overlay-caption-shield .project-headline {
-                color: #111111;
-                font-size: 1.1rem;
-                font-weight: 700;
+                position: relative !important;
+                top: auto !important;
+                left: auto !important;
+                opacity: 1 !important;
+                background: transparent !important;
+                padding: 0 !important;
+                height: auto !important;
+                width: 100% !important;
+                margin-top: 1rem !important;
+                pointer-events: auto !important;
+                display: flex !important;
+                flex-direction: column !important;
             }
 
             .overlay-caption-shield .project-meta {
-                color: #666;
-                font-size: 0.7rem;
-                margin-bottom: 0.2rem;
+                font-size: 0.75rem !important;
+                color: #666 !important;
+                margin-bottom: 0.2rem !important;
+                letter-spacing: 0.1em !important;
+                font-weight: 700 !important;
+            }
+
+            .overlay-caption-shield .project-headline {
+                font-size: 1.35rem !important;
+                font-weight: 700 !important;
+                color: #111111 !important;
+                line-height: 1.2 !important;
+                letter-spacing: -0.02em !important;
+                margin-bottom: 0 !important;
             }
 
             /* Split-profile Mobile Bottom Navigation Bar with Architecture Expanded */
@@ -586,7 +607,8 @@
         <div class="scroll-viewport" id="scrollContainer">
             <main class="magazine-grid">
 
-                <section class="editorial-panel">
+                <!-- 1st Image Card -->
+                <section class="editorial-panel" style="order: 1;">
                     <div class="image-frame-basin">
                         <img src="../../assets/architecture/kahramanmaras/planning-layout.webp" alt="Master Plan"
                             class="project-image" loading="lazy" decoding="async">
@@ -597,7 +619,8 @@
                     </div>
                 </section>
 
-                <section class="editorial-panel">
+                <!-- 2nd Image Card -->
+                <section class="editorial-panel" style="order: 2;">
                     <div class="image-frame-basin">
                         <img src="../../assets/architecture/kahramanmaras/perspective-view.webp"
                             alt="Morphological Study" class="project-image" loading="lazy" decoding="async">
@@ -608,6 +631,7 @@
                     </div>
                 </section>
 
+                <!-- Text Box / Intro Brief -->
                 <section class="editorial-panel panel-intro-brief">
                     <span class="project-meta" data-key="proj-meta">Master Planning & Revitalization</span>
                     <h2 class="project-headline" data-key="proj-title">Kahramanmaraş Meydan</h2>
@@ -618,7 +642,8 @@
                         communicating the design intent through clear and realistic visualizations.</p>
                 </section>
 
-                <section class="editorial-panel">
+                <!-- Rest of the Image Cards -->
+                <section class="editorial-panel" style="order: 4;">
                     <div class="image-frame-basin">
                         <img src="../../assets/architecture/kahramanmaras/image3.webp" alt="Layout" class="project-image"
                             loading="lazy" decoding="async">
@@ -629,7 +654,7 @@
                     </div>
                 </section>
 
-                <section class="editorial-panel">
+                <section class="editorial-panel" style="order: 5;">
                     <div class="image-frame-basin">
                         <img src="../../assets/architecture/kahramanmaras/image4.webp" alt="Modeling"
                             class="project-image crop-bottom" loading="lazy" decoding="async">
@@ -640,7 +665,7 @@
                     </div>
                 </section>
 
-                <section class="editorial-panel">
+                <section class="editorial-panel" style="order: 6;">
                     <div class="image-frame-basin">
                         <img src="../../assets/architecture/kahramanmaras/image5.webp" alt="Render" class="project-image"
                             loading="lazy" decoding="async">
@@ -651,7 +676,7 @@
                     </div>
                 </section>
 
-                <section class="editorial-panel">
+                <section class="editorial-panel" style="order: 7;">
                     <div class="image-frame-basin">
                         <img src="../../assets/architecture/kahramanmaras/image6.webp" alt="Detail" class="project-image"
                             loading="lazy" decoding="async">
@@ -662,7 +687,7 @@
                     </div>
                 </section>
 
-                <section class="editorial-panel">
+                <section class="editorial-panel" style="order: 8;">
                     <div class="image-frame-basin">
                         <img src="../../assets/architecture/kahramanmaras/image7.webp" alt="Final" class="project-image"
                             loading="lazy" decoding="async">
