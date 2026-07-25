@@ -17,6 +17,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         html,
@@ -27,6 +28,7 @@
             font-family: 'Space Grotesk', sans-serif;
             overflow: hidden;
             cursor: none;
+            -webkit-font-smoothing: antialiased;
         }
 
         .page-wrapper {
@@ -127,6 +129,7 @@
             text-decoration: none;
             color: #111111;
             text-transform: uppercase;
+            letter-spacing: 0.1em;
             padding: 0.6rem 0;
             width: 160px;
             display: flex;
@@ -259,6 +262,9 @@
             flex-shrink: 0;
             align-self: flex-end;
             margin-bottom: 3vh;
+            background: #ffffff;
+            border: 2px solid #111111;
+            border-radius: 4px;
         }
 
         .media-box {
@@ -295,20 +301,227 @@
             color: #444;
             font-size: clamp(0.75rem, 0.85vw, 0.88rem);
         }
+
+        /* MOBILE ELEMENTS (Hidden on Desktop) */
+        .mobile-top-home,
+        .mobile-split-nav {
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+            html,
+            body {
+                overflow-y: auto;
+                height: auto;
+                cursor: auto;
+            }
+
+            .page-wrapper {
+                height: auto;
+                padding: 1rem 1rem 5.5rem 1rem;
+            }
+
+            .custom-crosshair {
+                display: none;
+            }
+
+            .global-header {
+                display: none;
+            }
+
+            .back-btn {
+                display: inline-flex !important;
+                margin-bottom: 1.2rem;
+                font-size: 0.85rem;
+            }
+
+            /* Floating Home Button */
+            .mobile-top-home {
+                position: fixed;
+                top: 1rem;
+                right: 1rem;
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                background-color: #111111;
+                border: 1.5px solid #111111;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                z-index: 9998;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+                outline: none;
+            }
+
+            .mobile-top-home .na-text {
+                font-family: 'Syne', sans-serif;
+                font-size: 0.8rem;
+                font-weight: 800;
+                letter-spacing: -0.05em;
+                color: #ffffff;
+            }
+
+            .scroll-viewport {
+                overflow-x: visible;
+                height: auto;
+                padding-bottom: 0;
+            }
+
+            .magazine-grid {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                height: auto;
+                gap: 2rem;
+                padding-right: 0;
+            }
+
+            .text-card {
+                width: 100% !important;
+                height: auto !important;
+                min-height: 0 !important;
+                margin: 0 !important;
+                border: 2px solid #111111;
+                border-radius: 4px;
+                background-color: #ffffff;
+                padding: 1.5rem;
+                justify-content: flex-start;
+                align-self: stretch;
+                order: -1 !important;
+            }
+
+            .text-card .project-subheading {
+                font-size: 0.65rem !important;
+            }
+
+            .text-card .project-headline {
+                font-size: 1.1rem !important;
+            }
+
+            .text-card .project-description {
+                font-size: 0.8rem !important;
+            }
+
+            .gallery-item {
+                width: 100% !important;
+                height: auto !important;
+                margin: 0 !important;
+                border: 2px solid #111111 !important;
+                border-radius: 4px !important;
+                background-color: #ffffff !important;
+                padding: 1.2rem !important;
+                display: flex !important;
+                flex-direction: column !important;
+                order: 0;
+            }
+
+            .media-box {
+                position: relative !important;
+                height: auto !important;
+                width: 100% !important;
+                border: none !important;
+                border-radius: 0 !important;
+                background-color: transparent !important;
+                padding: 0 !important;
+                overflow: hidden !important;
+                display: block !important;
+            }
+
+            .media-box img,
+            .media-box video {
+                width: 100% !important;
+                height: auto !important;
+                max-height: none !important;
+                object-fit: contain !important;
+                display: block !important;
+            }
+
+            /* Split-profile Mobile Bottom Navigation Bar */
+            .mobile-split-nav {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 36px;
+                background-color: #111111;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                z-index: 9998;
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+
+            .split-nav-item {
+                position: relative;
+                top: -14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                padding: 0 0.75rem;
+                height: 44px;
+                border-radius: 22px;
+                background-color: #ffffff;
+                border: 2px solid #111111;
+                color: #111111;
+                cursor: pointer;
+                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+                transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease, color 0.2s ease, padding 0.2s ease;
+                white-space: nowrap;
+                outline: none;
+            }
+
+            .split-nav-item:focus,
+            .split-nav-item:active {
+                outline: none;
+            }
+
+            .split-nav-item .pill-text {
+                font-family: 'Space Grotesk', sans-serif;
+                font-size: 0.72rem;
+                font-weight: 800;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+                color: #111111;
+                transition: color 0.2s ease;
+            }
+
+            .split-nav-item.active {
+                background-color: #E63946;
+                border-color: #111111;
+                transform: translateY(-4px) scale(1.05);
+                padding: 0 1.15rem;
+            }
+
+            .split-nav-item.active .pill-text {
+                color: #ffffff;
+            }
+
+            .split-nav-item:active {
+                transform: scale(0.95);
+            }
+        }
     </style>
 </head>
 
 <body>
     <div class="custom-crosshair" id="crosshair"></div>
+
+    <!-- MOBILE TOP RIGHT HOME BUTTON -->
+    <a href="../../index.html" class="mobile-top-home" title="Home">
+        <span class="na-text">NA</span>
+    </a>
+
     <div class="page-wrapper">
         <header class="global-header">
             <nav class="nav-rectangle">
                 <a href="../../index.html" class="brand-logo">NA</a>
                 <div class="nav-spacer"></div>
-                <a href="../../architecture.html" class="nav-item" data-key="nav-arch">Architecture</a>
-                <a href="../../3d-design.html" class="nav-item active" data-key="nav-3d">3D Design</a>
-                <a href="../../research.html" class="nav-item" data-key="nav-res">Research</a>
-                <a href="../../contact.html" class="nav-item" data-key="nav-cont">Contact</a>
+                <a href="../../architecture.html" class="nav-item" data-key="nav-arch-full">Architecture</a>
+                <a href="../../3d-design.html" class="nav-item active" data-key="nav-3d-full">3D Design</a>
+                <a href="../../research.html" class="nav-item" data-key="nav-res-full">Research</a>
+                <a href="../../contact.html" class="nav-item" data-key="nav-cont-full">Contact</a>
                 <button id="langToggle" class="lang-toggle-container">
                     <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -323,7 +536,7 @@
             </nav>
         </header>
 
-        <a href="../../3d-design.html" class="back-btn">← BACK</a>
+        <a href="../../3d-design.html" class="back-btn" data-key="back-link">← BACK</a>
 
         <div class="scroll-viewport" id="scrollContainer">
             <main class="magazine-grid">
@@ -335,35 +548,69 @@
                 <div class="text-card">
                     <div class="project-subheading" data-key="p-sub">Character Design</div>
                     <h2 class="project-headline" data-key="p-title">Rusty</h2>
-                    <p class="project-description" data-key="p-desc">Commissioned for the hybrid-casual game Mirror Mania, Rusty is a scrappy, lovable robot with a retro-industrial aesthetic. I conceptualized and executed the original character design—ranging from initial concept sketches to the final asset render—focusing on distinctive silhouettes, worn textures, and expressive features optimized for low-poly clarity. The character blends charm and grit, creating a memorable visual anchor that enhances player engagement and supports the game's lighthearted narrative.</p>
+                    <p class="project-description" data-key="p-desc">Commissioned for the hybrid-casual game Mirror
+                        Mania, Rusty is a scrappy, lovable robot with a retro-industrial aesthetic. I conceptualized and
+                        executed the original character design—ranging from initial concept sketches to the final asset
+                        render—focusing on distinctive silhouettes, worn textures, and expressive features optimized for
+                        low-poly clarity. The character blends charm and grit, creating a memorable visual anchor that
+                        enhances player engagement and supports the game's lighthearted narrative.</p>
                 </div>
 
                 <div class="gallery-item">
-                    <div class="media-box"><img src="../../assets/design/rusty/thumbnail.webp" alt="Character Render" loading="lazy" decoding="async"></div>
+                    <div class="media-box"><img src="../../assets/design/rusty/thumbnail.webp" alt="Character Render"
+                            loading="lazy" decoding="async"></div>
                 </div>
 
                 <div class="gallery-item">
-                    <div class="media-box"><img src="../../assets/design/rusty/image-2.webp" alt="Character Sheet" loading="lazy" decoding="async"></div>
+                    <div class="media-box"><img src="../../assets/design/rusty/image-2.webp" alt="Character Sheet"
+                            loading="lazy" decoding="async"></div>
                 </div>
 
             </main>
         </div>
     </div>
 
+    <!-- MOBILE BOTTOM NAVIGATION BAR -->
+    <nav class="mobile-split-nav">
+        <a href="../../architecture.html" class="split-nav-item" title="Architecture">
+            <span class="pill-text" data-key="nav-arch">Arch</span>
+        </a>
+        <a href="../../3d-design.html" class="split-nav-item active" title="3D Design">
+            <span class="pill-text" data-key="nav-3d-full">3D Design</span>
+        </a>
+        <a href="../../research.html" class="split-nav-item" title="Research">
+            <span class="pill-text" data-key="nav-res">Res</span>
+        </a>
+        <a href="../../contact.html" class="split-nav-item" title="Contact">
+            <span class="pill-text" data-key="nav-cont">Cont</span>
+        </a>
+        <button id="langToggleMobile" class="split-nav-item" title="Language">
+            <span id="langLabelMobile" class="pill-text">TR</span>
+        </button>
+    </nav>
+
     <script>
         const translations = {
             en: {
-                "nav-arch": "Architecture", "nav-3d": "3D Design", "nav-res": "Research", "nav-cont": "Contact",
+                "nav-arch-full": "Architecture", "nav-3d-full": "3D Design", "nav-res-full": "Research", "nav-cont-full": "Contact",
+                "nav-arch": "Arch", "nav-3d": "3D", "nav-res": "Res", "nav-cont": "Cont",
+                "back-link": "← BACK",
                 "p-sub": "Character Design", "p-title": "Rusty", "p-desc": "Commissioned for the hybrid-casual game Mirror Mania, Rusty is a scrappy, lovable robot with a retro-industrial aesthetic. I conceptualized and executed the original character design—ranging from initial concept sketches to the final asset render—focusing on distinctive silhouettes, worn textures, and expressive features optimized for low-poly clarity. The character blends charm and grit, creating a memorable visual anchor that enhances player engagement and supports the game's lighthearted narrative."
             },
             tr: {
-                "nav-arch": "Mimarlık", "nav-3d": "3D Tasarım", "nav-res": "Araştırma", "nav-cont": "İletişim",
+                "nav-arch-full": "Mimarlık", "nav-3d-full": "3D Tasarım", "nav-res-full": "Araştırma", "nav-cont-full": "İletişim",
+                "nav-arch": "Mim", "nav-3d": "3D", "nav-res": "Arş", "nav-cont": "İlet",
+                "back-link": "← GERİ",
                 "p-sub": "Karakter Tasarımı", "p-title": "Rusty", "p-desc": "Mirror Mania hibrit-gündelik oyunu için sipariş edilen Rusty, retro-endüstriyel estetiğe sahip, sevimli ve hırslı bir robottur. İlk konsept eskizlerinden son varlık renderına kadar orijinal karakter tasarımını kavramsallaştırıp uyguladım; düşük poli netliği için optimize edilmiş ayırt edici silüetlere, aşınmış dokulara ve ifade dolu özelliklere odaklandım. Karakter; çekicilik ve kararlılığı harmanlayarak, oyuncu etkileşimini artıran ve oyunun eğlenceli anlatısını destekleyen unutulmaz bir görsel unsur yaratır."
             }
         };
 
         let lang = localStorage.getItem('portfolio-lang') || 'en';
-        
+        const langToggleBtn = document.getElementById('langToggle');
+        const langToggleMobile = document.getElementById('langToggleMobile');
+        const langLabel = document.getElementById('langLabel');
+        const langLabelMobile = document.getElementById('langLabelMobile');
+
         const apply = (l) => {
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
@@ -371,14 +618,23 @@
                     el.textContent = translations[l][key];
                 }
             });
-            document.getElementById('langLabel').textContent = l === 'en' ? 'TR' : 'EN';
+            const targetLabel = l === 'en' ? 'TR' : 'EN';
+            langLabel.textContent = targetLabel;
+            if (langLabelMobile) {
+                langLabelMobile.textContent = targetLabel;
+            }
         };
 
-        document.getElementById('langToggle').addEventListener('click', () => {
+        const toggleLanguage = () => {
             lang = lang === 'en' ? 'tr' : 'en';
             localStorage.setItem('portfolio-lang', lang);
             apply(lang);
-        });
+        };
+
+        langToggleBtn.addEventListener('click', toggleLanguage);
+        if (langToggleMobile) {
+            langToggleMobile.addEventListener('click', toggleLanguage);
+        }
 
         const crosshair = document.getElementById('crosshair');
         let mouseX = 0;
@@ -403,8 +659,10 @@
 
         const scrollContainer = document.getElementById('scrollContainer');
         scrollContainer.addEventListener('wheel', (e) => {
-            e.preventDefault();
-            scrollContainer.scrollLeft += e.deltaY;
+            if (window.innerWidth > 900) {
+                e.preventDefault();
+                scrollContainer.scrollLeft += e.deltaY;
+            }
         }, { passive: false });
 
         apply(lang);
