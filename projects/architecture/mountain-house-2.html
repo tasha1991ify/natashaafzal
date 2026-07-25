@@ -503,7 +503,7 @@
                 margin-bottom: 0 !important;
             }
 
-            /* Split-profile Mobile Bottom Navigation Bar */
+            /* Split-profile Mobile Bottom Navigation Bar matching architecture.html exactly */
             .mobile-split-nav {
                 position: fixed;
                 bottom: 0;
@@ -538,6 +538,11 @@
                 outline: none;
             }
 
+            .split-nav-item:focus,
+            .split-nav-item:active {
+                outline: none;
+            }
+
             .split-nav-item .pill-text {
                 font-family: 'Space Grotesk', sans-serif;
                 font-size: 0.72rem;
@@ -548,6 +553,7 @@
                 transition: color 0.2s ease;
             }
 
+            /* Active focal point styling: expands pill and shows full label */
             .split-nav-item.active {
                 background-color: #E63946;
                 border-color: #111111;
@@ -555,8 +561,12 @@
                 padding: 0 1.15rem;
             }
 
-            .split-nav-item.active .pill-text {
+.split-nav-item.active .pill-text {
                 color: #ffffff;
+            }
+
+            .split-nav-item:active {
+                transform: scale(0.95);
             }
         }
     </style>
@@ -575,10 +585,10 @@
             <nav class="nav-rectangle">
                 <a href="../../index.html" class="brand-logo">NA</a>
                 <div class="nav-spacer"></div>
-                <a href="../../architecture.html" class="nav-item active" data-key="nav-arch">Architecture</a>
-                <a href="../../3d-design.html" class="nav-item" data-key="nav-3d">3D Design</a>
-                <a href="../../research.html" class="nav-item" data-key="nav-res">Research</a>
-                <a href="../../contact.html" class="nav-item" data-key="nav-cont">Contact</a>
+                <a href="../../architecture.html" class="nav-item active" data-key="nav-arch-full">Architecture</a>
+                <a href="../../3d-design.html" class="nav-item" data-key="nav-3d-full">3D Design</a>
+                <a href="../../research.html" class="nav-item" data-key="nav-res-full">Research</a>
+                <a href="../../contact.html" class="nav-item" data-key="nav-cont-full">Contact</a>
                 <button id="langToggle" class="lang-toggle-container">
                     <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -659,20 +669,25 @@
         </div>
     </div>
 
-    <!-- MOBILE BOTTOM NAVIGATION BAR -->
+    <!-- MOBILE BOTTOM NAVIGATION BAR WITH EXPANDED ARCHITECTURE PILL -->
     <nav class="mobile-split-nav">
+        <!-- Architecture (Active - expands to full name) -->
         <a href="../../architecture.html" class="split-nav-item active" title="Architecture">
-            <span class="pill-text" data-key="nav-arch">Architecture</span>
+            <span class="pill-text" data-key="nav-arch-full">Architecture</span>
         </a>
+        <!-- 3D Design -->
         <a href="../../3d-design.html" class="split-nav-item" title="3D Design">
             <span class="pill-text" data-key="nav-3d">3D</span>
         </a>
+        <!-- Research -->
         <a href="../../research.html" class="split-nav-item" title="Research">
             <span class="pill-text" data-key="nav-res">Res</span>
         </a>
+        <!-- Contact -->
         <a href="../../contact.html" class="split-nav-item" title="Contact">
-            <span class="pill-text" data-key="nav-cont">Contact</span>
+            <span class="pill-text" data-key="nav-cont">Cont</span>
         </a>
+        <!-- Language Toggle -->
         <button id="langToggleMobile" class="split-nav-item" title="Language">
             <span id="langLabelMobile" class="pill-text">TR</span>
         </button>
@@ -681,7 +696,8 @@
     <script>
         const translations = {
             en: {
-                "nav-arch": "Architecture", "nav-3d": "3D Design", "nav-res": "Research", "nav-cont": "Contact",
+                "nav-arch-full": "Architecture", "nav-3d-full": "3D Design", "nav-res-full": "Research", "nav-cont-full": "Contact",
+                "nav-arch": "Arch", "nav-3d": "3D", "nav-res": "Res", "nav-cont": "Cont",
                 "p-sub": "Residential Architecture", "p-title": "Hill House", "p-desc": "A 3-bedroom, climate-responsive mountain residence in Murree, Pakistan, spanning a 33' x 39' (10.06m x 11.89m) footprint. Key programs are oriented toward the valley to maximize panoramic views and visual connectivity. The architecture is engineered with durable, weather-resistant assemblies to withstand heavy regional snowfall and seasonal freeze-thaw cycles.",
                 "c1-meta": "Motion Study", "c1-title": "Street View Animation",
                 "c2-meta": "Floor Plan // Ground Level", "c2-title": "Ground Floor Layout",
@@ -691,7 +707,8 @@
                 "c6-meta": "Context Render", "c6-title": "Side Elevation"
             },
             tr: {
-                "nav-arch": "Mimarlık", "nav-3d": "3D Tasarım", "nav-res": "Araştırma", "nav-cont": "İletişim",
+                "nav-arch-full": "Mimarlık", "nav-3d-full": "3D Tasarım", "nav-res-full": "Araştırma", "nav-cont-full": "İletişim",
+                "nav-arch": "Mim", "nav-3d": "3D", "nav-res": "Arş", "nav-cont": "İlet",
                 "p-sub": "Konut Mimarisi", "p-title": "Hill House", "p-desc": "Pakistan'ın Murree kentinde yer alan 33' x 39' (10.06m x 11.89m) büyüklüğünde, iklime duyarlı 3 yatak odalı bir dağ evi. Temel programlar, panoramik manzarayı ve görsel bağlantıyı en üst düzeye çıkarmak için vadiye yönlendirilmiştir. Mimari, bölgedeki yoğun kar yağışına ve mevsimsel donma-çözülme döngelerine dayanacak şekilde dayanıklı, hava koşullarına dayanıklı düzenlemelerle tasarlanmıştır.",
                 "c1-meta": "Hareket Çalışması", "c1-title": "Sokak Görünümü Animasyonu",
                 "c2-meta": "Kat Planı // Zemin Seviyesi", "c2-title": "Zemin Kat Yerleşimi",

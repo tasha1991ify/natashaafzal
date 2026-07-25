@@ -251,7 +251,6 @@
             flex-shrink: 0;
         }
 
-        /* Reduced padding for text cards */
         .text-card {
             width: 342px;
             height: 66vh;
@@ -325,14 +324,12 @@
                 display: none;
             }
 
-            /* Restore the back button appearance for mobile */
             .back-btn {
                 display: inline-flex !important;
                 margin-bottom: 1.2rem;
                 font-size: 0.85rem;
             }
 
-            /* Floating Home Button */
             .mobile-top-home {
                 position: fixed;
                 top: 1rem;
@@ -359,6 +356,12 @@
                 color: #ffffff;
             }
 
+            .scroll-viewport {
+                overflow-x: visible;
+                height: auto;
+                padding-bottom: 0;
+            }
+
             .magazine-grid {
                 display: flex;
                 flex-direction: column;
@@ -368,7 +371,6 @@
                 padding-right: 0;
             }
 
-            /* Text cards conversion for mobile */
             .text-card {
                 width: 100% !important;
                 height: auto !important;
@@ -381,12 +383,10 @@
                 order: 0;
             }
 
-            /* Main intro brief forced first */
             .main-intro-card {
                 order: -1 !important;
             }
 
-            /* Gallery items / image cards conversion for mobile */
             .gallery-item {
                 width: 100% !important;
                 height: auto !important;
@@ -492,10 +492,10 @@
             <nav class="nav-rectangle">
                 <a href="../../index.html" class="brand-logo">NA</a>
                 <div class="nav-spacer"></div>
-                <a href="../../architecture.html" class="nav-item active" data-key="nav-arch">Architecture</a>
-                <a href="../../3d-design.html" class="nav-item" data-key="nav-3d">3D Design</a>
-                <a href="../../research.html" class="nav-item" data-key="nav-res">Research</a>
-                <a href="../../contact.html" class="nav-item" data-key="nav-cont">Contact</a>
+                <a href="../../architecture.html" class="nav-item active" data-key="nav-arch-full">Architecture</a>
+                <a href="../../3d-design.html" class="nav-item" data-key="nav-3d-full">3D Design</a>
+                <a href="../../research.html" class="nav-item" data-key="nav-res-full">Research</a>
+                <a href="../../contact.html" class="nav-item" data-key="nav-cont-full">Contact</a>
                 <button id="langToggle" class="lang-toggle-container">
                     <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -648,7 +648,8 @@
     <script>
         const translations = {
             en: {
-                "nav-arch": "Architecture", "nav-3d": "3D Design", "nav-res": "Research", "nav-cont": "Contact",
+                "nav-arch-full": "Architecture", "nav-3d-full": "3D Design", "nav-res-full": "Research", "nav-cont-full": "Contact",
+                "nav-arch": "Architecture", "nav-3d": "3D", "nav-res": "Res", "nav-cont": "Cont",
                 "p-sub": "Urban Design", "p-title": "The Core-munal", "p-desc": "Addressing Maseru's housing shortage, this proposal creates a neighborhood that sustains residents through shared production and resources. I developed a system of three adaptive housing types (A, B, and C) that scale alongside a growing population. By integrating a central production hub—where residents engage in weaving, shoe-making, and dyeing—the community functions as a closed-loop economic ecosystem, ensuring sustainability and shared prosperity.",
                 "p-sub2": "Single Unit Design", "p-desc2": "The individual unit is designed around a core that holds kitchen and bathroom services, allowing peripheral spaces to be easily utilized for bedrooms and living. The material palette includes thatch, recycled plastic, and lime-plastered MDF. The roof, an inverted canopy inspired by traditional rain-collection techniques, funnels water into a communal filtration tank.",
                 "p-sub3": "Incremental Housing", "p-desc3": "The neighborhood consists of Type A, B, and C housing variations. This incremental system allows the community to grow organically, with ground floors occupied by the elderly and upper units expanding for growing families, ensuring the project reaches full capacity as needs evolve.",
@@ -656,12 +657,13 @@
                 "p-sub5": "Production & Exchange", "p-desc5": "A shared production hub supports local economic development, providing dedicated space for weaving, shoemaking, and dyeing. This space fosters communal cooperation and provides a venue for selling produced goods."
             },
             tr: {
-                "nav-arch": "Mimarlık", "nav-3d": "3D Tasarım", "nav-res": "Araştırma", "nav-cont": "İletişim",
+                "nav-arch-full": "Mimarlık", "nav-3d-full": "3D Tasarım", "nav-res-full": "Araştırma", "nav-cont-full": "İletişim",
+                "nav-arch": "Mimarlık", "nav-3d": "3D", "nav-res": "Arş", "nav-cont": "İlet",
                 "p-sub": "Kentsel Tasarım", "p-title": "The Core-munal", "p-desc": "Maseru'daki konut sıkıntısını ele alan bu öneri, ortak üretim ve kaynaklar aracılığıyla sakinleri destekleyen bir mahalle yaratıyor. Artan nüfusla birlikte ölçeklenebilen üç uyarlanabilir konut tipi (A, B ve C) geliştirdim. Dokuma, ayakkabıcılık ve boyama gibi faaliyetlerin yürütüldüğü merkezi bir üretim merkezini entegre ederek, topluluk sürdürülebilirlik ve ortak refah sağlayan kapalı döngü bir ekonomik ekosistem olarak işlev görüyor.",
                 "p-sub2": "Tek Birim Tasarımı", "p-desc2": "Bireysel birim, mutfak ve banyo hizmetlerini barındıran bir çekirdek etrafında tasarlanmış olup, çevre alanların yatak odaları ve yaşam alanları için kolayca kullanılmasını sağlar. Malzeme paletinde saz, geri dönüştürülmüş plastik ve kireç sıvalı MDF bulunur. Geleneksel yağmur toplama tekniklerinden ilham alan ters çatı, suyu ortak bir filtrasyon tankına aktarır.",
                 "p-sub3": "Kademeli Konut", "p-desc3": "Mahalle, A, B ve C tipi konut varyasyonlarından oluşur. Bu kademeli sistem, topluluğun organik olarak büyümesini sağlar; zemin katlar yaşlılar tarafından kullanılırken, üst birimler büyüyen aileler için genişleyerek projenin ihtiyaçlar değiştikçe tam kapasiteye ulaşmasını sağlar.",
                 "p-sub4": "Yeşil Uygulamalar", "p-desc4": "Pasif soğutma, baca etkisiyle havalandırma ve sera ısıtması her eve entegre edilmiştir. Atıklar kompost gübreleme için yeniden değerlendirilir ve mahalle çapında yağmur suyu hasadı bakım maliyetlerini önemli ölçüde azaltır.",
-                "p-sub5": "Üretim ve Takas", "p-desc5": "Paylaşılan bir üretim merkezi, dokuma, ayakkabıcılık ve boyama için özel alan sağlayarak yerel ekonomik kalkınmayı destekler. This alan, toplumsal iş birliğini teşvik eder ve üretilen malların satışı için bir mekan sağlar."
+                "p-sub5": "Üretim ve Takas", "p-desc5": "Paylaşılan bir üretim merkezi, dokuma, ayakkabıcılık ve boyama için özel alan sağlayarak yerel ekonomik kalkınmayı destekler. Bu alan, toplumsal iş birliğini teşvik eder ve üretilen malların satışı için bir mekan sağlar."
             }
         };
 
@@ -689,7 +691,12 @@
         const crosshair = document.getElementById('crosshair');
         window.addEventListener('mousemove', (e) => { crosshair.style.left = e.clientX + 'px'; crosshair.style.top = e.clientY + 'px'; });
         document.querySelectorAll('a, button, .gallery-item').forEach(i => { i.addEventListener('mouseenter', () => crosshair.classList.add('expand')); i.addEventListener('mouseleave', () => crosshair.classList.remove('expand')); });
-        document.getElementById('scrollContainer').addEventListener('wheel', (e) => { e.preventDefault(); document.getElementById('scrollContainer').scrollLeft += e.deltaY; }, { passive: false });
+        document.getElementById('scrollContainer').addEventListener('wheel', (e) => {
+            if (window.innerWidth > 900) {
+                e.preventDefault();
+                document.getElementById('scrollContainer').scrollLeft += e.deltaY;
+            }
+        }, { passive: false });
 
         apply(lang);
     </script>

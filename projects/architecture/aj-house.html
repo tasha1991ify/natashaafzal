@@ -129,6 +129,7 @@
             text-decoration: none;
             color: #111111;
             text-transform: uppercase;
+            letter-spacing: 0.1em;
             padding: 0.6rem 0;
             width: 160px;
             display: flex;
@@ -236,8 +237,6 @@
         }
 
         .gallery-item {
-            width: auto;
-            min-width: 300px;
             height: 66vh;
             border: 2px solid #111111;
             border-radius: 4px;
@@ -247,21 +246,17 @@
             align-items: center;
             justify-content: center;
             padding: 10px;
+            flex-shrink: 0;
         }
 
-        /* Fixed text card height constraint: strictly bounded to max 75% height of the image cards (49.5vh), 
-            with alignment fixed to the bottom and downward spacing so content never overflows upward or gets clipped. */
         .text-card {
-            width: 330px;
-            height: 49.5vh;
-            max-height: 49.5vh;
-            padding: 1.5rem;
+            width: 342px;
+            height: 66vh;
+            padding: 1.25rem;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             flex-shrink: 0;
-            align-self: flex-end;
-            margin-bottom: 3vh;
         }
 
         .media-box {
@@ -277,26 +272,27 @@
             height: 100%;
             width: auto;
             object-fit: contain;
+            object-position: center;
         }
 
         .project-subheading {
-            font-size: clamp(0.7rem, 0.8vw, 0.85rem);
+            font-size: 0.9rem;
             text-transform: uppercase;
             color: #666;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.5rem;
             letter-spacing: 0.05em;
         }
 
         .project-headline {
-            font-size: clamp(1.2rem, 1.5vw, 1.6rem);
+            font-size: 1.8rem;
             font-weight: 800;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
         }
 
         .project-description {
-            line-height: 1.4;
+            line-height: 1.6;
             color: #444;
-            font-size: clamp(0.75rem, 0.85vw, 0.88rem);
+            font-size: 0.95rem;
         }
 
         /* MOBILE ELEMENTS (Hidden on Desktop) */
@@ -306,6 +302,7 @@
         }
 
         @media (max-width: 900px) {
+
             html,
             body {
                 overflow-y: auto;
@@ -332,7 +329,6 @@
                 font-size: 0.85rem;
             }
 
-            /* Floating Home Button */
             .mobile-top-home {
                 position: fixed;
                 top: 1rem;
@@ -359,6 +355,12 @@
                 color: #ffffff;
             }
 
+            .scroll-viewport {
+                overflow-x: visible;
+                height: auto;
+                padding-bottom: 0;
+            }
+
             .magazine-grid {
                 display: flex;
                 flex-direction: column;
@@ -368,43 +370,26 @@
                 padding-right: 0;
             }
 
-            /* Text cards conversion for mobile */
             .text-card {
                 width: 100% !important;
                 height: auto !important;
-                max-height: none !important;
                 margin: 0 !important;
                 border: 2px solid #111111;
                 border-radius: 4px;
                 background-color: #ffffff;
                 padding: 1.5rem;
                 justify-content: flex-start;
-                align-self: stretch;
                 order: -1 !important;
             }
 
-            .text-card .project-subheading {
-                font-size: 0.65rem !important;
-            }
-
-            .text-card .project-headline {
-                font-size: 1.1rem !important;
-            }
-
-            .text-card .project-description {
-                font-size: 0.8rem !important;
-            }
-
-            /* Gallery items / image cards conversion for mobile */
             .gallery-item {
                 width: 100% !important;
-                min-width: 0 !important;
                 height: auto !important;
                 margin: 0 !important;
                 border: 2px solid #111111 !important;
                 border-radius: 4px !important;
                 background-color: #ffffff !important;
-                padding: 1.2rem !important;
+                padding: 1rem !important;
                 order: 0;
                 display: flex !important;
                 flex-direction: column !important;
@@ -503,10 +488,10 @@
             <nav class="nav-rectangle">
                 <a href="../../index.html" class="brand-logo">NA</a>
                 <div class="nav-spacer"></div>
-                <a href="../../architecture.html" class="nav-item active" data-key="nav-arch">Architecture</a>
-                <a href="../../3d-design.html" class="nav-item" data-key="nav-3d">3D Design</a>
-                <a href="../../research.html" class="nav-item" data-key="nav-res">Research</a>
-                <a href="../../contact.html" class="nav-item" data-key="nav-cont">Contact</a>
+                <a href="../../architecture.html" class="nav-item active" data-key="nav-arch-full">Architecture</a>
+                <a href="../../3d-design.html" class="nav-item" data-key="nav-3d-full">3D Design</a>
+                <a href="../../research.html" class="nav-item" data-key="nav-res-full">Research</a>
+                <a href="../../contact.html" class="nav-item" data-key="nav-cont-full">Contact</a>
                 <button id="langToggle" class="lang-toggle-container">
                     <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -589,7 +574,7 @@
             <span class="pill-text" data-key="nav-res">Res</span>
         </a>
         <a href="../../contact.html" class="split-nav-item" title="Contact">
-            <span class="pill-text" data-key="nav-cont">Contact</span>
+            <span class="pill-text" data-key="nav-cont">Cont</span>
         </a>
         <button id="langToggleMobile" class="split-nav-item" title="Language">
             <span id="langLabelMobile" class="pill-text">TR</span>
@@ -599,11 +584,13 @@
     <script>
         const translations = {
             en: {
-                "nav-arch": "Architecture", "nav-3d": "3D Design", "nav-res": "Research", "nav-cont": "Contact",
+                "nav-arch-full": "Architecture", "nav-3d-full": "3D Design", "nav-res-full": "Research", "nav-cont-full": "Contact",
+                "nav-arch": "Architecture", "nav-3d": "3D", "nav-res": "Res", "nav-cont": "Cont",
                 "p-sub": "Residential Architecture", "p-title": "AJ House", "p-desc": "A contemporary 2-kanal residence designed around spatial flow, natural light, and climate performance. The layout clearly separates the guest wing from the family quarters, with a central atrium binding the spaces together. The ground floor houses the parents' bedroom, while a connected mezzanine above accommodates the children's area to keep family spaces close. To handle the local climate, the exterior walls are built with a rat-trap bond to improve insulation and reduce heat transfer. The flat roof is covered with vegetation, acting as a natural thermal barrier while doubling as a productive garden for the household."
             },
             tr: {
-                "nav-arch": "Mimarlık", "nav-3d": "3D Tasarım", "nav-res": "Araştırma", "nav-cont": "İletişim",
+                "nav-arch-full": "Mimarlık", "nav-3d-full": "3D Tasarım", "nav-res-full": "Araştırma", "nav-cont-full": "İletişim",
+                "nav-arch": "Mimarlık", "nav-3d": "3D", "nav-res": "Arş", "nav-cont": "İlet",
                 "p-sub": "Konut Mimarisi", "p-title": "AJ Evi", "p-desc": "Mekânsal akışa, doğal ışığa ve iklim performansına göre tasarlanmış çağdaş bir 2 kanal konut. Yerleşim planı, misafir kanadını aile yaşam alanlarından açıkça ayırır ve mekanları birbirine bağlayan merkezi bir atriyuma sahiptir. Zemin katta ebeveyn yatak odası yer alırken, üst kattaki bağlantılı asma kat çocuk alanını barındırarak aile alanlarını bir arada tutar. Yerel iklim koşullarıyla başa çıkabilmek için dış duvarlar, izolasyonu artırmak ve ısı transferini azaltmak amacıyla rat-trap bağı (fare kapanı örgü tekniği) ile örülmüştür. Düz çatı bitkilendirilerek doğal bir termal bariyer işlevi görmesi sağlanmış, aynı zamanda hanehalkı için verimli bir bahçe olarak kullanılması amaçlanmıştır."
             }
         };

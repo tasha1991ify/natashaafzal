@@ -427,7 +427,7 @@
                 display: block !important;
             }
 
-            /* Split-profile Mobile Bottom Navigation Bar */
+            /* Split-profile Mobile Bottom Navigation Bar matching architecture.html exactly */
             .mobile-split-nav {
                 position: fixed;
                 bottom: 0;
@@ -462,6 +462,11 @@
                 outline: none;
             }
 
+            .split-nav-item:focus,
+            .split-nav-item:active {
+                outline: none;
+            }
+
             .split-nav-item .pill-text {
                 font-family: 'Space Grotesk', sans-serif;
                 font-size: 0.72rem;
@@ -472,6 +477,7 @@
                 transition: color 0.2s ease;
             }
 
+            /* Active focal point styling: expands pill and shows full label */
             .split-nav-item.active {
                 background-color: #E63946;
                 border-color: #111111;
@@ -481,6 +487,10 @@
 
             .split-nav-item.active .pill-text {
                 color: #ffffff;
+            }
+
+            .split-nav-item:active {
+                transform: scale(0.95);
             }
         }
     </style>
@@ -499,10 +509,10 @@
             <nav class="nav-rectangle">
                 <a href="../../index.html" class="brand-logo">NA</a>
                 <div class="nav-spacer"></div>
-                <a href="../../architecture.html" class="nav-item active" data-key="nav-arch">Architecture</a>
-                <a href="../../3d-design.html" class="nav-item" data-key="nav-3d">3D Design</a>
-                <a href="../../research.html" class="nav-item" data-key="nav-res">Research</a>
-                <a href="../../contact.html" class="nav-item" data-key="nav-cont">Contact</a>
+                <a href="../../architecture.html" class="nav-item active" data-key="nav-arch-full">Architecture</a>
+                <a href="../../3d-design.html" class="nav-item" data-key="nav-3d-full">3D Design</a>
+                <a href="../../research.html" class="nav-item" data-key="nav-res-full">Research</a>
+                <a href="../../contact.html" class="nav-item" data-key="nav-cont-full">Contact</a>
                 <button id="langToggle" class="lang-toggle-container">
                     <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -568,20 +578,25 @@
         </div>
     </div>
 
-    <!-- MOBILE BOTTOM NAVIGATION BAR -->
+    <!-- MOBILE BOTTOM NAVIGATION BAR WITH EXPANDED ARCHITECTURE PILL -->
     <nav class="mobile-split-nav">
+        <!-- Architecture (Active - expands to full name) -->
         <a href="../../architecture.html" class="split-nav-item active" title="Architecture">
-            <span class="pill-text" data-key="nav-arch">Architecture</span>
+            <span class="pill-text" data-key="nav-arch-full">Architecture</span>
         </a>
+        <!-- 3D Design -->
         <a href="../../3d-design.html" class="split-nav-item" title="3D Design">
             <span class="pill-text" data-key="nav-3d">3D</span>
         </a>
+        <!-- Research -->
         <a href="../../research.html" class="split-nav-item" title="Research">
             <span class="pill-text" data-key="nav-res">Res</span>
         </a>
+        <!-- Contact -->
         <a href="../../contact.html" class="split-nav-item" title="Contact">
-            <span class="pill-text" data-key="nav-cont">Contact</span>
+            <span class="pill-text" data-key="nav-cont">Cont</span>
         </a>
+        <!-- Language Toggle -->
         <button id="langToggleMobile" class="split-nav-item" title="Language">
             <span id="langLabelMobile" class="pill-text">TR</span>
         </button>
@@ -590,14 +605,16 @@
     <script>
         const translations = {
             en: {
-                "nav-arch": "Architecture", "nav-3d": "3D Design", "nav-res": "Research", "nav-cont": "Contact",
+                "nav-arch-full": "Architecture", "nav-3d-full": "3D Design", "nav-res-full": "Research", "nav-cont-full": "Contact",
+                "nav-arch": "Arch", "nav-3d": "3D", "nav-res": "Res", "nav-cont": "Cont",
                 "sub1": "Hotel Design", "title1": "UCHSR - Cappadocia, Turkey", "desc1": "This project involved developing photorealistic visualizations for the UCHSR Hotel, emphasizing the integration of contemporary luxury with Cappadocia's unique geological topography. My workflow focused on material studies and context-sensitive lighting to harmonize architectural forms with the site's historic stone vernacular. Software used: AutoCAD, Sketchup, Lumion, Photoshop.",
                 "sub2": "Visual Analysis",
                 "title2": "Facade Composition",
                 "desc2": "Front elevation studies exploring the interplay of light, shadow, and materiality. These renderings focus on the architectural composition of the facade and its visual integration into the existing historic landscape."
             },
             tr: {
-                "nav-arch": "Mimarlık", "nav-3d": "3D Tasarım", "nav-res": "Araştırma", "nav-cont": "İletişim",
+                "nav-arch-full": "Mimarlık", "nav-3d-full": "3D Tasarım", "nav-res-full": "Araştırma", "nav-cont-full": "İletişim",
+                "nav-arch": "Mim", "nav-3d": "3D", "nav-res": "Arş", "nav-cont": "İlet",
                 "sub1": "Otel Tasarımı", "title1": "UCHSR - Kapadokya, Türkiye", "desc1": "Kapadokya'daki UCHSR Otel Tasarımı için birincil odak noktam, tasarımın özünü nefes kesici doğal manzara içinde yakalayan fotogerçekçi 3D renderlar oluşturmaktı. Mimari formların ve yerel tasarım dilinden esinlenen malzemelerin çevreyle nasıl uyum sağladığını sergileyen renderlar üzerinde titizlikle çalıştım. Kullanılan yazılımlar: AutoCAD, Sketchup, Lumion, Photoshop.",
                 "sub2": "Görsel Analiz",
                 "title2": "Cephe Kompozisyonu",
@@ -667,3 +684,4 @@
 </body>
 
 </html>
+```[cite: 5]

@@ -245,7 +245,6 @@
         }
 
         .gallery-item {
-            width: auto;
             height: 66vh;
             border: 2px solid #111111;
             border-radius: 4px;
@@ -259,15 +258,13 @@
         }
 
         .text-card {
-            width: 340px;
-            max-height: 49.5vh;
-            padding: 1.5rem;
+            width: 342px;
+            height: 66vh;
+            padding: 1.25rem;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             flex-shrink: 0;
-            align-self: flex-end;
-            margin-bottom: 3vh;
         }
 
         .media-box {
@@ -282,26 +279,27 @@
             height: 100%;
             width: auto;
             object-fit: contain;
+            object-position: center;
         }
 
         .project-subheading {
-            font-size: clamp(0.75rem, 0.85vw, 0.9rem);
+            font-size: 0.9rem;
             text-transform: uppercase;
             color: #666;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.5rem;
             letter-spacing: 0.05em;
         }
 
         .project-headline {
-            font-size: clamp(1.3rem, 1.8vw, 1.8rem);
+            font-size: 1.8rem;
             font-weight: 800;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
         }
 
         .project-description {
-            line-height: 1.5;
+            line-height: 1.6;
             color: #444;
-            font-size: clamp(0.8rem, 0.95vw, 0.95rem);
+            font-size: 0.95rem;
         }
 
         /* MOBILE ELEMENTS (Hidden on Desktop) */
@@ -311,6 +309,7 @@
         }
 
         @media (max-width: 900px) {
+
             html,
             body {
                 overflow-y: auto;
@@ -337,7 +336,6 @@
                 font-size: 0.85rem;
             }
 
-            /* Floating Home Button */
             .mobile-top-home {
                 position: fixed;
                 top: 1rem;
@@ -364,6 +362,12 @@
                 color: #ffffff;
             }
 
+            .scroll-viewport {
+                overflow-x: visible;
+                height: auto;
+                padding-bottom: 0;
+            }
+
             .magazine-grid {
                 display: flex;
                 flex-direction: column;
@@ -381,6 +385,7 @@
                 width: 100%;
                 gap: 1rem;
                 flex-shrink: 0;
+                height: 260px;
                 order: 1;
             }
 
@@ -388,76 +393,66 @@
             .text-card {
                 width: 100% !important;
                 height: auto !important;
-                max-height: none !important;
                 margin: 0 !important;
                 border: 2px solid #111111;
                 border-radius: 4px;
                 background-color: #ffffff;
                 padding: 1.5rem;
                 justify-content: flex-start;
-                align-self: stretch;
                 order: -1 !important;
             }
 
-            .text-card .project-subheading {
-                font-size: 0.7rem !important;
-            }
-
-            .text-card .project-headline {
-                font-size: 1.35rem !important;
-            }
-
-            .text-card .project-description {
-                font-size: 0.9rem !important;
-            }
-
-            /* Gallery items default — full width stacking */
+            /* Standalone gallery items (outside the row) stack full-width */
             .gallery-item {
-                height: 260px !important;
+                width: 100% !important;
+                height: auto !important;
                 margin: 0 !important;
                 border: 2px solid #111111 !important;
                 border-radius: 4px !important;
                 background-color: #ffffff !important;
-                padding: 10px !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                flex-shrink: 0;
+                padding: 1rem !important;
                 order: 1;
+                display: flex !important;
+                flex-direction: column !important;
             }
 
-            /* Standalone gallery items (outside the row) fill full width */
-            .magazine-grid > .gallery-item {
-                width: 100% !important;
-            }
-
-            /* First image: 60% of viewport width */
+            /* First image: 60% width, fixed height to match row */
             .desktop-image-row .gallery-item:nth-child(1) {
                 width: 60vw !important;
+                height: 260px !important;
                 flex-shrink: 0;
+                padding: 10px !important;
             }
 
             /* Second image: fills remaining space */
             .desktop-image-row .gallery-item:nth-child(2) {
                 flex: 1 !important;
                 width: auto !important;
+                height: 260px !important;
+                flex-shrink: 0;
+                padding: 10px !important;
             }
 
             .media-box {
                 position: relative !important;
-                height: 100% !important;
+                height: auto !important;
                 width: 100% !important;
                 border: none !important;
                 border-radius: 0 !important;
                 background-color: transparent !important;
                 padding: 0 !important;
                 overflow: hidden !important;
+                display: block !important;
+            }
+
+            /* Images inside the side-by-side row: cover to fill */
+            .desktop-image-row .media-box {
+                height: 100% !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: center !important;
             }
 
-            /* Images inside the side-by-side row: cover to fill without distortion */
             .desktop-image-row .media-box img {
                 width: 100% !important;
                 height: 100% !important;
@@ -465,7 +460,7 @@
                 display: block !important;
             }
 
-            /* Images in standalone gallery items: contain as normal */
+            /* Images in standalone gallery items: natural height */
             .magazine-grid > .gallery-item .media-box img {
                 width: 100% !important;
                 height: auto !important;
@@ -473,7 +468,7 @@
                 display: block !important;
             }
 
-            /* Split-profile Mobile Bottom Navigation Bar */
+            /* Split-profile Mobile Bottom Navigation Bar matching architecture.html exactly */
             .mobile-split-nav {
                 position: fixed;
                 bottom: 0;
@@ -508,6 +503,11 @@
                 outline: none;
             }
 
+            .split-nav-item:focus,
+            .split-nav-item:active {
+                outline: none;
+            }
+
             .split-nav-item .pill-text {
                 font-family: 'Space Grotesk', sans-serif;
                 font-size: 0.72rem;
@@ -528,6 +528,10 @@
             .split-nav-item.active .pill-text {
                 color: #ffffff;
             }
+
+            .split-nav-item:active {
+                transform: scale(0.95);
+            }
         }
     </style>
 </head>
@@ -545,10 +549,10 @@
             <nav class="nav-rectangle">
                 <a href="../../index.html" class="brand-logo">NA</a>
                 <div class="nav-spacer"></div>
-                <a href="../../architecture.html" class="nav-item active" data-key="nav-arch">Architecture</a>
-                <a href="../../3d-design.html" class="nav-item" data-key="nav-3d">3D Design</a>
-                <a href="../../research.html" class="nav-item" data-key="nav-res">Research</a>
-                <a href="../../contact.html" class="nav-item" data-key="nav-cont">Contact</a>
+                <a href="../../architecture.html" class="nav-item active" data-key="nav-arch-full">Architecture</a>
+                <a href="../../3d-design.html" class="nav-item" data-key="nav-3d-full">3D Design</a>
+                <a href="../../research.html" class="nav-item" data-key="nav-res-full">Research</a>
+                <a href="../../contact.html" class="nav-item" data-key="nav-cont-full">Contact</a>
                 <button id="langToggle" class="lang-toggle-container">
                     <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -628,10 +632,10 @@
         </div>
     </div>
 
-    <!-- MOBILE BOTTOM NAVIGATION BAR -->
+    <!-- MOBILE BOTTOM NAVIGATION BAR WITH EXPANDED ARCHITECTURE PILL -->
     <nav class="mobile-split-nav">
         <a href="../../architecture.html" class="split-nav-item active" title="Architecture">
-            <span class="pill-text" data-key="nav-arch">Architecture</span>
+            <span class="pill-text" data-key="nav-arch-full">Architecture</span>
         </a>
         <a href="../../3d-design.html" class="split-nav-item" title="3D Design">
             <span class="pill-text" data-key="nav-3d">3D</span>
@@ -640,7 +644,7 @@
             <span class="pill-text" data-key="nav-res">Res</span>
         </a>
         <a href="../../contact.html" class="split-nav-item" title="Contact">
-            <span class="pill-text" data-key="nav-cont">Contact</span>
+            <span class="pill-text" data-key="nav-cont">Cont</span>
         </a>
         <button id="langToggleMobile" class="split-nav-item" title="Language">
             <span id="langLabelMobile" class="pill-text">TR</span>
@@ -650,11 +654,13 @@
     <script>
         const translations = {
             en: {
-                "nav-arch": "Architecture", "nav-3d": "3D Design", "nav-res": "Research", "nav-cont": "Contact",
+                "nav-arch-full": "Architecture", "nav-3d-full": "3D Design", "nav-res-full": "Research", "nav-cont-full": "Contact",
+                "nav-arch": "Arch", "nav-3d": "3D", "nav-res": "Res", "nav-cont": "Cont",
                 "p-sub": "Interior Design", "p-title": "BR Restaurant", "p-desc": "Spanning 4,800 square feet across two levels, Bin Riaz Grill merges spatial authenticity with modern curation, pairing a warm, tactile material palette with a minimalist vocabulary of refined plasterwork, architectural metal detailing, and terrazzo flooring. The interior is organized into a disciplined three-part longitudinal layout, anchored by a striking central zone featuring an avant-garde hanging wooden installation—an overhanging organic nest meticulously crafted from suspended, angular battens that define the restaurant's signature visual identity."
             },
             tr: {
-                "nav-arch": "Mimarlık", "nav-3d": "3D Tasarım", "nav-res": "Araştırma", "nav-cont": "İletişim",
+                "nav-arch-full": "Mimarlık", "nav-3d-full": "3D Tasarım", "nav-res-full": "Araştırma", "nav-cont-full": "İletişim",
+                "nav-arch": "Mim", "nav-3d": "3D", "nav-res": "Arş", "nav-cont": "İlet",
                 "p-sub": "İç Mimari", "p-title": "BR Restoran", "p-desc": "İki katta toplam 4.800 feet karelik bir alana yayılan Bin Riaz Grill; sıcak ve dokulu bir malzeme paletini, rafine sıva işçiliği, mimari metal detaylar ve terrazzo zemin kaplamasından oluşan minimalist bir söz varlığıyla birleştirerek mekanın özgünlüğünü modern bir kürasyonla buluşturur. Mekan, uzunlamasına üç disiplinli bölüme ayrılmış olup; restoranın imza görsel kimliğini belirleyen, asma ve açılı çıtalardan titizlikle üretilmiş avangart bir ahşap asma yuvaya ev sahipliği yapan çarpıcı bir merkezi bölge ile merkeze alınmıştır."
             }
         };

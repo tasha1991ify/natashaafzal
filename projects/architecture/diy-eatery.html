@@ -129,6 +129,7 @@
             text-decoration: none;
             color: #111111;
             text-transform: uppercase;
+            letter-spacing: 0.1em;
             padding: 0.6rem 0;
             width: 160px;
             display: flex;
@@ -235,7 +236,6 @@
             width: max-content;
         }
 
-        /* Flexible gallery item */
         .gallery-item {
             width: auto;
             height: 66vh;
@@ -250,7 +250,6 @@
             flex-shrink: 0;
         }
 
-        /* Increased width and optimized padding/alignment for readability */
         .text-card {
             width: 400px;
             height: 66vh;
@@ -289,7 +288,6 @@
             margin-bottom: 0.8rem;
         }
 
-        /* Slightly reduced font size and tighter line height to fit neatly */
         .project-description {
             line-height: 1.5;
             color: #444;
@@ -365,7 +363,6 @@
                 padding-right: 0;
             }
 
-            /* Text cards conversion for mobile */
             .text-card {
                 width: 100% !important;
                 height: auto !important;
@@ -392,7 +389,6 @@
                 font-size: 0.8rem !important;
             }
 
-            /* Gallery items / image cards conversion for mobile */
             .gallery-item {
                 width: 100% !important;
                 height: auto !important;
@@ -426,7 +422,7 @@
                 display: block !important;
             }
 
-            /* Split-profile Mobile Bottom Navigation Bar */
+            /* Split-profile Mobile Bottom Navigation Bar matching architecture.html exactly */
             .mobile-split-nav {
                 position: fixed;
                 bottom: 0;
@@ -461,6 +457,11 @@
                 outline: none;
             }
 
+            .split-nav-item:focus,
+            .split-nav-item:active {
+                outline: none;
+            }
+
             .split-nav-item .pill-text {
                 font-family: 'Space Grotesk', sans-serif;
                 font-size: 0.72rem;
@@ -481,6 +482,10 @@
             .split-nav-item.active .pill-text {
                 color: #ffffff;
             }
+
+            .split-nav-item:active {
+                transform: scale(0.95);
+            }
         }
     </style>
 </head>
@@ -498,10 +503,10 @@
             <nav class="nav-rectangle">
                 <a href="../../index.html" class="brand-logo">NA</a>
                 <div class="nav-spacer"></div>
-                <a href="../../architecture.html" class="nav-item active" data-key="nav-arch">Architecture</a>
-                <a href="../../3d-design.html" class="nav-item" data-key="nav-3d">3D Design</a>
-                <a href="../../research.html" class="nav-item" data-key="nav-res">Research</a>
-                <a href="../../contact.html" class="nav-item" data-key="nav-cont">Contact</a>
+                <a href="../../architecture.html" class="nav-item active" data-key="nav-arch-full">Architecture</a>
+                <a href="../../3d-design.html" class="nav-item" data-key="nav-3d-full">3D Design</a>
+                <a href="../../research.html" class="nav-item" data-key="nav-res-full">Research</a>
+                <a href="../../contact.html" class="nav-item" data-key="nav-cont-full">Contact</a>
                 <button id="langToggle" class="lang-toggle-container">
                     <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -572,20 +577,25 @@
         </div>
     </div>
 
-    <!-- MOBILE BOTTOM NAVIGATION BAR -->
+    <!-- MOBILE BOTTOM NAVIGATION BAR WITH EXPANDED ARCHITECTURE PILL -->
     <nav class="mobile-split-nav">
+        <!-- Architecture (Active - expands to full name) -->
         <a href="../../architecture.html" class="split-nav-item active" title="Architecture">
-            <span class="pill-text" data-key="nav-arch">Architecture</span>
+            <span class="pill-text" data-key="nav-arch-full">Architecture</span>
         </a>
+        <!-- 3D Design -->
         <a href="../../3d-design.html" class="split-nav-item" title="3D Design">
             <span class="pill-text" data-key="nav-3d">3D</span>
         </a>
+        <!-- Research -->
         <a href="../../research.html" class="split-nav-item" title="Research">
             <span class="pill-text" data-key="nav-res">Res</span>
         </a>
+        <!-- Contact -->
         <a href="../../contact.html" class="split-nav-item" title="Contact">
-            <span class="pill-text" data-key="nav-cont">Contact</span>
+            <span class="pill-text" data-key="nav-cont">Cont</span>
         </a>
+        <!-- Language Toggle -->
         <button id="langToggleMobile" class="split-nav-item" title="Language">
             <span id="langLabelMobile" class="pill-text">TR</span>
         </button>
@@ -594,11 +604,13 @@
     <script>
         const translations = {
             en: {
-                "nav-arch": "Architecture", "nav-3d": "3D Design", "nav-res": "Research", "nav-cont": "Contact",
+                "nav-arch-full": "Architecture", "nav-3d-full": "3D Design", "nav-res-full": "Research", "nav-cont-full": "Contact",
+                "nav-arch": "Arch", "nav-3d": "3D", "nav-res": "Res", "nav-cont": "Cont",
                 "p-sub": "Restaurant Design", "p-title": "DIY Eatery", "p-desc": "Grounded in social and environmental sustainability, the proposed interior for the DIY Eatery embraces a cradle-to-cradle design methodology. The material palette highlights repurposed elements, most notably a dynamic overhead gantry constructed from reclaimed kale wood crates. This cascading feature serves a dual purpose as an architectural statement piece and an integrated housing for lighting. Framed against textured white brick walls interspersed with longitudinal timber accents, the space delivers a warm, tactile, and eco-conscious dining environment."
             },
             tr: {
-                "nav-arch": "Mimarlık", "nav-3d": "3D Tasarım", "nav-res": "Araştırma", "nav-cont": "İletişim",
+                "nav-arch-full": "Mimarlık", "nav-3d-full": "3D Tasarım", "nav-res-full": "Araştırma", "nav-cont-full": "İletişim",
+                "nav-arch": "Mim", "nav-3d": "3D", "nav-res": "Arş", "nav-cont": "İlet",
                 "p-sub": "Restoran Tasarımı", "p-title": "DIY Eatery", "p-desc": "Sosyal ve çevresel sürdürülebilirliğe dayanan DIY Eatery'nin iç mekan önerisi, 'beşikten beşiğe' tasarım metodolojisini benimsiyor. Malzeme paleti, geri dönüştürülmüş kale ahşap kasalarından inşa edilen dinamik tavan konstrüksiyonu gibi yeniden değerlendirilen unsurları ön plana çıkarıyor. Bu sarkıt özellik, hem mimari bir ifade parçası hem de aydınlatma için entegre bir yuva olarak ikili bir amaca hizmet ediyor. Longitudinal ahşap detaylarla zenginleştirilmiş dokulu beyaz tuğla duvarların arka planında çerçevelenen mekan, sıcak, dokunsal ve eko-bilinçli bir yemek ortamı sunuyor."
             }
         };
