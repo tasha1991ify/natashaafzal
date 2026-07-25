@@ -10,23 +10,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syne:wght@800&display=swap" rel="stylesheet">
 
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         html, body { 
             height: 100%; background-color: #f7f7f7; color: #111111; 
             font-family: 'Space Grotesk', sans-serif; overflow: hidden; 
             cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><line x1='12' y1='2' x2='12' y2='22' stroke='black' stroke-width='2'/><line x1='2' y1='12' x2='22' y2='12' stroke='black' stroke-width='2'/></svg>") 12 12, auto; 
+            -webkit-font-smoothing: antialiased;
         }
 
-        a:hover, button:hover, .back-link:hover, .lang-toggle-container:hover {
+        a:hover, button:hover, .back-btn:hover, .lang-toggle-container:hover {
             cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'><line x1='25' y1='5' x2='25' y2='45' stroke='black' stroke-width='2'/><line x1='5' y1='25' x2='45' y2='25' stroke='black' stroke-width='2'/></svg>") 25 25, auto;
         }
 
         .page-wrapper { display: flex; flex-direction: column; height: 100vh; padding: 0.5rem 2.5rem 2.5rem 2.5rem; }
 
         /* HEADER */
-        .global-header { width: 100%; margin-bottom: 2rem; padding-top: 0.5rem; flex-shrink: 0; }
-        .nav-rectangle { border: 2px solid #111111; border-radius: 4px; display: flex; align-items: stretch; width: 100%; overflow: hidden; background-color: #f7f7f7; }
+        .global-header { width: 100%; margin-bottom: 1rem; padding-top: 0.5rem; flex-shrink: 0; z-index: 1000; }
+        .nav-rectangle { border: 2px solid #111111; border-radius: 4px; display: flex; align-items: stretch; width: 100%; height: 50px; overflow: hidden; background-color: #f7f7f7; }
         .brand-logo { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; text-decoration: none; color: #111111; padding: 0.6rem 2rem; display: flex; align-items: center; border-right: 2px solid #111111; transition: 0.2s; }
         .brand-logo:hover { background-color: #E63946; color: #ffffff; }
         .nav-spacer { flex: 1; border-right: 2px solid #111111; }
@@ -39,42 +40,235 @@
         .lang-toggle-container:hover .globe-icon { stroke: #ffffff; }
         .lang-toggle-container:hover .lang-label { color: #E63946; }
         .globe-icon { stroke: #111111; transition: stroke 0.2s ease; }
-        .lang-label { font-size: 0.85rem; font-weight: 700; color: #111111; transition: color 0.2s ease; }
+        .lang-label { font-size: 0.85rem; font-weight: 700; color: #111111; transition: color 0.2s ease; text-transform: uppercase; }
 
-        /* BACK LINK */
-        .back-link-wrapper { margin-bottom: 1.5rem; }
-        .back-link { display: inline-block; font-size: 0.85rem; text-transform: uppercase; color: #666; font-weight: 700; text-decoration: none; transition: 0.2s ease; }
-        .back-link:hover { color: #E63946; }
+        /* BACK BUTTON MATCHING OTHER PAGES */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #111111;
+            margin-bottom: 1rem;
+            transition: color 0.2s ease;
+        }
+
+        .back-btn:hover {
+            color: #E63946;
+        }
         
         /* SCROLL VIEWPORT */
-        .scroll-viewport { flex: 1; min-height: 0; width: 100%; overflow-x: auto; overflow-y: hidden; display: flex; align-items: stretch; padding-bottom: 2rem; }
+        .scroll-viewport { flex: 1; min-height: 0; width: 100%; overflow-x: auto; overflow-y: hidden; display: flex; align-items: center; padding-top: 1rem; padding-bottom: 2rem; }
         .scroll-viewport::-webkit-scrollbar { height: 8px; }
         .scroll-viewport::-webkit-scrollbar-thumb { 
             background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='8'><circle cx='9' cy='4' r='2' fill='%23E63946'/></svg>"); 
             background-repeat: repeat-x; background-position: center; 
         }
 
-        .magazine-spread { display: flex; gap: 4rem; padding-right: 4rem; height: 100%; align-items: flex-start; width: max-content; }
-        .content-column { height: 100%; width: 400px; flex-shrink: 0; display: flex; flex-direction: column; }
+        .magazine-spread { display: flex; gap: 4rem; padding-right: 4rem; height: 100%; align-items: center; width: max-content; }
+        .content-column { height: 66vh; width: 400px; flex-shrink: 0; display: flex; flex-direction: column; justify-content: flex-end; }
         
-        .image-container { height: 70vh; flex-shrink: 0; border: 2px solid #111; border-radius: 4px; background: #eaeaea; overflow: hidden; padding: 10px; position: relative; }
-        .image-container img { width: 100%; height: 100%; object-fit: contain; }
+        .image-container { height: 66vh; width: auto; flex-shrink: 0; border: 2px solid #111; border-radius: 4px; background: #eaeaea; overflow: hidden; padding: 10px; display: flex; align-items: center; justify-content: center; }
+        .image-container img { height: 100%; width: auto; object-fit: contain; }
 
-        .project-title { font-size: 2.2rem; font-weight: 700; line-height: 1.1; margin-bottom: 2rem; }
-        .body-text { font-size: 1rem; line-height: 1.6; color: #333; margin-bottom: 1rem; }
+        .project-title { font-size: 1.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; letter-spacing: -0.02em; }
+        .body-text { font-size: 0.95rem; line-height: 1.6; color: #444; }
+
+        /* MOBILE ELEMENTS (Hidden on Desktop) */
+        .mobile-top-home,
+        .mobile-split-nav {
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+            html, body {
+                overflow-y: auto;
+                height: auto;
+                cursor: auto;
+            }
+
+            .page-wrapper {
+                height: auto;
+                padding: 1rem 1rem 5.5rem 1rem;
+            }
+
+            .global-header {
+                display: none;
+            }
+
+            .back-btn {
+                display: inline-flex !important;
+                margin-bottom: 1.2rem;
+                font-size: 0.85rem;
+            }
+
+            /* Floating Home Button */
+            .mobile-top-home {
+                position: fixed;
+                top: 1rem;
+                right: 1rem;
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                background-color: #111111;
+                border: 1.5px solid #111111;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                z-index: 9998;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+                outline: none;
+            }
+
+            .mobile-top-home .na-text {
+                font-family: 'Syne', sans-serif;
+                font-size: 0.8rem;
+                font-weight: 800;
+                letter-spacing: -0.05em;
+                color: #ffffff;
+            }
+
+            .scroll-viewport {
+                overflow-x: visible;
+                height: auto;
+                padding-bottom: 0;
+            }
+
+            .magazine-spread {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                height: auto;
+                gap: 2rem;
+                padding-right: 0;
+            }
+
+            .content-column {
+                width: 100% !important;
+                height: auto !important;
+                margin: 0 !important;
+                border: 2px solid #111111;
+                border-radius: 4px;
+                background-color: #ffffff;
+                padding: 1.5rem;
+                justify-content: flex-start;
+                order: -1 !important;
+            }
+
+            .project-title {
+                font-size: 1.35rem !important;
+            }
+
+            .body-text {
+                font-size: 0.9rem !important;
+            }
+
+            .image-container {
+                width: 100% !important;
+                height: auto !important;
+                margin: 0 !important;
+                border: 2px solid #111111 !important;
+                border-radius: 4px !important;
+                background-color: #ffffff !important;
+                padding: 1.2rem !important;
+                display: block !important;
+            }
+
+            .image-container img {
+                width: 100% !important;
+                height: auto !important;
+                max-height: none !important;
+                object-fit: contain !important;
+                display: block !important;
+            }
+
+            /* Split-profile Mobile Bottom Navigation Bar */
+            .mobile-split-nav {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 36px;
+                background-color: #111111;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                z-index: 9998;
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+
+            .split-nav-item {
+                position: relative;
+                top: -14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                padding: 0 0.75rem;
+                height: 44px;
+                border-radius: 22px;
+                background-color: #ffffff;
+                border: 2px solid #111111;
+                color: #111111;
+                cursor: pointer;
+                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+                transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease, color 0.2s ease, padding 0.2s ease;
+                white-space: nowrap;
+                outline: none;
+            }
+
+            .split-nav-item:focus,
+            .split-nav-item:active {
+                outline: none;
+            }
+
+            .split-nav-item .pill-text {
+                font-family: 'Space Grotesk', sans-serif;
+                font-size: 0.72rem;
+                font-weight: 800;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+                color: #111111;
+                transition: color 0.2s ease;
+            }
+
+            .split-nav-item.active {
+                background-color: #E63946;
+                border-color: #111111;
+                transform: translateY(-4px) scale(1.05);
+                padding: 0 1.15rem;
+            }
+
+            .split-nav-item.active .pill-text {
+                color: #ffffff;
+            }
+
+            .split-nav-item:active {
+                transform: scale(0.95);
+            }
+        }
     </style>
 </head>
 <body>
+
+    <!-- MOBILE TOP RIGHT HOME BUTTON -->
+    <a href="../../index.html" class="mobile-top-home" title="Home">
+        <span class="na-text">NA</span>
+    </a>
 
     <div class="page-wrapper">
         <header class="global-header">
             <nav class="nav-rectangle">
                 <a href="../../index.html" class="brand-logo">NA</a>
                 <div class="nav-spacer"></div>
-                <a href="../../architecture.html" class="nav-item" data-key="nav-arch">Architecture</a>
-                <a href="../../3d-design.html" class="nav-item" data-key="nav-3d">3D Design</a>
-                <a href="../../research.html" class="nav-item active" data-key="nav-res">Research</a>
-                <a href="../../contact.html" class="nav-item" data-key="nav-cont">Contact</a>
+                <a href="../../architecture.html" class="nav-item" data-key="nav-arch-full">Architecture</a>
+                <a href="../../3d-design.html" class="nav-item" data-key="nav-3d-full">3D Design</a>
+                <a href="../../research.html" class="nav-item active" data-key="nav-res-full">Research</a>
+                <a href="../../contact.html" class="nav-item" data-key="nav-cont-full">Contact</a>
                 <button id="langToggle" class="lang-toggle-container">
                     <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                     <span id="langLabel" class="lang-label">TR</span>
@@ -82,9 +276,7 @@
             </nav>
         </header>
 
-        <div class="back-link-wrapper">
-            <a href="../../research.html" class="back-link" data-key="back-link">← BACK</a>
-        </div>
+        <a href="../../research.html" class="back-btn" data-key="back-link">← BACK</a>
 
         <div class="scroll-viewport" id="scrollContainer">
             <main class="magazine-spread">
@@ -115,16 +307,37 @@
         </div>
     </div>
 
+    <!-- MOBILE BOTTOM NAVIGATION BAR -->
+    <nav class="mobile-split-nav">
+        <a href="../../architecture.html" class="split-nav-item" title="Architecture">
+            <span class="pill-text" data-key="nav-arch">Arch</span>
+        </a>
+        <a href="../../3d-design.html" class="split-nav-item" title="3D Design">
+            <span class="pill-text" data-key="nav-3d">3D</span>
+        </a>
+        <a href="../../research.html" class="split-nav-item active" title="Research">
+            <span class="pill-text" data-key="nav-res-full">Research</span>
+        </a>
+        <a href="../../contact.html" class="split-nav-item" title="Contact">
+            <span class="pill-text" data-key="nav-cont">Cont</span>
+        </a>
+        <button id="langToggleMobile" class="split-nav-item" title="Language">
+            <span id="langLabelMobile" class="pill-text">TR</span>
+        </button>
+    </nav>
+
     <script>
         const translations = {
             en: {
-                "nav-arch": "Architecture", "nav-3d": "3D Design", "nav-res": "Research", "nav-cont": "Contact",
+                "nav-arch-full": "Architecture", "nav-3d-full": "3D Design", "nav-res-full": "Research", "nav-cont-full": "Contact",
+                "nav-arch": "Arch", "nav-3d": "3D", "nav-res": "Res", "nav-cont": "Cont",
                 "back-link": "← BACK",
                 "title": "Ankara Streams vs. Urbanization",
                 "p1": "This study interrogates the volatile tension between Ankara’s natural hydrological systems and its rapid, expansive urban growth. By employing multi-temporal mapping, the research exposes how the systematic channelization and \"paving-over\" of historical stream beds have fundamentally altered the city's topography, exacerbating flood risks while eroding ecological connectivity."
             },
             tr: {
-                "nav-arch": "Mimarlık", "nav-3d": "3D Tasarım", "nav-res": "Araştırma", "nav-cont": "İletişim",
+                "nav-arch-full": "Mimarlık", "nav-3d-full": "3D Tasarım", "nav-res-full": "Araştırma", "nav-cont-full": "İletişim",
+                "nav-arch": "Mim", "nav-3d": "3D", "nav-res": "Arş", "nav-cont": "İlet",
                 "back-link": "← GERİ",
                 "title": "Ankara Dereleri ve Kentleşme",
                 "p1": "Bu çalışma, Ankara'nın doğal hidrolojik sistemleri ile hızlı ve geniş çaplı kentsel büyümesi arasındaki değişken gerilimi sorgulamaktadır. Çok zamanlı haritalama teknikleri kullanılarak, tarihsel dere yataklarının sistematik olarak kanalize edilmesinin ve \"üzerlerinin kapatılmasının\" şehrin topografyasını temelden nasıl değiştirdiği, sel risklerini nasıl artırdığı ve ekolojik sürekliliği nasıl zayıflattığı gözler önüne serilmektedir."
@@ -133,7 +346,9 @@
 
         let currentLang = localStorage.getItem('portfolio-lang') || 'en';
         const langToggleBtn = document.getElementById('langToggle');
+        const langToggleMobile = document.getElementById('langToggleMobile');
         const langLabel = document.getElementById('langLabel');
+        const langLabelMobile = document.getElementById('langLabelMobile');
 
         function applyTranslations(lang) {
             document.querySelectorAll('[data-key]').forEach(element => {
@@ -142,14 +357,23 @@
                     element.textContent = translations[lang][key];
                 }
             });
-            langLabel.textContent = lang === 'en' ? 'TR' : 'EN';
+            const targetLabel = lang === 'en' ? 'TR' : 'EN';
+            langLabel.textContent = targetLabel;
+            if (langLabelMobile) {
+                langLabelMobile.textContent = targetLabel;
+            }
         }
 
-        langToggleBtn.addEventListener('click', () => {
+        const toggleLanguage = () => {
             currentLang = currentLang === 'en' ? 'tr' : 'en';
             localStorage.setItem('portfolio-lang', currentLang);
             applyTranslations(currentLang);
-        });
+        };
+
+        langToggleBtn.addEventListener('click', toggleLanguage);
+        if (langToggleMobile) {
+            langToggleMobile.addEventListener('click', toggleLanguage);
+        }
 
         window.addEventListener('load', () => applyTranslations(currentLang));
 
