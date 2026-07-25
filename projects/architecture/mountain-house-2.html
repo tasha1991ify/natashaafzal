@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hill House | Architecture | Natasha Afzal</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%23111111'/><text x='51%' y='57%' dominant-baseline='middle' text-anchor='middle' font-family='Syne, sans-serif' font-weight='800' font-size='56' fill='%23ffffff' letter-spacing='-2'>NA</text></svg>">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -23,8 +26,8 @@
         html,
         body {
             height: 100%;
-            background-color: #f7f7f7;
-            color: #111111;
+            background-color: #111111;
+            color: #ffffff;
             font-family: 'Space Grotesk', sans-serif;
             overflow: hidden;
             cursor: none;
@@ -32,6 +35,8 @@
         }
 
         .page-wrapper {
+            position: relative;
+            z-index: 10;
             display: flex;
             flex-direction: column;
             height: 100vh;
@@ -48,7 +53,6 @@
             pointer-events: none;
             transform: translate(-50%, -50%);
             z-index: 9999;
-            mix-blend-mode: multiply;
             transition: width 0.2s cubic-bezier(0.25, 1, 0.5, 1), height 0.2s cubic-bezier(0.25, 1, 0.5, 1);
             will-change: left, top;
         }
@@ -57,7 +61,7 @@
         .custom-crosshair::after {
             content: '';
             position: absolute;
-            background-color: #000000;
+            background-color: #ffffff;
         }
 
         .custom-crosshair::before {
@@ -89,7 +93,7 @@
         }
 
         .nav-rectangle {
-            border: 2px solid #111111;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 4px;
             display: flex;
             flex-direction: row;
@@ -97,7 +101,8 @@
             width: 100%;
             height: 50px;
             overflow: hidden;
-            background-color: #f7f7f7;
+            background-color: rgba(17, 17, 17, 0.6);
+            backdrop-filter: blur(8px);
         }
 
         .brand-logo {
@@ -105,11 +110,11 @@
             font-size: 1.5rem;
             font-weight: 800;
             text-decoration: none;
-            color: #111111;
+            color: #ffffff;
             padding: 0.6rem 2rem;
             display: flex;
             align-items: center;
-            border-right: 2px solid #111111;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
             transition: 0.2s;
             cursor: none;
         }
@@ -121,15 +126,15 @@
 
         .nav-spacer {
             flex: 1;
-            border-right: 2px solid #111111;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .nav-item {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 500;
             text-decoration: none;
-            color: #111111;
+            color: #ffffff;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             padding: 0.6rem 0;
@@ -137,7 +142,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border-right: 2px solid #111111;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
             transition: 0.2s;
             cursor: none;
         }
@@ -148,7 +153,7 @@
         }
 
         .nav-item.active {
-            background-color: #111111;
+            background-color: rgba(255, 255, 255, 0.15);
             color: #ffffff;
             font-weight: 700;
         }
@@ -167,7 +172,7 @@
         }
 
         .lang-toggle-container:hover {
-            background-color: #111111;
+            background-color: #E63946;
         }
 
         .lang-toggle-container:hover .globe-icon {
@@ -175,19 +180,19 @@
         }
 
         .lang-toggle-container:hover .lang-label {
-            color: #E63946;
+            color: #ffffff;
         }
 
         .globe-icon {
-            stroke: #111111;
+            stroke: #ffffff;
             transition: 0.2s;
         }
 
         .lang-label {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 700;
-            color: #111111;
+            color: #ffffff;
             text-transform: uppercase;
         }
 
@@ -195,11 +200,11 @@
             display: inline-flex;
             align-items: center;
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 700;
             text-transform: uppercase;
             text-decoration: none;
-            color: #111111;
+            color: #ffffff;
             margin-bottom: 1rem;
             transition: color 0.2s ease;
             cursor: none;
@@ -225,9 +230,15 @@
             height: 8px;
         }
 
+        .scroll-viewport::-webkit-scrollbar-track {
+            background: rgba(17, 17, 17, 0.6);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
         .scroll-viewport::-webkit-scrollbar-thumb {
             background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='8'><circle cx='9' cy='4' r='2' fill='%23E63946'/></svg>");
             background-repeat: repeat-x;
+            background-position: center;
         }
 
         .magazine-grid {
@@ -243,15 +254,23 @@
             position: relative;
             height: 66vh;
             width: auto;
-            border: 2px solid #111111;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 4px;
-            background: #ffffff;
+            background: rgba(107, 106, 106, 0.614);
+            backdrop-filter: blur(8px);
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 10px;
             flex-shrink: 0;
+            transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .gallery-item:hover {
+            border-color: #E63946;
+            background-color: rgba(25, 25, 25, 0.85);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .overlay-caption-shield {
@@ -281,22 +300,33 @@
 
         .overlay-caption-shield .project-headline {
             color: #ffffff;
-            font-size: 1.4rem;
+            font-size: 1.55rem;
             margin-bottom: 0;
         }
 
         /* Text card matching Rusty style constraints */
         .text-card {
-            width: 342px;
-            height: 49.5vh;
-            max-height: 49.5vh;
-            padding: 1.5rem;
+            width: 360px;
+            height: 52vh;
+            max-height: 52vh;
+            padding: 1.75rem;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             flex-shrink: 0;
             align-self: flex-end;
             margin-bottom: 3vh;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            background: rgba(107, 106, 106, 0.614);
+            backdrop-filter: blur(8px);
+            transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .text-card:hover {
+            border-color: #E63946;
+            background-color: rgba(25, 25, 25, 0.85);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .media-box {
@@ -316,26 +346,27 @@
         }
 
         .project-meta {
-            font-size: clamp(0.7rem, 0.8vw, 0.85rem);
+            font-size: clamp(0.8rem, 0.95vw, 0.95rem);
             text-transform: uppercase;
-            color: #666;
-            margin-bottom: 0.3rem;
+            color: #aaa;
+            margin-bottom: 0.4rem;
             letter-spacing: 0.05em;
             font-weight: 500;
         }
 
         .project-headline {
-            font-size: clamp(1.2rem, 1.5vw, 1.6rem);
+            font-size: clamp(1.35rem, 1.7vw, 1.8rem);
             font-weight: 800;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
             line-height: 1.2;
             letter-spacing: -0.02em;
+            color: #ffffff;
         }
 
         .project-description {
-            line-height: 1.4;
-            color: #444;
-            font-size: clamp(0.75rem, 0.85vw, 0.88rem);
+            line-height: 1.45;
+            color: #d0d0d0;
+            font-size: clamp(0.85rem, 0.98vw, 1rem);
         }
 
         /* MOBILE ELEMENTS (Hidden on Desktop) */
@@ -381,13 +412,13 @@
                 height: 48px;
                 border-radius: 50%;
                 background-color: #111111;
-                border: 1.5px solid #111111;
+                border: 1.5px solid rgba(255, 255, 255, 0.3);
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 text-decoration: none;
                 z-index: 9998;
-                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
                 outline: none;
             }
 
@@ -397,6 +428,12 @@
                 font-weight: 800;
                 letter-spacing: -0.05em;
                 color: #ffffff;
+            }
+
+            .scroll-viewport {
+                overflow-x: visible;
+                height: auto;
+                padding-bottom: 0;
             }
 
             .magazine-grid {
@@ -414,9 +451,9 @@
                 height: auto !important;
                 max-height: none !important;
                 margin: 0 !important;
-                border: 2px solid #111111;
+                border: 1px solid rgba(255, 255, 255, 0.2);
                 border-radius: 4px;
-                background-color: #ffffff;
+                background-color: rgba(15, 15, 15, 0.85);
                 padding: 1.5rem;
                 justify-content: flex-start;
                 align-self: stretch;
@@ -440,9 +477,9 @@
                 width: 100% !important;
                 height: auto !important;
                 margin: 0 !important;
-                border: 2px solid #111111 !important;
+                border: 1px solid rgba(255, 255, 255, 0.2) !important;
                 border-radius: 4px !important;
-                background-color: #ffffff !important;
+                background-color: rgba(15, 15, 15, 0.85) !important;
                 padding: 1.2rem !important;
                 order: 0;
                 display: flex !important;
@@ -488,7 +525,7 @@
 
             .overlay-caption-shield .project-meta {
                 font-size: 0.65rem !important;
-                color: #666 !important;
+                color: #aaa !important;
                 margin-bottom: 0.15rem !important;
                 letter-spacing: 0.1em !important;
                 font-weight: 700 !important;
@@ -497,13 +534,13 @@
             .overlay-caption-shield .project-headline {
                 font-size: 1.1rem !important;
                 font-weight: 700 !important;
-                color: #111111 !important;
+                color: #ffffff !important;
                 line-height: 1.2 !important;
                 letter-spacing: -0.02em !important;
                 margin-bottom: 0 !important;
             }
 
-            /* Split-profile Mobile Bottom Navigation Bar matching architecture.html exactly */
+            /* Split-profile Mobile Bottom Navigation Bar */
             .mobile-split-nav {
                 position: fixed;
                 bottom: 0;
@@ -516,6 +553,7 @@
                 align-items: center;
                 z-index: 9998;
                 padding-bottom: env(safe-area-inset-bottom);
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
             }
 
             .split-nav-item {
@@ -528,18 +566,13 @@
                 padding: 0 0.75rem;
                 height: 44px;
                 border-radius: 22px;
-                background-color: #ffffff;
-                border: 2px solid #111111;
-                color: #111111;
+                background-color: rgba(30, 30, 30, 0.9);
+                border: 2px solid rgba(255, 255, 255, 0.2);
+                color: #ffffff;
                 cursor: pointer;
-                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
                 transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease, color 0.2s ease, padding 0.2s ease;
                 white-space: nowrap;
-                outline: none;
-            }
-
-            .split-nav-item:focus,
-            .split-nav-item:active {
                 outline: none;
             }
 
@@ -549,24 +582,19 @@
                 font-weight: 800;
                 letter-spacing: 0.05em;
                 text-transform: uppercase;
-                color: #111111;
+                color: #ffffff;
                 transition: color 0.2s ease;
             }
 
-            /* Active focal point styling: expands pill and shows full label */
             .split-nav-item.active {
                 background-color: #E63946;
-                border-color: #111111;
+                border-color: rgba(255, 255, 255, 0.4);
                 transform: translateY(-4px) scale(1.05);
                 padding: 0 1.15rem;
             }
 
-.split-nav-item.active .pill-text {
+            .split-nav-item.active .pill-text {
                 color: #ffffff;
-            }
-
-            .split-nav-item:active {
-                transform: scale(0.95);
             }
         }
     </style>
@@ -669,25 +697,20 @@
         </div>
     </div>
 
-    <!-- MOBILE BOTTOM NAVIGATION BAR WITH EXPANDED ARCHITECTURE PILL -->
+    <!-- MOBILE BOTTOM NAVIGATION BAR -->
     <nav class="mobile-split-nav">
-        <!-- Architecture (Active - expands to full name) -->
         <a href="../../architecture.html" class="split-nav-item active" title="Architecture">
-            <span class="pill-text" data-key="nav-arch-full">Architecture</span>
+            <span class="pill-text" data-key="nav-arch">Architecture</span>
         </a>
-        <!-- 3D Design -->
         <a href="../../3d-design.html" class="split-nav-item" title="3D Design">
             <span class="pill-text" data-key="nav-3d">3D</span>
         </a>
-        <!-- Research -->
         <a href="../../research.html" class="split-nav-item" title="Research">
             <span class="pill-text" data-key="nav-res">Res</span>
         </a>
-        <!-- Contact -->
         <a href="../../contact.html" class="split-nav-item" title="Contact">
             <span class="pill-text" data-key="nav-cont">Cont</span>
         </a>
-        <!-- Language Toggle -->
         <button id="langToggleMobile" class="split-nav-item" title="Language">
             <span id="langLabelMobile" class="pill-text">TR</span>
         </button>
@@ -697,7 +720,7 @@
         const translations = {
             en: {
                 "nav-arch-full": "Architecture", "nav-3d-full": "3D Design", "nav-res-full": "Research", "nav-cont-full": "Contact",
-                "nav-arch": "Arch", "nav-3d": "3D", "nav-res": "Res", "nav-cont": "Cont",
+                "nav-arch": "Architecture", "nav-3d": "3D", "nav-res": "Res", "nav-cont": "Cont",
                 "p-sub": "Residential Architecture", "p-title": "Hill House", "p-desc": "A 3-bedroom, climate-responsive mountain residence in Murree, Pakistan, spanning a 33' x 39' (10.06m x 11.89m) footprint. Key programs are oriented toward the valley to maximize panoramic views and visual connectivity. The architecture is engineered with durable, weather-resistant assemblies to withstand heavy regional snowfall and seasonal freeze-thaw cycles.",
                 "c1-meta": "Motion Study", "c1-title": "Street View Animation",
                 "c2-meta": "Floor Plan // Ground Level", "c2-title": "Ground Floor Layout",
@@ -708,13 +731,13 @@
             },
             tr: {
                 "nav-arch-full": "Mimarlık", "nav-3d-full": "3D Tasarım", "nav-res-full": "Araştırma", "nav-cont-full": "İletişim",
-                "nav-arch": "Mim", "nav-3d": "3D", "nav-res": "Arş", "nav-cont": "İlet",
-                "p-sub": "Konut Mimarisi", "p-title": "Hill House", "p-desc": "Pakistan'ın Murree kentinde yer alan 33' x 39' (10.06m x 11.89m) büyüklüğünde, iklime duyarlı 3 yatak odalı bir dağ evi. Temel programlar, panoramik manzarayı ve görsel bağlantıyı en üst düzeye çıkarmak için vadiye yönlendirilmiştir. Mimari, bölgedeki yoğun kar yağışına ve mevsimsel donma-çözülme döngelerine dayanacak şekilde dayanıklı, hava koşullarına dayanıklı düzenlemelerle tasarlanmıştır.",
+                "nav-arch": "Mimarlık", "nav-3d": "3D", "nav-res": "Arş", "nav-cont": "İlet",
+                "p-sub": "Konut Mimarisi", "p-title": "Hill House", "p-desc": "Pakistan'ın Murree kentinde yer alan 33' x 39' (10.06m x 11.89m) büyüklüğünde, iklime duyarlı 3 yatak odalı bir dağ evi. Temel programlar, panoramik manzarayı ve görsel bağlantıyı en üst düzeye çıkarmak için vadiye yönlendirilmiştir. Mimari, bölgedeki yoğun kar yağışına ve mevsimsel donma-çözülme döngülerine dayanacak şekilde dayanıklı, hava koşullarına dayanıklı düzenlemelerle tasarlanmıştır.",
                 "c1-meta": "Hareket Çalışması", "c1-title": "Sokak Görünümü Animasyonu",
                 "c2-meta": "Kat Planı // Zemin Seviyesi", "c2-title": "Zemin Kat Yerleşimi",
                 "c3-meta": "Kat Planı // Üst Seviye", "c3-title": "Birinci Kat Yerleşimi",
                 "c4-meta": "Dış Mekan Render", "c4-title": "Ön Cephe",
-                "c5-meta": "Dış Mekan Render", "c5-title": "Yaklaşım Perspektifi",
+                "c5-meta": "Dış Mekan Render", "c5-title": "Approach Perspective",
                 "c6-meta": "Bağlam Render", "c6-title": "Yan Cephe"
             }
         };
@@ -758,7 +781,7 @@
         }
         requestAnimationFrame(updateCursor);
 
-        document.querySelectorAll('a, button, .gallery-item').forEach(i => {
+        document.querySelectorAll('a, button, .gallery-item, .text-card').forEach(i => {
             i.addEventListener('mouseenter', () => crosshair.classList.add('expand'));
             i.addEventListener('mouseleave', () => crosshair.classList.remove('expand'));
         });
