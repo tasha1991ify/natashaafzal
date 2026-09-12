@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Villa Resort | Architecture | Natasha Afzal</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%23111111'/><text x='51%' y='57%' dominant-baseline='middle' text-anchor='middle' font-family='Syne, sans-serif' font-weight='800' font-size='56' fill='%23ffffff' letter-spacing='-2'>NA</text></svg>">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syne:wght@800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html,
+        body {
+            height: 100%;
+            background-color: #111111;
+            color: #ffffff;
+            font-family: 'Space Grotesk', sans-serif;
+            overflow: hidden;
+            cursor: none;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Full-Screen Editorial Background Render */
+        .hero-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            object-fit: cover;
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        /* Dark Gradient Overlay for Readability */
+        .hero-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(17,17,17,0.8) 0%, rgba(17,17,17,0.5) 50%, rgba(17,17,17,0.9) 100%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .page-wrapper {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding: 0.5rem 2.5rem 2.5rem 2.5rem;
+        }
+
+        .custom-crosshair {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            transition: width 0.2s cubic-bezier(0.25, 1, 0.5, 1), height 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: left, top;
+        }
+
+        .custom-crosshair::before,
+        .custom-crosshair::after {
+            content: '';
+            position: absolute;
+            background-color: #ffffff;
+        }
+
+        .custom-crosshair::before {
+            top: 0;
+            left: calc(50% - 1.5px);
+            width: 3px;
+            height: 100%;
+        }
+
+        .custom-crosshair::after {
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 3px;
+        }
+
+        .custom-crosshair.expand {
+            width: 50px;
+            height: 50px;
+        }
+
+        .global-header {
+            width: 100%;
+            margin-bottom: 1rem;
+            padding-top: 0.5rem;
+            flex-shrink: 0;
+            z-index: 1000;
+        }
+
+        .nav-rectangle {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            width: 100%;
+            height: 50px;
+            overflow: hidden;
+            background-color: rgba(17, 17, 17, 0.6);
+            backdrop-filter: blur(8px);
+        }
+
+        .brand-logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            color: #ffffff;
+            padding: 0.6rem 2rem;
+            display: flex;
+            align-items: center;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            transition: 0.2s;
+            cursor: none;
+        }
+
+        .brand-logo:hover {
+            background-color: #E63946;
+            color: #ffffff;
+        }
+
+        .nav-spacer {
+            flex: 1;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-item {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.6rem 0;
+            width: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            transition: 0.2s;
+            cursor: none;
+        }
+
+        .nav-item:hover {
+            background-color: #E63946;
+            color: #ffffff;
+        }
+
+        .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .lang-toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 90px;
+            background: transparent;
+            border: none;
+            gap: 0.5rem;
+            padding: 0 1rem;
+            cursor: none;
+            transition: 0.2s;
+        }
+
+        .lang-toggle-container:hover {
+            background-color: #E63946;
+        }
+
+        .lang-toggle-container:hover .globe-icon {
+            stroke: #ffffff;
+        }
+
+        .lang-toggle-container:hover .lang-label {
+            color: #ffffff;
+        }
+
+        .globe-icon {
+            stroke: #ffffff;
+            transition: 0.2s;
+        }
+
+        .lang-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            transition: color 0.2s ease;
+            cursor: none;
+        }
+
+        .back-btn:hover {
+            color: #E63946;
+        }
+
+        .scroll-viewport {
+            flex: 1;
+            min-height: 0;
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            display: flex;
+            align-items: center;
+            padding-top: 1rem;
+            padding-bottom: 2rem;
+        }
+
+        .scroll-viewport::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .scroll-viewport::-webkit-scrollbar-track {
+            background: rgba(17, 17, 17, 0.6);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .scroll-viewport::-webkit-scrollbar-thumb {
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='8'><circle cx='9' cy='4' r='2' fill='%23E63946'/></svg>");
+            background-repeat: repeat-x;
+            background-position: center;
+        }
+
+        .magazine-grid {
+            display: flex;
+            gap: 2.5rem;
+            height: 100%;
+            align-items: center;
+            width: max-content;
+        }
+
+        .gallery-item {
+            height: 66vh;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            background: rgba(107, 106, 106, 0.614);
+            backdrop-filter: blur(8px);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            flex-shrink: 0;
+            position: relative;
+            transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .gallery-item:hover {
+            border-color: #E63946;
+            background-color: rgba(25, 25, 25, 0.85);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Transparent shield overlay to block right-clicking or opening images directly */
+        .image-shield {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            background: transparent;
+        }
+
+        .text-card {
+            width: 420px;
+            height: 66vh;
+            padding: 2.2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            background: rgba(107, 106, 106, 0.614);
+            backdrop-filter: blur(8px);
+            transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .text-card:hover {
+            border-color: #E63946;
+            background-color: rgba(25, 25, 25, 0.85);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .media-box {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none; /* Prevents direct interaction with the underlying image */
+        }
+
+        .media-box img,
+        .media-box video {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+            object-position: center;
+        }
+
+        .project-subheading {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #aaa;
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.08em;
+        }
+
+        .project-headline {
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .project-description {
+            line-height: 1.6;
+            color: #d0d0d0;
+            font-size: 0.82rem;
+        }
+
+        /* MOBILE ELEMENTS (Hidden on Desktop) */
+        .mobile-top-home,
+        .mobile-split-nav {
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+
+            html,
+            body {
+                overflow-y: auto;
+                height: auto;
+                cursor: auto;
+            }
+
+            .page-wrapper {
+                height: auto;
+                padding: 1rem 1rem 5.5rem 1rem;
+            }
+
+            .custom-crosshair {
+                display: none;
+            }
+
+            .global-header {
+                display: none;
+            }
+
+            .back-btn {
+                display: inline-flex !important;
+                margin-bottom: 1.2rem;
+                font-size: 0.85rem;
+            }
+
+            .mobile-top-home {
+                position: fixed;
+                top: 1rem;
+                right: 1rem;
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                background-color: #111111;
+                border: 1.5px solid rgba(255, 255, 255, 0.3);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                z-index: 9998;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+                outline: none;
+            }
+
+            .mobile-top-home .na-text {
+                font-family: 'Syne', sans-serif;
+                font-size: 0.8rem;
+                font-weight: 800;
+                letter-spacing: -0.05em;
+                color: #ffffff;
+            }
+
+            .scroll-viewport {
+                overflow-x: visible;
+                height: auto;
+                padding-bottom: 0;
+            }
+
+            .magazine-grid {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                height: auto;
+                gap: 2rem;
+                padding-right: 0;
+            }
+
+            .text-card {
+                width: 100% !important;
+                height: auto !important;
+                margin: 0 !important;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 4px;
+                background-color: rgba(15, 15, 15, 0.85);
+                padding: 1.5rem;
+                justify-content: flex-start;
+                order: -1 !important;
+            }
+
+            .text-card .project-subheading {
+                font-size: 0.9rem;
+            }
+
+            .text-card .project-headline {
+                font-size: 1.8rem;
+            }
+
+            .text-card .project-description {
+                font-size: 0.95rem;
+            }
+
+            .gallery-item {
+                width: 100% !important;
+                height: auto !important;
+                margin: 0 !important;
+                border: 1px solid rgba(255, 255, 255, 0.2) !important;
+                border-radius: 4px !important;
+                background-color: rgba(15, 15, 15, 0.85) !important;
+                padding: 1rem !important;
+                order: 0;
+                display: flex !important;
+                flex-direction: column !important;
+            }
+
+            .media-box {
+                position: relative !important;
+                height: auto !important;
+                width: 100% !important;
+                border: none !important;
+                border-radius: 0 !important;
+                background-color: transparent !important;
+                padding: 0 !important;
+                overflow: hidden !important;
+                display: block !important;
+            }
+
+            .media-box img,
+            .media-box video {
+                width: 100% !important;
+                height: auto !important;
+                max-height: none !important;
+                object-fit: contain !important;
+                display: block !important;
+            }
+
+            /* Split-profile Mobile Bottom Navigation Bar */
+            .mobile-split-nav {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 36px;
+                background-color: #111111;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                z-index: 9998;
+                padding-bottom: env(safe-area-inset-bottom);
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .split-nav-item {
+                position: relative;
+                top: -14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                padding: 0 0.75rem;
+                height: 44px;
+                border-radius: 22px;
+                background-color: rgba(30, 30, 30, 0.9);
+                border: 2px solid rgba(255, 255, 255, 0.2);
+                color: #ffffff;
+                cursor: pointer;
+                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+                transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease, color 0.2s ease, padding 0.2s ease;
+                white-space: nowrap;
+                outline: none;
+            }
+
+            .split-nav-item .pill-text {
+                font-family: 'Space Grotesk', sans-serif;
+                font-size: 0.72rem;
+                font-weight: 800;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+                color: #ffffff;
+                transition: color 0.2s ease;
+            }
+
+            .split-nav-item.active {
+                background-color: #E63946;
+                border-color: rgba(255, 255, 255, 0.4);
+                transform: translateY(-4px) scale(1.05);
+                padding: 0 1.15rem;
+            }
+
+            .split-nav-item.active .pill-text {
+                color: #ffffff;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="custom-crosshair" id="crosshair"></div>
+
+    <!-- Full-Screen Editorial Background Render / Fallback -->
+    <img src="../../assets/design/on-the-road/8.webp" alt="Background Render" class="hero-background" loading="eager" decoding="async">
+    <div class="hero-overlay"></div>
+
+    <!-- MOBILE TOP RIGHT HOME BUTTON -->
+    <a href="../../index.html" class="mobile-top-home" title="Home">
+        <span class="na-text">NA</span>
+    </a>
+
+    <div class="page-wrapper">
+        <header class="global-header">
+            <nav class="nav-rectangle">
+                <a href="../../index.html" class="brand-logo">NA</a>
+                <div class="nav-spacer"></div>
+                <a href="../../architecture.html" class="nav-item active" data-key="nav-arch-full">Architecture</a>
+                <a href="../../3d-design.html" class="nav-item" data-key="nav-3d-full">3D Design</a>
+                <a href="../../research.html" class="nav-item" data-key="nav-res-full">Research</a>
+                <a href="../../contact.html" class="nav-item" data-key="nav-cont-full">Contact</a>
+                <button id="langToggle" class="lang-toggle-container">
+                    <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path
+                            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                        </path>
+                    </svg>
+                    <span id="langLabel" class="lang-label">TR</span>
+                </button>
+            </nav>
+        </header>
+
+        <a href="../../architecture.html" class="back-btn">← BACK</a>
+
+        <div class="scroll-viewport" id="scrollContainer">
+            <main class="magazine-grid">
+                <div class="gallery-item">
+                    <div class="image-shield"></div>
+                    <div class="media-box"><img src="../../assets/architecture/villa-resort/villa-a-exterior-1.jpg" alt="Villa Resort Exterior" loading="lazy" decoding="async"></div>
+                </div>
+                <div class="text-card">
+                    <div class="project-subheading" data-key="p-sub">3D Visualization & Hospitality Architecture</div>
+                    <h2 class="project-headline" data-key="p-title">Villa Resort</h2>
+                    <p class="project-description" data-key="p-desc">A comprehensive hospitality architecture and 3D visualization project featuring luxury private villas seamlessly embedded into a native coastal landscape. The design prioritizes open-plan living, shaded courtyards, and deep overhangs for optimal climatic comfort. The digital workflow utilized 3ds Max for precise architectural modeling and spatial orchestration, Blender for complex organic asset detailing, and Cycles for physically-accurate path-traced rendering, achieving hyper-realistic lighting, custom procedural shaders, and atmospheric depth.</p>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="image-shield"></div>
+                    <div class="media-box"><img src="../../assets/architecture/villa-resort/villa_a_rec-entrance.jpg"
+                            alt="Reception Entrance" loading="lazy" decoding="async"></div>
+                </div>
+                <div class="gallery-item">
+                    <div class="image-shield"></div>
+                    <div class="media-box"><img src="../../assets/architecture/villa-resort/villa_a_pool.jpg"
+                            alt="Pool View" loading="lazy" decoding="async"></div>
+                </div>
+                <div class="gallery-item">
+                    <div class="image-shield"></div>
+                    <div class="media-box"><img src="../../assets/architecture/villa-resort/villa-a-exterior-nv.jpg" alt="Night View" loading="lazy" decoding="async">
+                    </div>
+                </div>
+
+
+                <div class="gallery-item">
+                    <div class="image-shield"></div>
+                    <div class="media-box"><img src="../../assets/architecture/villa-resort/villa_a_spa_poolview.jpg" alt="Spa Pool View" loading="lazy" decoding="async">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="image-shield"></div>
+                    <div class="media-box"><img src="../../assets/architecture/villa-resort/villa_a_bedview.jpg" alt="Bedroom View" loading="lazy" decoding="async">
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="image-shield"></div>
+                    <div class="media-box"><img src="../../assets/architecture/villa-resort/villa_a_lux.jpg" alt="Luxury Interior" loading="lazy" decoding="async">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="image-shield"></div>
+                    <div class="media-box"><img src="../../assets/architecture/villa-resort/villa-a-cafe-3.jpg" alt="Cafe View" loading="lazy" decoding="async">
+                    </div>
+                </div>
+                
+            </main>
+        </div>
+    </div>
+
+    <!-- MOBILE BOTTOM NAVIGATION BAR -->
+    <nav class="mobile-split-nav">
+        <a href="../../architecture.html" class="split-nav-item active" title="Architecture">
+            <span class="pill-text" data-key="nav-arch">Architecture</span>
+        </a>
+        <a href="../../3d-design.html" class="split-nav-item" title="3D Design">
+            <span class="pill-text" data-key="nav-3d">3D</span>
+        </a>
+        <a href="../../research.html" class="split-nav-item" title="Research">
+            <span class="pill-text" data-key="nav-res">Res</span>
+        </a>
+        <a href="../../contact.html" class="split-nav-item" title="Contact">
+            <span class="pill-text" data-key="nav-cont">Cont</span>
+        </a>
+        <button id="langToggleMobile" class="split-nav-item" title="Language">
+            <span id="langLabelMobile" class="pill-text">TR</span>
+        </button>
+    </nav>
+
+    <script>
+        const translations = {
+            en: {
+                "nav-arch-full": "Architecture", "nav-3d-full": "3D Design", "nav-res-full": "Research", "nav-cont-full": "Contact",
+                "nav-arch": "Architecture", "nav-3d": "3D", "nav-res": "Res", "nav-cont": "Cont",
+                "p-sub": "3D Visualization & Hospitality Architecture", "p-title": "Villa Resort", "p-desc": "A comprehensive hospitality architecture and 3D visualization project featuring luxury private villas seamlessly embedded into a native coastal landscape. The design prioritizes open-plan living, shaded courtyards, and deep overhangs for optimal climatic comfort. The digital workflow utilized 3ds Max for precise architectural modeling and spatial orchestration, Blender for complex organic asset detailing, and Cycles for physically-accurate path-traced rendering, achieving hyper-realistic lighting, custom procedural shaders, and atmospheric depth."
+            },
+            tr: {
+                "nav-arch-full": "Mimarlık", "nav-3d-full": "3D Tasarım", "nav-res-full": "Araştırma", "nav-cont-full": "İletişim",
+                "nav-arch": "Mimarlık", "nav-3d": "3D", "nav-res": "Arş", "nav-cont": "İlet",
+                "p-sub": "3D Görselleştirme ve Otel Mimarisi", "p-title": "Villa Resort", "p-desc": "Doğal bir peyzaj dokusu içine entegre edilmiş lüks özel villalardan oluşan kapsamlı bir konaklama mimarisi ve 3D görselleştirme projesi. Tasarım; açık plan yaşam alanları, gölgeli avlular ve iklimsel konfor sağlayan derin saçaklarla optimize edilmiştir. Dijital iş akışında, hassas mimari modelleme ve mekânsal kurgu için 3ds Max, organik varlık detaylandırması için Blender, fiziksel tabanlı ışık takibi ve gerçekçi gölgelendirmeler için ise Cycles tercih edilerek atmosferik derinlik ve yüksek gerçekçilik elde edilmiştir."
+            }
+        };
+
+        let lang = localStorage.getItem('portfolio-lang') || 'en';
+        
+        const apply = (l) => {
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[l] && translations[l][key]) {
+                    el.textContent = translations[l][key];
+                }
+            });
+            const targetLabel = l === 'en' ? 'TR' : 'EN';
+            document.getElementById('langLabel').textContent = targetLabel;
+            if (document.getElementById('langLabelMobile')) {
+                document.getElementById('langLabelMobile').textContent = targetLabel;
+            }
+        };
+
+        const toggleLanguage = () => {
+            lang = lang === 'en' ? 'tr' : 'en';
+            localStorage.setItem('portfolio-lang', lang);
+            apply(lang);
+        };
+
+        document.getElementById('langToggle').addEventListener('click', toggleLanguage);
+        const mobileToggle = document.getElementById('langToggleMobile');
+        if (mobileToggle) {
+            mobileToggle.addEventListener('click', toggleLanguage);
+        }
+
+        // Prevent right-clicking or context menu triggers on the image shields
+        document.querySelectorAll('.image-shield').forEach(shield => {
+            shield.addEventListener('contextmenu', (e) => e.preventDefault());
+            shield.addEventListener('dragstart', (e) => e.preventDefault());
+        });
+
+        const crosshair = document.getElementById('crosshair');
+        let mouseX = 0;
+        let mouseY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function updateCursor() {
+            crosshair.style.left = mouseX + 'px';
+            crosshair.style.top = mouseY + 'px';
+            requestAnimationFrame(updateCursor);
+        }
+        requestAnimationFrame(updateCursor);
+
+        document.querySelectorAll('a, button, .gallery-item, .text-card').forEach(i => {
+            i.addEventListener('mouseenter', () => crosshair.classList.add('expand'));
+            i.addEventListener('mouseleave', () => crosshair.classList.remove('expand'));
+        });
+
+        const scrollContainer = document.getElementById('scrollContainer');
+        scrollContainer.addEventListener('wheel', (e) => {
+            if (window.innerWidth > 900) {
+                e.preventDefault();
+                scrollContainer.scrollLeft += e.deltaY;
+            }
+        }, { passive: false });
+
+        apply(lang);
+    </script>
+</body>
+
+</html>
